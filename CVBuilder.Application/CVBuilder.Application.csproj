@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CVBuilder.Domain\CVBuilder.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
