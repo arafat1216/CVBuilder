@@ -18,13 +18,13 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
         public async Task<AddEmployeeCommandResponse> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
             // Validate incoming request
-            var validator = new AddEmployeeCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
+            //var validator = new AddEmployeeCommandValidator();
+            //var validationResult = await validator.ValidateAsync(request);
 
-            if(!validationResult.IsValid)
-            {
-                throw new Exceptions.ValidationException(validationResult);
-            }
+            //if(!validationResult.IsValid)
+            //{
+            //    throw new Exceptions.ValidationException(validationResult);
+            //}
 
             // Mapping request to employee entity
             var employee = mapper.Map<Employee>(request);

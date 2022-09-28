@@ -26,13 +26,13 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
             }
 
             // Validate incoming request
-            var validator = new UpdateEmployeeCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
+            //var validator = new UpdateEmployeeCommandValidator();
+            //var validationResult = await validator.ValidateAsync(request);
 
-            if(!validationResult.IsValid)
-            {
-                throw new Exceptions.ValidationException(validationResult);
-            }
+            //if(!validationResult.IsValid)
+            //{
+            //    throw new Exceptions.ValidationException(validationResult);
+            //}
 
             // Mapping request to employee 
             var employee = mapper.Map<Employee>(request);
