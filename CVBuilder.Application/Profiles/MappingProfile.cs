@@ -18,7 +18,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<AddEmployeeCommand, Employee>();
             CreateMap<Employee, AddEmployeeCommandResponse>();
             CreateMap<UpdateEmployeeCommand, Employee>();
-
+            
 
             // Skill Mappings
             CreateMap<Skill, SkillViewModel>();

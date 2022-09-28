@@ -41,7 +41,9 @@ namespace CVBuilder.Infrastructure.Repositories
 
         public async Task<Employee?> GetEmployeeByIdAsync(Guid employeeId)
         {
-            return await context.Employees.Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
+            return await context.Employees
+                .Include(e => e.Skills)
+                .Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
         }
 
         public async Task UpdateEmployeeAsync(Employee employee)
