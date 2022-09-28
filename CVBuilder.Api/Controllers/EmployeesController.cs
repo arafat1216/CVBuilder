@@ -46,7 +46,7 @@ namespace CVBuilder.Api.Controllers
         {
             var response = await mediator.Send(addEmployeeCommand);
 
-            return Ok(response);
+            return CreatedAtAction(nameof(GetEmployeeDetails),new {id = response.EmployeeId},response);
         }
 
         [HttpPut("{id}")]
