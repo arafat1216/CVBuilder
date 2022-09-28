@@ -14,7 +14,9 @@ namespace CVBuilder.Application.Profiles
             CreateMap<Employee, EmployeeListViewModel>();
             CreateMap<Employee, EmployeeDetailViewModel>();
             CreateMap<AddEmployeeCommand, Employee>();
+            CreateMap<Employee, AddEmployeeCommandResponse>();
             CreateMap<UpdateEmployeeCommand, Employee>();
         }
     }
 }
+

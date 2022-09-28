@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
 {
-    public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, Guid>
+    public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, AddEmployeeCommandResponse>
     {
         private readonly IEmployeeRepository repository;
         private readonly IMapper mapper;
@@ -15,7 +15,7 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<Guid> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<AddEmployeeCommandResponse> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
             // Validate incoming request
             var validator = new AddEmployeeCommandValidator();
@@ -35,7 +35,9 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
 
             employee = await repository.AddEmployeeAsync(employee);
 
-            return employee.EmployeeId;
+            var response = mapper.Map<AddEmployeeCommandResponse>(employee);
+
+            return response;
         }
     }
 }
