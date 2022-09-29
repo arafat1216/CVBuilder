@@ -16,7 +16,7 @@ namespace CVBuilder.Infrastructure.Repositories
             return await context.WorkExperiences.AnyAsync(e => e.EmployeeId == employeeId && e.WorkExperienceId == id);
         }
 
-        public async Task<WorkExperience?> GetSkillByIdAsync(Guid employeeId, int id)
+        public async Task<WorkExperience?> GetWorkExperienceByIdAsync(Guid employeeId, int id)
         {
             return await context.WorkExperiences
                 .Where(e => e.EmployeeId == employeeId && e.WorkExperienceId == id)
