@@ -39,6 +39,11 @@ namespace CVBuilder.Infrastructure.Repositories
             return await context.Employees.ToListAsync();
         }
 
+        public async Task<Employee?> GetEmployeeByEmailAsync(string email)
+        {
+            return await context.Employees.Where(e => e.Email == email).FirstOrDefaultAsync();
+        }
+
         public async Task<Employee?> GetEmployeeByIdAsync(Guid employeeId)
         {
             return await context.Employees
