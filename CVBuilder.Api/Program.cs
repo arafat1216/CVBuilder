@@ -1,3 +1,4 @@
+using CVBuilder.Api.Middleware;
 using CVBuilder.Application;
 using CVBuilder.Infrastructure;
 using Microsoft.OpenApi.Models;
@@ -68,6 +69,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+
+app.UseCustomExceptionHandler();
+
 app.UseAuthorization();
 
 app.MapControllers();
