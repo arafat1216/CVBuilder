@@ -3,6 +3,8 @@ using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
 using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
+using CVBuilder.Application.Features.Projects.Commands.AddProject;
+using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.ViewModels;
@@ -34,6 +36,13 @@ namespace CVBuilder.Application.Profiles
             CreateMap<AddDegreeCommand, Degree>();
             CreateMap<Degree, AddDegreeCommandResponse>();
             CreateMap<UpdateDegreeCommand, Degree>();
+
+
+            // Project Mappings
+            CreateMap<Project, ProjectViewModel>();
+            CreateMap<AddProjectCommand, Project>();
+            CreateMap<Project, AddProjectCommandResponse>();
+            CreateMap<UpdateProjectCommand, Project>();
         }
     }
 }
