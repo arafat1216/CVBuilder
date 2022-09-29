@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
+using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
 using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
@@ -25,6 +27,13 @@ namespace CVBuilder.Application.Profiles
             CreateMap<AddSkillCommand, Skill>();
             CreateMap<Skill, AddSkillCommandResponse>();
             CreateMap<UpdateSkillCommand, Skill>();
+
+
+            // Degree Mappings
+            CreateMap<Degree, DegreeViewModel>();
+            CreateMap<AddDegreeCommand, Degree>();
+            CreateMap<Degree, AddDegreeCommandResponse>();
+            CreateMap<UpdateDegreeCommand, Degree>();
         }
     }
 }

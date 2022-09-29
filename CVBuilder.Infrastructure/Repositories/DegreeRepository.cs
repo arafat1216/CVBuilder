@@ -16,7 +16,7 @@ namespace CVBuilder.Infrastructure.Repositories
             return await context.Degrees.AnyAsync(e => e.EmployeeId == employeeId && e.DegreeId == id);
         }
 
-        public async Task<Degree?> GetSkillByIdAsync(Guid employeeId, int id)
+        public async Task<Degree?> GetDegreeByIdAsync(Guid employeeId, int id)
         {
             return await context.Degrees.Where(e => e.EmployeeId == employeeId && e.DegreeId == id).FirstOrDefaultAsync();
         }
