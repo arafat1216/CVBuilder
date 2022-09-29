@@ -34,9 +34,9 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
                 .WithMessage("{PropertyName} must not exceed 200 characters.");
 
             RuleFor(e => e.Role)
-                .NotEmpty()
-                .WithMessage("{PropertyName} is required.")
-                .NotNull();
+                .NotNull()
+                .WithMessage("{PropertyName} is required.");
+          
         
         }
     }
