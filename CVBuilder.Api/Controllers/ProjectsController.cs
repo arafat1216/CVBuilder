@@ -4,6 +4,7 @@ using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
 using CVBuilder.Application.Features.Projects.Queries.GetProjectDetails;
 using CVBuilder.Application.Features.Projects.Queries.GetProjectsList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace CVBuilder.Api.Controllers
 {
     [Route("api/employees/{employeeId}/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class ProjectsController : ControllerBase
     {
         private readonly IMediator mediator;

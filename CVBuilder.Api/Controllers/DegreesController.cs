@@ -4,6 +4,7 @@ using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails;
 using CVBuilder.Application.Features.Degrees.Queries.GetDegreesList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace CVBuilder.Api.Controllers
 {
     [Route("api/employees/{employeeId}/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class DegreesController : ControllerBase
     {
         private readonly IMediator mediator;

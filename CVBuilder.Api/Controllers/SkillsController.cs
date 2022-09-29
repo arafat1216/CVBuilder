@@ -4,6 +4,7 @@ using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillDetails;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillsList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace CVBuilder.Api.Controllers
 {
     [Route("api/employees/{employeeId}/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class SkillsController : ControllerBase
     {
         private readonly IMediator mediator;
