@@ -50,7 +50,7 @@ namespace CVBuilder.Application.Profiles
             // Work Experince Mappings
             CreateMap<WorkExperience, WorkExperienceViewModel>();
             CreateMap<AddWorkExperienceCommand, WorkExperience>();
-            CreateMap<WorkExperience, AddWorkExperienceCommand>();
+            CreateMap<WorkExperience, AddWorkExperienceCommandResponse>();
             CreateMap<UpdateWorkExperienceCommand, WorkExperience>();
         }
     }
