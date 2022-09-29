@@ -43,6 +43,9 @@ namespace CVBuilder.Infrastructure.Repositories
         {
             return await context.Employees
                 .Include(e => e.Skills)
+                .Include(e=> e.Degrees)
+                .Include(e => e.WorkExperiences)
+                .Include(e => e.Projects)
                 .Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
         }
 

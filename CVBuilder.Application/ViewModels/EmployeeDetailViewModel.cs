@@ -13,6 +13,9 @@ namespace CVBuilder.Application.ViewModels
         public Role Role { get; set; }
 
         public ICollection<SkillViewModel> Skills { get; set; }
+        public ICollection<DegreeViewModel> Degrees { get; set; }
+        public ICollection<WorkExperienceViewModel> WorkExperiences { get; set; }
+        public ICollection<ProjectViewModel> Projects { get; set; }
 
     }
 }
