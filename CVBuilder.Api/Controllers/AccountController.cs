@@ -31,9 +31,7 @@ namespace CVBuilder.Api.Controllers
 
             var token = await service.AuthenticateUserAsync(loginViewModel);
 
-            if (token == null)
-                return NotFound();
-
+            
             return Ok(token);
         }
 

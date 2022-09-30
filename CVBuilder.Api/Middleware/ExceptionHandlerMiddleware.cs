@@ -51,7 +51,7 @@ namespace CVBuilder.Api.Middleware
                     
                     break;
                 case Exception ex:
-                    httpStatusCode=HttpStatusCode.BadRequest;   
+                    httpStatusCode=HttpStatusCode.BadRequest; 
                     break;
             }
 
