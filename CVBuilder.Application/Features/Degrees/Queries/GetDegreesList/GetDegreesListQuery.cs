@@ -1,4 +1,4 @@
-﻿using CVBuilder.Application.ViewModels;
+﻿using CVBuilder.Application.ViewModels.Degree;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreesList

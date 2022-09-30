@@ -1,6 +1,6 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels;
+using CVBuilder.Application.ViewModels.Login;
 
 namespace CVBuilder.Infrastructure.Services
 {

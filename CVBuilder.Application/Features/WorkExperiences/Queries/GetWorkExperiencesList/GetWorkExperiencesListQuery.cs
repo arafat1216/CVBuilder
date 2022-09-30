@@ -1,4 +1,4 @@
-﻿using CVBuilder.Application.ViewModels;
+﻿using CVBuilder.Application.ViewModels.WorkExperience;
 using MediatR;
 
 namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperiencesList

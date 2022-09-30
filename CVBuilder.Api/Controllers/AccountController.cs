@@ -1,6 +1,6 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
-using CVBuilder.Application.ViewModels;
+using CVBuilder.Application.ViewModels.Login;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels;
+using CVBuilder.Application.ViewModels.Employee;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Employees.Queries.GetEmployeesList

@@ -1,4 +1,4 @@
-﻿using CVBuilder.Application.ViewModels;
+﻿using CVBuilder.Application.ViewModels.Skill;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList

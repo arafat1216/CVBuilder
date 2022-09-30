@@ -9,7 +9,11 @@ using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
-using CVBuilder.Application.ViewModels;
+using CVBuilder.Application.ViewModels.Degree;
+using CVBuilder.Application.ViewModels.Employee;
+using CVBuilder.Application.ViewModels.Project;
+using CVBuilder.Application.ViewModels.Skill;
+using CVBuilder.Application.ViewModels.WorkExperience;
 using CVBuilder.Domain.Entities;
 
 namespace CVBuilder.Application.Profiles
@@ -28,6 +32,7 @@ namespace CVBuilder.Application.Profiles
 
             // Skill Mappings
             CreateMap<Skill, SkillViewModel>();
+            CreateMap<Skill, SkillsListViewModel>();
             CreateMap<AddSkillCommand, Skill>();
             CreateMap<Skill, AddSkillCommandResponse>();
             CreateMap<UpdateSkillCommand, Skill>();
@@ -35,6 +40,7 @@ namespace CVBuilder.Application.Profiles
 
             // Degree Mappings
             CreateMap<Degree, DegreeViewModel>();
+            CreateMap<Degree, DegreesListViewModel>();
             CreateMap<AddDegreeCommand, Degree>();
             CreateMap<Degree, AddDegreeCommandResponse>();
             CreateMap<UpdateDegreeCommand, Degree>();
@@ -42,6 +48,7 @@ namespace CVBuilder.Application.Profiles
 
             // Project Mappings
             CreateMap<Project, ProjectViewModel>();
+            CreateMap<Project, ProjectsListViewModel>();
             CreateMap<AddProjectCommand, Project>();
             CreateMap<Project, AddProjectCommandResponse>();
             CreateMap<UpdateProjectCommand, Project>();
@@ -49,6 +56,7 @@ namespace CVBuilder.Application.Profiles
 
             // Work Experince Mappings
             CreateMap<WorkExperience, WorkExperienceViewModel>();
+            CreateMap<WorkExperience, WorkExperiencesListViewModel>();
             CreateMap<AddWorkExperienceCommand, WorkExperience>();
             CreateMap<WorkExperience, AddWorkExperienceCommandResponse>();
             CreateMap<UpdateWorkExperienceCommand, WorkExperience>();

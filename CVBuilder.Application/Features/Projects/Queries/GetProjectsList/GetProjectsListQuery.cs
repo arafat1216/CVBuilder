@@ -1,4 +1,4 @@
-﻿using CVBuilder.Application.ViewModels;
+﻿using CVBuilder.Application.ViewModels.Project;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList

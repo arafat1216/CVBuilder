@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels;
+using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Domain.Entities;
 using MediatR;
 

@@ -1,4 +1,4 @@
-﻿namespace CVBuilder.Application.ViewModels
+﻿namespace CVBuilder.Application.ViewModels.Skill
 {
     public class SkillViewModel
     {

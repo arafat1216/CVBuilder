@@ -1,4 +1,4 @@
-﻿using CVBuilder.Application.ViewModels;
+﻿using CVBuilder.Application.ViewModels.Login;
 
 namespace CVBuilder.Application.Contracts.Authentication
 {

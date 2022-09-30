@@ -1,4 +1,4 @@
-﻿using CVBuilder.Application.ViewModels;
+﻿using CVBuilder.Application.ViewModels.Employee;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CVBuilder.Application.ViewModels
+namespace CVBuilder.Application.ViewModels.Employee
 {
     public class EmployeeListViewModel
     {
