@@ -18,16 +18,18 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
         }
         public async Task<WorkExperienceViewModel> Handle(GetWorkExperienceDetailsQuery request, CancellationToken cancellationToken)
         {
-            #region check if work experience exists
+            #region fetch work experience details
 
-            var workExperienceExists = await repository.ExistsAsync(request.EmployeeId, request.WorkExperienceId);
-
-            if (!workExperienceExists)
-                throw new Exceptions.NotFoundException(nameof(WorkExperience), request.WorkExperienceId);
+            var workExperienceDetails = await repository.GetWorkExperienceByIdAsync(request.EmployeeId, request.WorkExperienceId);
 
             #endregion
 
-            var workExperienceDetails = await repository.GetWorkExperienceByIdAsync(request.EmployeeId, request.WorkExperienceId);
+            #region check if work experience exists
+
+            if (workExperienceDetails == null)
+                throw new Exceptions.NotFoundException(nameof(WorkExperience), request.WorkExperienceId);
+
+            #endregion
 
             return mapper.Map<WorkExperienceViewModel>(workExperienceDetails);
         }

@@ -31,13 +31,7 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail
             var employeeDetails = await repository.GetEmployeeByIdAsync(request.Id);
             var employeeDetailsDto = mapper.Map<EmployeeDetailViewModel>(employeeDetails);
 
-            // Inlcude Skills
-
-            // Inlcude Degress
-
-            // Include Work Experiences
-
-            // Include Projects
+           
 
             return employeeDetailsDto;
         }

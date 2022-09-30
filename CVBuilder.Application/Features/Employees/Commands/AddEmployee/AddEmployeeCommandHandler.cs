@@ -17,7 +17,8 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
         }
         public async Task<AddEmployeeCommandResponse> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
-            // Validate incoming request
+            #region validate incoming request
+
             var validator = new AddEmployeeCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
 
@@ -26,12 +27,23 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
                 throw new Exceptions.ValidationException(validationResult);
             }
 
-            // Mapping request to employee entity
+            #endregion
+
+
+            #region mapping incoming request to employee entity
+
             var employee = mapper.Map<Employee>(request);
 
-            // Hashing Password
+            #endregion
+
+
+            #region hashing password
+
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
             employee.Password = hashedPassword;
+
+            #endregion
+
 
             employee = await repository.AddEmployeeAsync(employee);
 

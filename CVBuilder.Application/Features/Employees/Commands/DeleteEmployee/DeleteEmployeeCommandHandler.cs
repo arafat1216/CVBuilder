@@ -14,15 +14,24 @@ namespace CVBuilder.Application.Features.Employees.Commands.DeleteEmployee
         }
         public async Task<Unit> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
-            
+
+            #region fetch employee 
+
             var employee = await repository.GetEmployeeByIdAsync(request.EmployeeId);
 
-            // Check if employee exists
+            #endregion
+
+
+            #region check if employee exists
+
             if (employee == null)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
+            #endregion
+
+
             await repository.DeleteEmployeeAsync(employee);
-            
+
             return Unit.Value;
         }
     }

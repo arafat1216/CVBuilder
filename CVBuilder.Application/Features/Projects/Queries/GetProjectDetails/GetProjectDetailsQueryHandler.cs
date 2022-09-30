@@ -18,18 +18,16 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectDetails
         }
         public async Task<ProjectViewModel> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
         {
-            #region check if project exists
-
-            var projectExists = await repository.ExistsAsync(request.EmployeeId, request.ProjectId);
-
-            if (!projectExists)
-                throw new Exceptions.NotFoundException(nameof(Project), request.ProjectId);
-
-            #endregion
-
             #region fetch project details
 
             var projectDetails = await repository.GetProjectByIdAsync(request.EmployeeId, request.ProjectId);
+
+            #endregion
+
+            #region check if project exists
+
+            if (projectDetails == null)
+                throw new Exceptions.NotFoundException(nameof(Project), request.ProjectId);
 
             #endregion
 

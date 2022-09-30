@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CVBuilder.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace CVBuilder.Application.ViewModels
         public string Email { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
-        
+        public Role Role { get; set; }
+
     }
 }
