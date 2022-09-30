@@ -23,9 +23,6 @@ namespace CVBuilder.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyList<WorkExperience>> ListAllAsync(Guid employeeId)
-        {
-            return await context.WorkExperiences.Where(e => e.EmployeeId == employeeId).ToListAsync();
-        }
+        
     }
 }

@@ -21,9 +21,6 @@ namespace CVBuilder.Infrastructure.Repositories
             return await context.Skills.Where(e => e.EmployeeId == employeeId && e.SkillId == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyList<Skill>> ListAllAsync(Guid employeeId)
-        {
-            return await context.Skills.Where(e => e.EmployeeId == employeeId).ToListAsync();
-        }
+        
     }
 }

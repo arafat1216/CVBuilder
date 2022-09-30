@@ -22,9 +22,6 @@ namespace CVBuilder.Infrastructure.Repositories
             return await context.Projects.Where(e => e.EmployeeId == employeeId && e.ProjectId == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyList<Project>> ListAllAsync(Guid employeeId)
-        {
-            return await context.Projects.Where(e => e.EmployeeId == employeeId).ToListAsync();
-        }
+        
     }
 }

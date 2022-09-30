@@ -31,7 +31,7 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
 
             #region fetch work experiences list
 
-            var workExperiencesList = await workExperienceRepository.ListAllAsync(request.EmployeeId);
+            var workExperiencesList = await workExperienceRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
 
             #endregion
 

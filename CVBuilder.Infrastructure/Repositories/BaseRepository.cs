@@ -1,5 +1,7 @@
 ﻿using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CVBuilder.Infrastructure.Repositories
 {
@@ -23,6 +25,13 @@ namespace CVBuilder.Infrastructure.Repositories
         {
             context.Set<T>().Remove(entity);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            var query = context.Set<T>().AsQueryable();
+
+            return await query.Where(predicate).ToListAsync<T>();
         }
 
         public async Task UpdateAsync(T entity)

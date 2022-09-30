@@ -31,7 +31,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
 
             #region fetch projects list
 
-            var projectsList = await projectRepository.ListAllAsync(request.EmployeeId);
+            var projectsList = await projectRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
 
             #endregion
 
