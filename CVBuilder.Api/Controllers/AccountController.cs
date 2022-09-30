@@ -1,5 +1,6 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
+using CVBuilder.Application.Features.UpdatePassword.Commands;
 using CVBuilder.Application.ViewModels.Login;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -47,6 +48,24 @@ namespace CVBuilder.Api.Controllers
             var result = await mediator.Send(requestDto);
 
             return Ok(result);
+        }
+
+        [HttpPost("updatepassword")]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordViewModel updatePasswordViewModel)
+        {
+            var userId = Guid.Parse(User.Identity.Name);
+
+            var requestDto = new UpdatePasswordCommand()
+            {
+                EmployeeId = userId,
+                CurrentPassword = updatePasswordViewModel.CurrentPassword,
+                NewPassword = updatePasswordViewModel.NewPassword,
+                ConfirmPassword = updatePasswordViewModel.ConfirmPassword
+            };
+
+            await mediator.Send(requestDto);
+
+            return NoContent();
         }
 
         

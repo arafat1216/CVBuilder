@@ -8,7 +8,9 @@ namespace CVBuilder.Application.Contracts.Persistence
         Task<Employee> AddEmployeeAsync(Employee employee);
         Task<Employee?> GetEmployeeByIdAsync(Guid employeeId);
         Task<Employee?> GetEmployeeByEmailAsync(string email);
+        Task<Employee?> GetEmployeeDetailsByIdAsync(Guid employeeId);
         Task UpdateEmployeeAsync(Employee employee);
+        Task UpdateEmployeePasswordAsync(Employee employee);    
         Task DeleteEmployeeAsync(Employee employee);
         Task<bool> EmployeeExistsAsync(Guid employeeId);
     }

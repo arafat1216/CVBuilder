@@ -54,6 +54,11 @@ namespace CVBuilder.Infrastructure.Repositories
                 .Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
         }
 
+        public async Task<Employee?> GetEmployeeDetailsByIdAsync(Guid employeeId)
+        {
+            return await context.Employees.Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
+        }
+
         public async Task UpdateEmployeeAsync(Employee employee)
         {
             var employeeToBeUpdated = await GetEmployeeByIdAsync(employee.EmployeeId);
@@ -64,6 +69,13 @@ namespace CVBuilder.Infrastructure.Repositories
             employeeToBeUpdated.Email = employee.Email;
 
             context.Employees.Update(employeeToBeUpdated);
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEmployeePasswordAsync(Employee employee)
+        {
+            context.Employees.Update(employee);
 
             await context.SaveChangesAsync();
         }
