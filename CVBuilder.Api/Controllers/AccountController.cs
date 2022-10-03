@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CVBuilder.Api.Controllers
 {
@@ -27,12 +28,9 @@ namespace CVBuilder.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            if (loginViewModel.Email == null || loginViewModel.Password == null)
-                return BadRequest();
 
             var token = await service.AuthenticateUserAsync(loginViewModel);
 
-            
             return Ok(token);
         }
 
@@ -53,11 +51,11 @@ namespace CVBuilder.Api.Controllers
         [HttpPost("updatepassword")]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordViewModel updatePasswordViewModel)
         {
-            var userId = Guid.Parse(User.Identity.Name);
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
 
             var requestDto = new UpdatePasswordCommand()
             {
-                EmployeeId = userId,
+                Email = userEmail,
                 CurrentPassword = updatePasswordViewModel.CurrentPassword,
                 NewPassword = updatePasswordViewModel.NewPassword,
                 ConfirmPassword = updatePasswordViewModel.ConfirmPassword
@@ -68,6 +66,6 @@ namespace CVBuilder.Api.Controllers
             return NoContent();
         }
 
-        
+
     }
 }

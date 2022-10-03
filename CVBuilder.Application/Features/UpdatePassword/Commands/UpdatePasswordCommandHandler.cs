@@ -20,7 +20,7 @@ namespace CVBuilder.Application.Features.UpdatePassword.Commands
         {
             #region fetch employee details
 
-            var employee = await repository.GetEmployeeDetailsByIdAsync(request.EmployeeId);
+            var employee = await repository.GetEmployeeByEmailAsync(request.Email);
 
             #endregion
 
