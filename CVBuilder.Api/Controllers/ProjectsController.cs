@@ -1,8 +1,10 @@
-﻿using CVBuilder.Application.Features.Projects.Commands.AddProject;
+﻿using AutoMapper;
+using CVBuilder.Application.Features.Projects.Commands.AddProject;
 using CVBuilder.Application.Features.Projects.Commands.DeleteProject;
 using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
 using CVBuilder.Application.Features.Projects.Queries.GetProjectDetails;
 using CVBuilder.Application.Features.Projects.Queries.GetProjectsList;
+using CVBuilder.Application.ViewModels.Project;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +18,12 @@ namespace CVBuilder.Api.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public ProjectsController(IMediator mediator)
+        public ProjectsController(IMediator mediator, IMapper mapper)
         {
             this.mediator = mediator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -50,25 +54,28 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProject(Guid employeeId, AddProjectCommand addProjectCommand)
+        public async Task<IActionResult> AddProject(Guid employeeId, ProjectViewModel projectViewModel)
         {
-            if (employeeId != addProjectCommand.EmployeeId)
-                return BadRequest();
+            var requestDto = mapper.Map<AddProjectCommand>(projectViewModel);
 
-            var response = await mediator.Send(addProjectCommand);
+            requestDto.EmployeeId = employeeId;
+
+            var response = await mediator.Send(requestDto);
 
             return CreatedAtAction(nameof(GetProjectDetails), new { employeeId = response.EmployeeId, projectId = response.ProjectId }, response);
         }
 
         [HttpPut("{projectId}")]
-        public async Task<IActionResult> UpdateProject(Guid employeeId, int projectId, UpdateProjectCommand updateProjectCommand)
+        public async Task<IActionResult> UpdateProject(Guid employeeId, int projectId, ProjectViewModel projectViewModel)
         {
-            if((employeeId != updateProjectCommand.EmployeeId) || (projectId != updateProjectCommand.ProjectId))
-                return BadRequest();
+            var requestDto = mapper.Map<UpdateProjectCommand>(projectViewModel);
 
-            await mediator.Send(updateProjectCommand);
+            requestDto.EmployeeId = employeeId;
+            requestDto.ProjectId = projectId;
 
-            return NoContent();
+            await mediator.Send(requestDto);
+
+            return Ok(requestDto);
         }
 
         [HttpDelete("{projectId}")]
@@ -87,5 +94,5 @@ namespace CVBuilder.Api.Controllers
 
     }
 
-    
+
 }

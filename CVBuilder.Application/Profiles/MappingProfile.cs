@@ -15,6 +15,7 @@ using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.ViewModels.Degree;
+using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Domain.Entities;
 
 namespace CVBuilder.Application.Profiles
@@ -53,8 +54,10 @@ namespace CVBuilder.Application.Profiles
             // Project Mappings
             CreateMap<Project, ProjectDetailsDto>();
             CreateMap<Project, ProjectsListDto>();
+            CreateMap<ProjectViewModel, AddProjectCommand>();
             CreateMap<AddProjectCommand, Project>();
             CreateMap<Project, AddProjectCommandResponse>();
+            CreateMap<ProjectViewModel, UpdateProjectCommand>();
             CreateMap<UpdateProjectCommand, Project>();
 
 
