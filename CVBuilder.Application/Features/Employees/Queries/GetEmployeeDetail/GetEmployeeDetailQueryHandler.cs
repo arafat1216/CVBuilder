@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels.Employee;
+using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail
 {
-    public class GetEmployeeDetailQueryHandler : IRequestHandler<GetEmployeeDetailQuery, EmployeeDetailViewModel>
+    public class GetEmployeeDetailQueryHandler : IRequestHandler<GetEmployeeDetailQuery, EmployeeDetailsDto>
     {
         private readonly IEmployeeRepository repository;
         private readonly IMapper mapper;
@@ -16,7 +16,7 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<EmployeeDetailViewModel> Handle(GetEmployeeDetailQuery request, CancellationToken cancellationToken)
+        public async Task<EmployeeDetailsDto> Handle(GetEmployeeDetailQuery request, CancellationToken cancellationToken)
         {
             // Checks If Employee Exists
 
@@ -29,7 +29,7 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail
 
             // Get Employee Details
             var employeeDetails = await repository.GetEmployeeByIdAsync(request.Id);
-            var employeeDetailsDto = mapper.Map<EmployeeDetailViewModel>(employeeDetails);
+            var employeeDetailsDto = mapper.Map<EmployeeDetailsDto>(employeeDetails);
 
            
 

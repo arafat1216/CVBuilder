@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CVBuilder.Application.ViewModels.Employee
+namespace CVBuilder.Application.Dtos.Employee
 {
-    public class EmployeeListViewModel
+    public class EmployeesListDto
     {
         public Guid EmployeeId { get; set; }
         public string FullName { get; set; }

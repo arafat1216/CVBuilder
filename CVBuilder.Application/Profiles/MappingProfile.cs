@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
@@ -10,7 +11,6 @@ using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.ViewModels.Degree;
-using CVBuilder.Application.ViewModels.Employee;
 using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Application.ViewModels.Skill;
 using CVBuilder.Application.ViewModels.WorkExperience;
@@ -23,8 +23,8 @@ namespace CVBuilder.Application.Profiles
         public MappingProfile()
         {
             // Employee Mappings
-            CreateMap<Employee, EmployeeListViewModel>();
-            CreateMap<Employee, EmployeeDetailViewModel>();
+            CreateMap<Employee, EmployeesListDto>();
+            CreateMap<Employee, EmployeeDetailsDto>();
             CreateMap<AddEmployeeCommand, Employee>();
             CreateMap<Employee, AddEmployeeCommandResponse>();
             CreateMap<UpdateEmployeeCommand, Employee>();

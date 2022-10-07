@@ -5,9 +5,9 @@ using CVBuilder.Application.ViewModels.WorkExperience;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
 
-namespace CVBuilder.Application.ViewModels.Employee
+namespace CVBuilder.Application.Dtos.Employee
 {
-    public class EmployeeDetailViewModel
+    public class EmployeeDetailsDto
     {
         public Guid EmployeeId { get; set; }
         public string FullName { get; set; }
