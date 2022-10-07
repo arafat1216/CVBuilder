@@ -35,7 +35,7 @@ namespace CVBuilder.Api.Controllers
             return Ok(dtos);    
         }
 
-        [HttpGet("{skillId}", Name = "GetSkillDetails")]
+        [HttpGet("{skillId}")]
         public async Task<IActionResult> GetSkillDetails(Guid employeeId, int skillId)
         {
             var requestDto = new GetSkillDetailsQuery()

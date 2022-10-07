@@ -34,7 +34,7 @@ namespace CVBuilder.Api.Controllers
             return Ok(token);
         }
 
-        [HttpGet("viewcv")]
+        [HttpGet("view-cv")]
         public async Task<IActionResult> GetMyCv()
         {
             var userId = Guid.Parse(User.Identity.Name);
@@ -48,7 +48,7 @@ namespace CVBuilder.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("updatepassword")]
+        [HttpPost("update-password")]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordViewModel updatePasswordViewModel)
         {
             var userEmail = User.FindFirstValue(ClaimTypes.Email);

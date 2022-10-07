@@ -30,7 +30,7 @@ namespace CVBuilder.Api.Controllers
         }
 
 
-        [HttpGet("{id}",Name ="GetEmployeeDetails")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeDetails(Guid id)
         {
             var requestDto = new GetEmployeeDetailQuery()
