@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels.Skill;
+using CVBuilder.Application.Dtos.Skill;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Skills.Queries.GetSkillDetails
 {
-    public class GetSkillDetailsQueryHandler : IRequestHandler<GetSkillDetailsQuery,SkillViewModel>
+    public class GetSkillDetailsQueryHandler : IRequestHandler<GetSkillDetailsQuery,SkillDetailsDto>
     {
         private readonly ISkillRepository repository;
         private readonly IMapper mapper;
@@ -16,7 +16,7 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillDetails
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<SkillViewModel> Handle(GetSkillDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<SkillDetailsDto> Handle(GetSkillDetailsQuery request, CancellationToken cancellationToken)
         {
 
             #region fetch skill details 
@@ -32,7 +32,7 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillDetails
 
             #endregion
 
-            return mapper.Map<SkillViewModel>(skillDetails);
+            return mapper.Map<SkillDetailsDto>(skillDetails);
         }
     }
 }

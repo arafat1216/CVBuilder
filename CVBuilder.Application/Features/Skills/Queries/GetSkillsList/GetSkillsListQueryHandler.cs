@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels.Skill;
+using CVBuilder.Application.Dtos.Skill;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
 {
-    public class GetSkillsListQueryHandler : IRequestHandler<GetSkillsListQuery, List<SkillViewModel>>
+    public class GetSkillsListQueryHandler : IRequestHandler<GetSkillsListQuery, List<SkillDetailsDto>>
     {
         private readonly ISkillRepository skillRepository;
         private readonly IEmployeeRepository employeeRepository;
@@ -18,7 +18,7 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
             this.employeeRepository = employeeRepository;
             this.mapper = mapper;
         }
-        public async Task<List<SkillViewModel>> Handle(GetSkillsListQuery request, CancellationToken cancellationToken)
+        public async Task<List<SkillDetailsDto>> Handle(GetSkillsListQuery request, CancellationToken cancellationToken)
         {
             #region check if user exists
 
@@ -39,7 +39,7 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
 
             #region mapping skill entity to skill view model
 
-            return mapper.Map<List<SkillViewModel>>(skills);
+            return mapper.Map<List<SkillDetailsDto>>(skills);
 
             #endregion
 
