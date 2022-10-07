@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels.Project;
+using CVBuilder.Application.Dtos.Project;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
 {
-    public class GetProjectsListQueryHandler : IRequestHandler<GetProjectsListQuery, List<ProjectViewModel>>
+    public class GetProjectsListQueryHandler : IRequestHandler<GetProjectsListQuery, List<ProjectDetailsDto>>
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly IProjectRepository projectRepository;
@@ -18,7 +18,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
             this.projectRepository = projectRepository;
             this.mapper = mapper;
         }
-        public async Task<List<ProjectViewModel>> Handle(GetProjectsListQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProjectDetailsDto>> Handle(GetProjectsListQuery request, CancellationToken cancellationToken)
         {
             #region check if employee exists
 
@@ -37,7 +37,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
 
             #region mapping projects list to project view model
 
-            var projectsListDto = mapper.Map<List<ProjectViewModel>>(projectsList);
+            var projectsListDto = mapper.Map<List<ProjectDetailsDto>>(projectsList);
 
             #endregion
 

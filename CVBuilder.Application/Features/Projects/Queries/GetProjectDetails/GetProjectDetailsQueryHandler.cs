@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels.Project;
+using CVBuilder.Application.Dtos.Project;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Projects.Queries.GetProjectDetails
 {
-    public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQuery, ProjectViewModel>
+    public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQuery, ProjectDetailsDto>
     {
         private readonly IProjectRepository repository;
         private readonly IMapper mapper;
@@ -16,7 +16,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectDetails
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<ProjectViewModel> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<ProjectDetailsDto> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
         {
             #region fetch project details
 
@@ -31,7 +31,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectDetails
 
             #endregion
 
-            return mapper.Map<ProjectViewModel>(projectDetails);
+            return mapper.Map<ProjectDetailsDto>(projectDetails);
         }
     }
 }

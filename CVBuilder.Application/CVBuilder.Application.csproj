@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="ViewModels\Degree\" />
     <Folder Include="ViewModels\Employee\" />
+    <Folder Include="ViewModels\Project\" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,7 @@
 ﻿using CVBuilder.Application.Dtos.Degree;
-using CVBuilder.Application.ViewModels.Project;
+using CVBuilder.Application.Dtos.Project;
 using CVBuilder.Application.ViewModels.Skill;
 using CVBuilder.Application.ViewModels.WorkExperience;
-using CVBuilder.Domain.Entities;
-using CVBuilder.Domain.Enums;
 
 namespace CVBuilder.Application.Dtos.Employee
 {
@@ -19,7 +17,7 @@ namespace CVBuilder.Application.Dtos.Employee
         public ICollection<SkillsListViewModel> Skills { get; set; }
         public ICollection<DegreesListDto> Degrees { get; set; }
         public ICollection<WorkExperiencesListViewModel> WorkExperiences { get; set; }
-        public ICollection<ProjectsListViewModel> Projects { get; set; }
+        public ICollection<ProjectsListDto> Projects { get; set; }
 
     }
 }
