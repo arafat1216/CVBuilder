@@ -8,7 +8,6 @@
         public string? Link { get; set; }
 
         // Naviagtion Property
-        public Employee? Employee { get; set; }
         public Guid EmployeeId { get; set; }
     }
 }

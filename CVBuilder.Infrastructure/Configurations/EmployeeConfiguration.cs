@@ -19,13 +19,13 @@ namespace CVBuilder.Infrastructure.Configurations
 
             // Relationships
 
-            builder.HasMany(s => s.Skills).WithOne(e => e.Employee).HasForeignKey(e => e.EmployeeId);
+            builder.HasMany(s => s.Skills).WithOne().HasForeignKey(e => e.EmployeeId);
 
-            builder.HasMany(d => d.Degrees).WithOne(e => e.Employee).HasForeignKey(e => e.EmployeeId);
+            builder.HasMany(d => d.Degrees).WithOne().HasForeignKey(e => e.EmployeeId);
 
-            builder.HasMany(w => w.WorkExperiences).WithOne(e => e.Employee).HasForeignKey(e => e.EmployeeId);
+            builder.HasMany(w => w.WorkExperiences).WithOne().HasForeignKey(e => e.EmployeeId);
 
-            builder.HasMany(p => p.Projects).WithOne(e => e.Employee).HasForeignKey(e => e.EmployeeId);
+            builder.HasMany(p => p.Projects).WithOne().HasForeignKey(e => e.EmployeeId);
 
         }
     }

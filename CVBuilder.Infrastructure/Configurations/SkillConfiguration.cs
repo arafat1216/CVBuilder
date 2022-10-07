@@ -8,7 +8,8 @@ namespace CVBuilder.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Skill> builder)
         {
-            builder.Property(s => s.Name).IsRequired();
+            builder.Property(s => s.Name).IsRequired();      
+
         }
     }
 }
