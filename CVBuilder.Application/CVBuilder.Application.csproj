@@ -23,6 +23,7 @@
     <Folder Include="ViewModels\Employee\" />
     <Folder Include="ViewModels\Project\" />
     <Folder Include="ViewModels\Skill\" />
+    <Folder Include="ViewModels\WorkExperience\" />
   </ItemGroup>
 
 </Project>

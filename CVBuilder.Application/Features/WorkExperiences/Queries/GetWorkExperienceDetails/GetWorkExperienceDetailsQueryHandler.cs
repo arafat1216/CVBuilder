@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels.WorkExperience;
+using CVBuilder.Application.Dtos.WorkExperience;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
 namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperienceDetails
 {
-    public class GetWorkExperienceDetailsQueryHandler : IRequestHandler<GetWorkExperienceDetailsQuery, WorkExperienceViewModel>
+    public class GetWorkExperienceDetailsQueryHandler : IRequestHandler<GetWorkExperienceDetailsQuery, WorkExperienceDetailsDto>
     {
         private readonly IWorkExperienceRepository repository;
         private readonly IMapper mapper;
@@ -16,7 +16,7 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<WorkExperienceViewModel> Handle(GetWorkExperienceDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<WorkExperienceDetailsDto> Handle(GetWorkExperienceDetailsQuery request, CancellationToken cancellationToken)
         {
             #region fetch work experience details
 
@@ -31,7 +31,7 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
 
             #endregion
 
-            return mapper.Map<WorkExperienceViewModel>(workExperienceDetails);
+            return mapper.Map<WorkExperienceDetailsDto>(workExperienceDetails);
         }
     }
 }

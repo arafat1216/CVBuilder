@@ -1,6 +1,6 @@
-﻿namespace CVBuilder.Application.ViewModels.WorkExperience
+﻿namespace CVBuilder.Application.Dtos.WorkExperience
 {
-    public class WorkExperienceViewModel
+    public class WorkExperienceDetailsDto
     {
         public int WorkExperienceId { get; set; }
         public string Designation { get; set; }

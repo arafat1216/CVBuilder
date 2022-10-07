@@ -3,6 +3,7 @@ using CVBuilder.Application.Dtos.Degree;
 using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Application.Dtos.Project;
 using CVBuilder.Application.Dtos.Skill;
+using CVBuilder.Application.Dtos.WorkExperience;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
@@ -13,7 +14,6 @@ using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
-using CVBuilder.Application.ViewModels.WorkExperience;
 using CVBuilder.Domain.Entities;
 
 namespace CVBuilder.Application.Profiles
@@ -55,8 +55,8 @@ namespace CVBuilder.Application.Profiles
 
 
             // Work Experince Mappings
-            CreateMap<WorkExperience, WorkExperienceViewModel>();
-            CreateMap<WorkExperience, WorkExperiencesListViewModel>();
+            CreateMap<WorkExperience, WorkExperienceDetailsDto>();
+            CreateMap<WorkExperience, WorkExperiencesListDto>();
             CreateMap<AddWorkExperienceCommand, WorkExperience>();
             CreateMap<WorkExperience, AddWorkExperienceCommandResponse>();
             CreateMap<UpdateWorkExperienceCommand, WorkExperience>();
