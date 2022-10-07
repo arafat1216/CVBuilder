@@ -13,10 +13,10 @@ namespace CVBuilder.Domain.Entities
         public Role Role { get; set; }
 
         //Navigation Properties
-        public ICollection<Skill>? Skills { get; set; }
-        public ICollection<Degree>? Degrees { get; set; }
-        public ICollection<WorkExperience>? WorkExperiences { get; set; }
-        public ICollection<Project>? Projects { get; set; }
+        public ICollection<Skill> Skills { get; set; } = new List<Skill>();
+        public ICollection<Degree> Degrees { get; set; } = new List<Degree>();
+        public ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
+        public ICollection<Project> Projects { get; set; } = new List<Project>();
 
 
     }
