@@ -1,8 +1,10 @@
-﻿using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
+﻿using AutoMapper;
+using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.DeleteDegree;
 using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails;
 using CVBuilder.Application.Features.Degrees.Queries.GetDegreesList;
+using CVBuilder.Application.ViewModels.Degree;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +18,12 @@ namespace CVBuilder.Api.Controllers
     public class DegreesController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public DegreesController(IMediator mediator)
+        public DegreesController(IMediator mediator, IMapper mapper)
         {
             this.mediator = mediator;
+            this.mapper = mapper;
         }
 
 
@@ -51,25 +55,31 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDegree(Guid employeeId, AddDegreeCommand addDegreeCommand)
+        public async Task<IActionResult> AddDegree(Guid employeeId, DegreeViewModel addDegreeViewModel)
         {
-            if (employeeId != addDegreeCommand.EmployeeId)
-                return BadRequest();
 
-            var response = await mediator.Send(addDegreeCommand);
+            var requestDto = mapper.Map<AddDegreeCommand>(addDegreeViewModel);
+
+            requestDto.EmployeeId = employeeId;
+
+
+            var response = await mediator.Send(requestDto);
 
             return CreatedAtAction(nameof(GetDegreeDetails), new { employeeId = response.EmployeeId, degreeId = response.DegreeId }, response);
         }
 
         [HttpPut("{degreeId}")]
-        public async Task<IActionResult> UpdateDegree(Guid employeeId, int degreeId, UpdateDegreeCommand updateDegreeCommand)
+        public async Task<IActionResult> UpdateDegree(Guid employeeId, int degreeId, DegreeViewModel degreeViewModel)
         {
-            if ((employeeId != updateDegreeCommand.EmployeeId) || (degreeId != updateDegreeCommand.DegreeId))
-                return BadRequest();
 
-            await mediator.Send(updateDegreeCommand);
+            var requestDto = mapper.Map<UpdateDegreeCommand>(degreeViewModel);
 
-            return NoContent();
+            requestDto.EmployeeId = employeeId;
+            requestDto.DegreeId = degreeId;
+
+            await mediator.Send(requestDto);
+
+            return Ok(requestDto);
         }
 
         [HttpDelete("{degreeId}")]

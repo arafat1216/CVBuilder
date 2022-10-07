@@ -14,6 +14,7 @@ using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
+using CVBuilder.Application.ViewModels.Degree;
 using CVBuilder.Domain.Entities;
 
 namespace CVBuilder.Application.Profiles
@@ -41,9 +42,12 @@ namespace CVBuilder.Application.Profiles
             // Degree Mappings
             CreateMap<Degree, DegreeDetailsDto>();
             CreateMap<Degree, DegreesListDto>();
+            CreateMap<DegreeViewModel, AddDegreeCommand>();
             CreateMap<AddDegreeCommand, Degree>();
             CreateMap<Degree, AddDegreeCommandResponse>();
+            CreateMap<DegreeViewModel, UpdateDegreeCommand>();
             CreateMap<UpdateDegreeCommand, Degree>();
+            
 
 
             // Project Mappings
