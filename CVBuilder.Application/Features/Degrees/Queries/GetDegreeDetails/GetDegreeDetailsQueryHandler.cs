@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.ViewModels.Degree;
+using CVBuilder.Application.Dtos.Degree;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails
 {
-    public class GetDegreeDetailsQueryHandler : IRequestHandler<GetDegreeDetailsQuery, DegreeViewModel>
+    public class GetDegreeDetailsQueryHandler : IRequestHandler<GetDegreeDetailsQuery, DegreeDetailsDto>
     {
         private readonly IDegreeRepository repository;
         private readonly IMapper mapper;
@@ -17,7 +17,7 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails
             this.mapper = mapper;
         }
 
-        public async Task<DegreeViewModel> Handle(GetDegreeDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<DegreeDetailsDto> Handle(GetDegreeDetailsQuery request, CancellationToken cancellationToken)
         {
             #region fetch degree details
 
@@ -36,7 +36,7 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails
 
             #region mapping degree entity to degree view model
 
-            var degreeDetailsDto = mapper.Map<DegreeViewModel>(degreeDetails);
+            var degreeDetailsDto = mapper.Map<DegreeDetailsDto>(degreeDetails);
 
             #endregion
 

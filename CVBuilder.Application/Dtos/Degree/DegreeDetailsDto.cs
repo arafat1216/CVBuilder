@@ -1,6 +1,6 @@
-﻿namespace CVBuilder.Application.ViewModels.Degree
+﻿namespace CVBuilder.Application.Dtos.Degree
 {
-    public class DegreeViewModel
+    public class DegreeDetailsDto
     {
         public int DegreeId { get; set; }
         public string Name { get; set; }

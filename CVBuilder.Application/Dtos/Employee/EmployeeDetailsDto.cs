@@ -1,4 +1,4 @@
-﻿using CVBuilder.Application.ViewModels.Degree;
+﻿using CVBuilder.Application.Dtos.Degree;
 using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Application.ViewModels.Skill;
 using CVBuilder.Application.ViewModels.WorkExperience;
@@ -17,7 +17,7 @@ namespace CVBuilder.Application.Dtos.Employee
 
 
         public ICollection<SkillsListViewModel> Skills { get; set; }
-        public ICollection<DegreesListViewModel> Degrees { get; set; }
+        public ICollection<DegreesListDto> Degrees { get; set; }
         public ICollection<WorkExperiencesListViewModel> WorkExperiences { get; set; }
         public ICollection<ProjectsListViewModel> Projects { get; set; }
 
