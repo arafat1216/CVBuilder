@@ -17,7 +17,7 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
         }
         public async Task<Unit> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            
+
             #region check if employee exists
 
             var employeeExists = await repository.EmployeeExistsAsync(request.EmployeeId);
@@ -25,19 +25,6 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
             if (!employeeExists)
             {
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
-            }
-
-            #endregion
-
-
-            #region validate incoming request
-
-            var validator = new UpdateEmployeeCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-            {
-                throw new Exceptions.ValidationException(validationResult);
             }
 
             #endregion
