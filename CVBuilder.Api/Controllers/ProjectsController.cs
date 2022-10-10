@@ -27,7 +27,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProjects(Guid employeeId)
+        public async Task<IActionResult> GetAllProjects([FromRoute] Guid employeeId)
         {
             var requestDto = new GetProjectsListQuery()
             {
@@ -40,7 +40,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("{projectId}")]
-        public async Task<IActionResult> GetProjectDetails(Guid employeeId, int projectId)
+        public async Task<IActionResult> GetProjectDetails([FromRoute] Guid employeeId, [FromRoute] int projectId)
         {
             var requestDto = new GetProjectDetailsQuery()
             {
@@ -54,7 +54,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProject(Guid employeeId, ProjectViewModel projectViewModel)
+        public async Task<IActionResult> AddProject([FromRoute] Guid employeeId, [FromBody] ProjectViewModel projectViewModel)
         {
             var requestDto = mapper.Map<AddProjectCommand>(projectViewModel);
 
@@ -66,7 +66,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPut("{projectId}")]
-        public async Task<IActionResult> UpdateProject(Guid employeeId, int projectId, ProjectViewModel projectViewModel)
+        public async Task<IActionResult> UpdateProject([FromRoute] Guid employeeId, [FromRoute] int projectId, [FromBody] ProjectViewModel projectViewModel)
         {
             var requestDto = mapper.Map<UpdateProjectCommand>(projectViewModel);
 
@@ -79,7 +79,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpDelete("{projectId}")]
-        public async Task<IActionResult> DeleteProject(Guid employeeId, int projectId)
+        public async Task<IActionResult> DeleteProject([FromRoute] Guid employeeId, [FromRoute] int projectId)
         {
             var requestDto = new DeleteProjectCommand()
             {
