@@ -1,4 +1,5 @@
 ﻿using CVBuilder.Application.Contracts.Persistence;
+using CVBuilder.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -18,31 +19,35 @@ namespace CVBuilder.Application.Features.UpdatePassword.Commands
         }
         public async Task<Unit> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
         {
-            #region fetch employee details
+            // fetch employee details
 
-            var employee = await repository.GetEmployeeByEmailAsync(request.Email);
+            var employee = await GetEmployee(request.Email);
 
-            #endregion
 
-            #region verify current password
+            // verify current password
 
             if (!BCrypt.Net.BCrypt.Verify(request.CurrentPassword, employee.Password))
                 throw new Exceptions.BadRequestException("Current Password Does Not Match");
 
-            #endregion
 
 
-            #region hashing new password
+            // hashing new password
 
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
-
-            #endregion
-
-            employee.Password = hashedPassword;
+            employee.Password = GetHashedPassword(request.NewPassword);
 
             await repository.UpdateEmployeePasswordAsync(employee);
 
             return Unit.Value;
+        }
+
+        private string GetHashedPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        private async Task<Employee?> GetEmployee(string email)
+        {
+            return await repository.GetEmployeeByEmailAsync(email);
         }
     }
 }
