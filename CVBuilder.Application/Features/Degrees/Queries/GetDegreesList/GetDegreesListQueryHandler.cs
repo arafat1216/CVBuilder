@@ -20,30 +20,31 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreesList
         }
         public async Task<List<DegreeDetailsDto>> Handle(GetDegreesListQuery request, CancellationToken cancellationToken)
         {
-            #region check if employee exits
-            
-            var employeeExists = await employeeRepository.EmployeeExistsAsync(request.EmployeeId);
+            // check if employee exits
+
+            var employeeExists = await EmployeeExists(request.EmployeeId);
 
             if (!employeeExists)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
-            #endregion
 
-            #region fetch degrees list
+            // fetch degrees list
 
             var degrees = await degreeRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
-            
-            #endregion
 
-            #region mapping degree entity to degree view model
+
+            // mapping degree entity to degree view model
 
             var degreesDto = mapper.Map<List<DegreeDetailsDto>>(degrees);
 
-            #endregion
 
             return degreesDto;
 
-            
+        }
+
+        private async Task<bool> EmployeeExists(Guid employeeId)
+        {
+            return await employeeRepository.EmployeeExistsAsync(employeeId);
         }
     }
 }

@@ -19,28 +19,28 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails
 
         public async Task<DegreeDetailsDto> Handle(GetDegreeDetailsQuery request, CancellationToken cancellationToken)
         {
-            #region fetch degree details
+            // fetch degree details
 
-            var degreeDetails = await repository.GetDegreeByIdAsync(request.EmployeeId, request.DegreeId);
+            var degreeDetails = await GetDegreeDetails(request.EmployeeId, request.DegreeId);
 
-            #endregion
-
-
-            #region check if degree exists
+            
+            // check if degree exists
 
             if (degreeDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Degree), request.DegreeId);
 
-            #endregion
+            
 
-
-            #region mapping degree entity to degree view model
+            // mapping degree entity to degree view model
 
             var degreeDetailsDto = mapper.Map<DegreeDetailsDto>(degreeDetails);
 
-            #endregion
-
             return degreeDetailsDto;
+        }
+
+        private async Task<Degree> GetDegreeDetails(Guid employeeId, int degreeId)
+        {
+            return await repository.GetDegreeByIdAsync(employeeId, degreeId);
         }
     }
 }

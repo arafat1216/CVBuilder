@@ -19,24 +19,27 @@ namespace CVBuilder.Application.Features.Degrees.Commands.UpdateDegree
 
         public async Task<Unit> Handle(UpdateDegreeCommand request, CancellationToken cancellationToken)
         {
-            #region check if degree exists
+            // check if degree exists
 
-            var degreeExists = await repository.ExistsAsync(request.EmployeeId, request.DegreeId);
+            var degreeExists = await DegreeExists(request.EmployeeId, request.DegreeId);
 
             if (!degreeExists)
                 throw new Exceptions.NotFoundException(nameof(Degree), request.DegreeId);
 
-            #endregion
-
-            #region mapping incoming request to degree entity
+            
+            // mapping incoming request to degree entity
 
             var degreeToUpdate = mapper.Map<Degree>(request);
 
-            #endregion
-
+            
             await repository.UpdateAsync(degreeToUpdate);
 
             return Unit.Value;
+        }
+
+        private async Task<bool> DegreeExists(Guid employeeId, int degreeId)
+        {
+            return await repository.ExistsAsync(employeeId, degreeId);
         }
     }
 }
