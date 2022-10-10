@@ -35,7 +35,7 @@ namespace CVBuilder.Api.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployeeDetails(Guid id)
+        public async Task<IActionResult> GetEmployeeDetails([FromRoute] Guid id)
         {
             var requestDto = new GetEmployeeDetailQuery()
             {
@@ -48,7 +48,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEmployee(AddEmployeeViewModel addEmployeeViewModel)
+        public async Task<IActionResult> AddEmployee([FromBody] AddEmployeeViewModel addEmployeeViewModel)
         {
             var requestDto = mapper.Map<AddEmployeeCommand>(addEmployeeViewModel);
 
@@ -58,7 +58,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(Guid id, UpdateEmployeeViewModel updateEmployeeViewModel)
+        public async Task<IActionResult> UpdateEmployee([FromRoute] Guid id, [FromBody] UpdateEmployeeViewModel updateEmployeeViewModel)
         {
             var requestDto = mapper.Map<UpdateEmployeeCommand>(updateEmployeeViewModel);
             requestDto.EmployeeId = id;
@@ -69,7 +69,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(Guid id)
+        public async Task<IActionResult> DeleteEmployee([FromRoute] Guid id)
         {
             var requestDto = new DeleteEmployeeCommand()
             {
