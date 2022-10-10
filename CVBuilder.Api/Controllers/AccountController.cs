@@ -25,7 +25,7 @@ namespace CVBuilder.Api.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
         {
 
             var token = await service.AuthenticateUserAsync(loginViewModel);
@@ -48,7 +48,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost("update-password")]
-        public async Task<IActionResult> UpdatePassword(UpdatePasswordViewModel updatePasswordViewModel)
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordViewModel updatePasswordViewModel)
         {
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
 
