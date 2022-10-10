@@ -26,17 +26,7 @@ namespace CVBuilder.Application.Features.Projects.Commands.UpdateProject
 
             #endregion
 
-            #region validate incoming request
-
-            var validator = new UpdateProjectCommandValidator();
-
-            var validationResult = await validator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-                throw new Exceptions.ValidationException(validationResult);
-
-            #endregion
-
+            
             #region mapping incoming request to project entity
 
             var projectToUpdate = mapper.Map<Project>(request);
