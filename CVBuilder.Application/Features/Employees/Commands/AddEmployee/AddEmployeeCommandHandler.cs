@@ -17,18 +17,6 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
         }
         public async Task<AddEmployeeCommandResponse> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
-            #region validate incoming request
-
-            var validator = new AddEmployeeCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-            {
-                throw new Exceptions.ValidationException(validationResult);
-            }
-
-            #endregion
-
 
             #region mapping incoming request to employee entity
 
