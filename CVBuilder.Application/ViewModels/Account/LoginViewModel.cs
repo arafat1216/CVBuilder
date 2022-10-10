@@ -1,4 +1,4 @@
-﻿namespace CVBuilder.Application.ViewModels.Login
+﻿namespace CVBuilder.Application.ViewModels.Account
 {
     public class LoginViewModel
     {

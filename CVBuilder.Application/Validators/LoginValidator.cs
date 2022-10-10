@@ -1,10 +1,5 @@
-﻿using CVBuilder.Application.ViewModels.Login;
+﻿using CVBuilder.Application.ViewModels.Account;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CVBuilder.Application.Validators
 {

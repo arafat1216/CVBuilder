@@ -1,10 +1,9 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
-using CVBuilder.Application.ViewModels.Login;
+using CVBuilder.Application.ViewModels.Account;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

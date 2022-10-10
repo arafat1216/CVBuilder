@@ -2,7 +2,7 @@
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Application.Exceptions;
 using CVBuilder.Application.Validators;
-using CVBuilder.Application.ViewModels.Login;
+using CVBuilder.Application.ViewModels.Account;
 
 namespace CVBuilder.Infrastructure.Services
 {
