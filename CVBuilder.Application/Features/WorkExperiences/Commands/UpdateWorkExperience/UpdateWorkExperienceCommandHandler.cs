@@ -26,17 +26,7 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExpe
 
             #endregion
 
-            #region validate incoming request
-
-            var validator = new UpdateWorkExperienceCommandValidator();
-
-            var validationResult = await validator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-                throw new Exceptions.ValidationException(validationResult);
-
-            #endregion
-
+            
             #region mapping incoming request to work experience entity
 
             var workExperienceToUpdate = mapper.Map<WorkExperience>(request);
