@@ -1,8 +1,10 @@
-﻿using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
+﻿using AutoMapper;
+using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
 using CVBuilder.Application.Features.Employees.Commands.DeleteEmployee;
 using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeesList;
+using CVBuilder.Application.ViewModels.Employee;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +18,12 @@ namespace CVBuilder.Api.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public EmployeesController(IMediator mediator)
+        public EmployeesController(IMediator mediator, IMapper mapper)
         {
             this.mediator = mediator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -44,25 +48,24 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEmployee(AddEmployeeCommand addEmployeeCommand)
+        public async Task<IActionResult> AddEmployee(AddEmployeeViewModel addEmployeeViewModel)
         {
-            var response = await mediator.Send(addEmployeeCommand);
+            var requestDto = mapper.Map<AddEmployeeCommand>(addEmployeeViewModel);
+
+            var response = await mediator.Send(requestDto);
 
             return CreatedAtAction(nameof(GetEmployeeDetails),new {id = response.EmployeeId},response);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(Guid id, UpdateEmployeeCommand updateEmployeeCommand)
+        public async Task<IActionResult> UpdateEmployee(Guid id, UpdateEmployeeViewModel updateEmployeeViewModel)
         {
-            // checks for bad request 
-            if(id != updateEmployeeCommand.EmployeeId)
-            {
-                return BadRequest();
-            }
+            var requestDto = mapper.Map<UpdateEmployeeCommand>(updateEmployeeViewModel);
+            requestDto.EmployeeId = id;
 
-            await mediator.Send(updateEmployeeCommand);
+            await mediator.Send(requestDto);
 
-            return NoContent();
+            return Ok(requestDto);
         }
 
         [HttpDelete("{id}")]

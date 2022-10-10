@@ -15,6 +15,7 @@ using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.ViewModels.Degree;
+using CVBuilder.Application.ViewModels.Employee;
 using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Application.ViewModels.Skill;
 using CVBuilder.Application.ViewModels.WorkExperience;
@@ -29,8 +30,10 @@ namespace CVBuilder.Application.Profiles
             // Employee Mappings
             CreateMap<Employee, EmployeesListDto>();
             CreateMap<Employee, EmployeeDetailsDto>();
+            CreateMap<AddEmployeeViewModel, AddEmployeeCommand>();
             CreateMap<AddEmployeeCommand, Employee>();
             CreateMap<Employee, AddEmployeeCommandResponse>();
+            CreateMap<UpdateEmployeeViewModel, UpdateEmployeeCommand>();
             CreateMap<UpdateEmployeeCommand, Employee>();
             
 
