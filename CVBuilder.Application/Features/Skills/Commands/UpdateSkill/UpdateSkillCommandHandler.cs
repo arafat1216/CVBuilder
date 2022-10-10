@@ -17,25 +17,27 @@ namespace CVBuilder.Application.Features.Skills.Commands.UpdateSkill
         }
         public async Task<Unit> Handle(UpdateSkillCommand request, CancellationToken cancellationToken)
         {
-            #region check if skill exists
-            
-            var skillExists = await skillRepository.ExistsAsync(request.EmployeeId,request.SkillId);
+            // check if skill exists
+
+            var skillExists = await SkillExists(request.EmployeeId, request.SkillId);
 
             if (!skillExists)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.SkillId);
 
-            #endregion
-
             
-            #region mapping incoming request to skill entity
+            // mapping incoming request to skill entity
 
             var skillToUpdate = mapper.Map<Skill>(request);
 
-            #endregion
-
+            
             await skillRepository.UpdateAsync(skillToUpdate);
 
             return Unit.Value;
+        }
+
+        private async Task<bool> SkillExists(Guid employeeId, int skillId)
+        {
+            return await skillRepository.ExistsAsync(employeeId, skillId);
         }
     }
 }

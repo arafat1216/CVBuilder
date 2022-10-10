@@ -14,21 +14,22 @@ namespace CVBuilder.Application.Features.Skills.Commands.DeleteSkill
         }
         public async Task<Unit> Handle(DeleteSkillCommand request, CancellationToken cancellationToken)
         {
-            #region fetch skill  
+            // fetch skill  
 
-            var skillToDelete = await repository.GetSkillByIdAsync(request.EmployeeId, request.SkillId);
-
-            #endregion
-
+            var skillToDelete = await GetSkillToDelete(request.EmployeeId, request.SkillId);
 
             if (skillToDelete == null)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.SkillId);
 
 
-
             await repository.DeleteAsync(skillToDelete);
 
             return Unit.Value;
+        }
+
+        private async Task<Skill?> GetSkillToDelete(Guid employeeId, int skillId)
+        {
+            return await repository.GetSkillByIdAsync(employeeId, skillId);
         }
     }
 }

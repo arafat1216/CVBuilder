@@ -20,30 +20,29 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
         }
         public async Task<List<SkillDetailsDto>> Handle(GetSkillsListQuery request, CancellationToken cancellationToken)
         {
-            #region check if user exists
+            // check if user exists
 
-            var employeeExists = await employeeRepository.EmployeeExistsAsync(request.EmployeeId);
+            var employeeExists = await EmployeeExists(request.EmployeeId);
 
             if (!employeeExists)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
-            #endregion
 
 
-            #region fetch skills list
+            // fetch skills list
 
             var skills = await skillRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
 
-            #endregion
-
-
-            #region mapping skill entity to skill view model
+            
+            // mapping skill entity to skill view model
 
             return mapper.Map<List<SkillDetailsDto>>(skills);
 
-            #endregion
+        }
 
-
+        private async Task<bool> EmployeeExists(Guid employeeId)
+        {
+            return await employeeRepository.EmployeeExistsAsync(employeeId);
         }
     }
 }

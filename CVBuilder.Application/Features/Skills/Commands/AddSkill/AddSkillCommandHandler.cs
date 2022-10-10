@@ -19,25 +19,26 @@ namespace CVBuilder.Application.Features.Skills.Commands.AddSkill
         }
         public async Task<AddSkillCommandResponse> Handle(AddSkillCommand request, CancellationToken cancellationToken)
         {
-            #region check if employee exists
+            // check if employee exists
 
-            var employeeExists = await employeeRepository.EmployeeExistsAsync(request.EmployeeId);
+            var employeeExists = await EmployeeExists(request.EmployeeId);
 
-            if(!employeeExists)
-                throw new Exceptions.NotFoundException(nameof(Skill),request.EmployeeId);
+            if (!employeeExists)
+                throw new Exceptions.NotFoundException(nameof(Skill), request.EmployeeId);
 
-            #endregion
 
-            
-            #region mapping incoming request to skill entity
+            // mapping incoming request to skill entity
 
             var skillToAdd = mapper.Map<Skill>(request);
-
-            #endregion
 
             var response = await skillRepository.AddAsync(skillToAdd);
 
             return mapper.Map<AddSkillCommandResponse>(response);
+        }
+
+        private async Task<bool> EmployeeExists(Guid employeeId)
+        {
+            return await employeeRepository.EmployeeExistsAsync(employeeId);
         }
     }
 }

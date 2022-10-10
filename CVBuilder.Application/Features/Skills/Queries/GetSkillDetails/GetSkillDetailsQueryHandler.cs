@@ -19,20 +19,23 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillDetails
         public async Task<SkillDetailsDto> Handle(GetSkillDetailsQuery request, CancellationToken cancellationToken)
         {
 
-            #region fetch skill details 
+            // fetch skill details 
 
-            var skillDetails = await repository.GetSkillByIdAsync(request.EmployeeId, request.SkillId);
+            var skillDetails = await GetSkillDetails(request.EmployeeId, request.SkillId);
 
-            #endregion
-            
-            #region check if skill exists
+
+            // check if skill exists
 
             if (skillDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.SkillId);
 
-            #endregion
-
+            
             return mapper.Map<SkillDetailsDto>(skillDetails);
+        }
+
+        private async Task<Skill?> GetSkillDetails(Guid employeeId, int skillId)
+        {
+            return await repository.GetSkillByIdAsync(employeeId, skillId);
         }
     }
 }
