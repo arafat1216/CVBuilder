@@ -28,16 +28,6 @@ namespace CVBuilder.Application.Features.Degrees.Commands.AddDegree
 
             #endregion
 
-            #region validate incoming request
-
-            var validator = new AddDegreeCommandValidator();
-
-            var validationResult = await validator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-                throw new Exceptions.ValidationException(validationResult);
-
-            #endregion
 
             #region mapping incoming request to degree entity
 
