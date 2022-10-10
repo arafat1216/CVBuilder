@@ -18,12 +18,14 @@ namespace CVBuilder.Api.Controllers
         private readonly IAuthenticationService service;
         private readonly IMediator mediator;
         private readonly IMapper mapper;
+        private readonly ILogger<AccountController> logger;
 
-        public AccountController(IAuthenticationService service, IMediator mediator, IMapper mapper)
+        public AccountController(IAuthenticationService service, IMediator mediator, IMapper mapper, ILogger<AccountController> logger)
         {
             this.service = service;
             this.mediator = mediator;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpPost("login")]
@@ -32,6 +34,8 @@ namespace CVBuilder.Api.Controllers
         {
 
             var token = await service.AuthenticateUserAsync(loginViewModel);
+
+            logger.LogInformation($"Logged in at {DateTime.Now}");
 
             return Ok(token);
         }
@@ -59,7 +63,16 @@ namespace CVBuilder.Api.Controllers
 
             requestDto.Email = userEmail;
 
-            await mediator.Send(requestDto);
+            try
+            {
+                await mediator.Send(requestDto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Password Update Failed: {ex.Message}");
+            }
+
+            logger.LogInformation($"Password Successfully Updated");
 
             return NoContent();
         }

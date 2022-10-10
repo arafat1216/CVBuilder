@@ -2,6 +2,7 @@ using CVBuilder.Api.Middleware;
 using CVBuilder.Application;
 using CVBuilder.Infrastructure;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -57,6 +58,13 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 var app = builder.Build();
 
