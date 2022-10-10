@@ -26,16 +26,7 @@ namespace CVBuilder.Application.Features.Skills.Commands.UpdateSkill
 
             #endregion
 
-            #region validate incoming request
             
-            var validator = new UpdateSkillCommandValidator();
-            var validationResult = validator.Validate(request);
-
-            if (!validationResult.IsValid)
-                throw new Exceptions.ValidationException(validationResult);
-
-            #endregion
-
             #region mapping incoming request to skill entity
 
             var skillToUpdate = mapper.Map<Skill>(request);
