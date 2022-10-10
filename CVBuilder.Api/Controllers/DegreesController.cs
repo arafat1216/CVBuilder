@@ -28,7 +28,7 @@ namespace CVBuilder.Api.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllDegrees(Guid employeeId)
+        public async Task<IActionResult> GetAllDegrees([FromRoute] Guid employeeId)
         {
             var requestDto = new GetDegreesListQuery()
             {
@@ -41,7 +41,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("{degreeId}")]
-        public async Task<IActionResult> GetDegreeDetails(Guid employeeId, int degreeId)
+        public async Task<IActionResult> GetDegreeDetails([FromRoute] Guid employeeId, [FromRoute] int degreeId)
         {
             var requestDto = new GetDegreeDetailsQuery()
             {
@@ -55,7 +55,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDegree(Guid employeeId, DegreeViewModel addDegreeViewModel)
+        public async Task<IActionResult> AddDegree([FromRoute] Guid employeeId, [FromBody] DegreeViewModel addDegreeViewModel)
         {
 
             var requestDto = mapper.Map<AddDegreeCommand>(addDegreeViewModel);
@@ -69,7 +69,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPut("{degreeId}")]
-        public async Task<IActionResult> UpdateDegree(Guid employeeId, int degreeId, DegreeViewModel degreeViewModel)
+        public async Task<IActionResult> UpdateDegree([FromRoute] Guid employeeId, [FromRoute] int degreeId, [FromBody]DegreeViewModel degreeViewModel)
         {
 
             var requestDto = mapper.Map<UpdateDegreeCommand>(degreeViewModel);
@@ -83,7 +83,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpDelete("{degreeId}")]
-        public async Task<IActionResult> DeleteDegree(Guid employeeId, int degreeId)
+        public async Task<IActionResult> DeleteDegree([FromRoute] Guid employeeId, [FromRoute] int degreeId)
         {
             var requestDto = new DeleteDegreeCommand() 
             { 
