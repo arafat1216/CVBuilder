@@ -1,8 +1,10 @@
-﻿using CVBuilder.Application.Features.Skills.Commands.AddSkill;
+﻿using AutoMapper;
+using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.DeleteSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillDetails;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillsList;
+using CVBuilder.Application.ViewModels.Skill;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +18,12 @@ namespace CVBuilder.Api.Controllers
     public class SkillsController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public SkillsController(IMediator mediatR)
+        public SkillsController(IMediator mediatR, IMapper mapper)
         {
             this.mediator = mediatR;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -32,7 +36,7 @@ namespace CVBuilder.Api.Controllers
 
             var dtos = await mediator.Send(requestDto);
 
-            return Ok(dtos);    
+            return Ok(dtos);
         }
 
         [HttpGet("{skillId}")]
@@ -50,27 +54,33 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSkill(Guid employeeId, AddSkillCommand addSkillCommand)
+        public async Task<IActionResult> AddSkill(Guid employeeId, SkillViewModel skillViewModel)
         {
-            if (employeeId != addSkillCommand.EmployeeId)
-                return BadRequest();
 
-            var response = await mediator.Send(addSkillCommand);
+            var requestDto = mapper.Map<AddSkillCommand>(skillViewModel);
 
-           
-            return CreatedAtAction(nameof(GetSkillDetails), new { employeeId = response.EmployeeId, skillId =response.SkillId }, response);
+            requestDto.EmployeeId = employeeId;
+
+            var response = await mediator.Send(requestDto);
+
+
+            return CreatedAtAction(nameof(GetSkillDetails), new { employeeId = response.EmployeeId, skillId = response.SkillId }, response);
 
         }
 
         [HttpPut("{skillId}")]
-        public async Task<IActionResult> UpdateSkill(Guid employeeId, int skillId, UpdateSkillCommand updateSkillCommand)
+        public async Task<IActionResult> UpdateSkill(Guid employeeId, int skillId, SkillViewModel skillViewModel)
         {
-            if ((skillId != updateSkillCommand.SkillId)||(employeeId != updateSkillCommand.EmployeeId))
-                return BadRequest();
 
-            await mediator.Send(updateSkillCommand);
+            var requestDto = mapper.Map<UpdateSkillCommand>(skillViewModel);
 
-            return NoContent();
+            requestDto.SkillId = skillId;
+
+            requestDto.EmployeeId = employeeId;
+
+            await mediator.Send(requestDto);
+
+            return Ok(requestDto);
 
         }
 
