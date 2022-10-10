@@ -17,18 +17,23 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExpe
         }
         public async Task<Unit> Handle(DeleteWorkExperienceCommand request, CancellationToken cancellationToken)
         {
-            #region fetch work experience
+            // fetch work experience
 
-            var workExperienceToDelete = await repository.GetWorkExperienceByIdAsync(request.EmployeeId, request.WorkExperienceId);
+            var workExperienceToDelete = await GetWorkExperienceToDelete(request.EmployeeId, request.WorkExperienceId);
 
-            #endregion
-
+            
             if (workExperienceToDelete == null)
                 throw new Exceptions.NotFoundException(nameof(WorkExperience), request.WorkExperienceId);
+
 
             await repository.DeleteAsync(workExperienceToDelete);
 
             return Unit.Value;
+        }
+
+        private async Task<WorkExperience?> GetWorkExperienceToDelete(Guid employeeId, int workExperienceId)
+        {
+            return await repository.GetWorkExperienceByIdAsync(employeeId, workExperienceId);
         }
     }
 }

@@ -19,25 +19,28 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperie
         }
         public async Task<AddWorkExperienceCommandResponse> Handle(AddWorkExperienceCommand request, CancellationToken cancellationToken)
         {
-            #region check if employee exists
+            // check if employee exists
 
-            var employeeExists = await employeeRepository.EmployeeExistsAsync(request.EmployeeId);
+            var employeeExists = await EmployeeExists(request.EmployeeId);
 
             if (!employeeExists)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
-            #endregion
 
-            
-            #region mapping incoming request to work experience entity
+
+            // mapping incoming request to work experience entity
 
             var workExperienceToCreate = mapper.Map<WorkExperience>(request);
 
-            #endregion
-
+            
             var response = await workExperienceRepository.AddAsync(workExperienceToCreate);
 
             return mapper.Map<AddWorkExperienceCommandResponse>(response);
+        }
+
+        private async Task<bool> EmployeeExists(Guid employeeId)
+        {
+            return await employeeRepository.EmployeeExistsAsync(employeeId);
         }
     }
 }

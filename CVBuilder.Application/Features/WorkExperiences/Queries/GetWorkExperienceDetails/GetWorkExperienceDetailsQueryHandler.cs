@@ -18,20 +18,23 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
         }
         public async Task<WorkExperienceDetailsDto> Handle(GetWorkExperienceDetailsQuery request, CancellationToken cancellationToken)
         {
-            #region fetch work experience details
+            // fetch work experience details
 
-            var workExperienceDetails = await repository.GetWorkExperienceByIdAsync(request.EmployeeId, request.WorkExperienceId);
+            var workExperienceDetails = await GetWorkExperienceDetails(request.EmployeeId, request.WorkExperienceId);
 
-            #endregion
 
-            #region check if work experience exists
+            // check if work experience exists
 
             if (workExperienceDetails == null)
                 throw new Exceptions.NotFoundException(nameof(WorkExperience), request.WorkExperienceId);
 
-            #endregion
-
+            
             return mapper.Map<WorkExperienceDetailsDto>(workExperienceDetails);
+        }
+
+        private async Task<WorkExperience?> GetWorkExperienceDetails(Guid employeeId, int workExperienceId)
+        {
+            return await repository.GetWorkExperienceByIdAsync(employeeId, workExperienceId);
         }
     }
 }
