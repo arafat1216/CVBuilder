@@ -32,17 +32,6 @@ namespace CVBuilder.Application.Features.UpdatePassword.Commands
             #endregion
 
 
-            #region validate new password
-
-            var validator = new UpdatePasswordCommandValidator();
-
-            var validationResult = await validator.ValidateAsync(request);
-
-            if (!validationResult.IsValid)
-                throw new Exceptions.ValidationException(validationResult);
-
-            #endregion
-
             #region hashing new password
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
