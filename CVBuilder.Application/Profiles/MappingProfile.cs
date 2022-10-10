@@ -12,8 +12,10 @@ using CVBuilder.Application.Features.Projects.Commands.AddProject;
 using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
+using CVBuilder.Application.Features.UpdatePassword.Commands;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
+using CVBuilder.Application.ViewModels.Account;
 using CVBuilder.Application.ViewModels.Degree;
 using CVBuilder.Application.ViewModels.Employee;
 using CVBuilder.Application.ViewModels.Project;
@@ -76,6 +78,9 @@ namespace CVBuilder.Application.Profiles
             CreateMap<WorkExperience, AddWorkExperienceCommandResponse>();
             CreateMap<WorkExperienceViewModel, UpdateWorkExperienceCommand>();
             CreateMap<UpdateWorkExperienceCommand, WorkExperience>();
+
+            // Update Password Mappings
+            CreateMap<UpdatePasswordViewModel, UpdatePasswordCommand>();
         }
     }
 }

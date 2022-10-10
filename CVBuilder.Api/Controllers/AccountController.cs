@@ -1,4 +1,5 @@
-﻿using CVBuilder.Application.Contracts.Authentication;
+﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
 using CVBuilder.Application.ViewModels.Account;
@@ -16,11 +17,13 @@ namespace CVBuilder.Api.Controllers
     {
         private readonly IAuthenticationService service;
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public AccountController(IAuthenticationService service, IMediator mediator)
+        public AccountController(IAuthenticationService service, IMediator mediator, IMapper mapper)
         {
             this.service = service;
             this.mediator = mediator;
+            this.mapper = mapper;
         }
 
         [HttpPost("login")]
@@ -52,13 +55,9 @@ namespace CVBuilder.Api.Controllers
         {
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
 
-            var requestDto = new UpdatePasswordCommand()
-            {
-                Email = userEmail,
-                CurrentPassword = updatePasswordViewModel.CurrentPassword,
-                NewPassword = updatePasswordViewModel.NewPassword,
-                ConfirmPassword = updatePasswordViewModel.ConfirmPassword
-            };
+            var requestDto = mapper.Map<UpdatePasswordCommand>(updatePasswordViewModel);
+
+            requestDto.Email = userEmail;
 
             await mediator.Send(requestDto);
 
