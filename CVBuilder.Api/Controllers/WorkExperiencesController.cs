@@ -27,7 +27,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllWorkExperiences(Guid employeeId)
+        public async Task<IActionResult> GetAllWorkExperiences([FromRoute] Guid employeeId)
         {
             var requestDto = new GetWorkExperiencesListQuery()
             {
@@ -40,7 +40,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("{workExperienceId}")]
-        public async Task<IActionResult> GetWorkExperienceDetails(Guid employeeId, int workExperienceId)
+        public async Task<IActionResult> GetWorkExperienceDetails([FromRoute] Guid employeeId, [FromRoute] int workExperienceId)
         {
             var requestDto = new GetWorkExperienceDetailsQuery()
             {
@@ -54,7 +54,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddWorkExperience(Guid employeeId, WorkExperienceViewModel workExperienceViewModel)
+        public async Task<IActionResult> AddWorkExperience([FromRoute] Guid employeeId, [FromBody] WorkExperienceViewModel workExperienceViewModel)
         {
 
             var requestDto = mapper.Map<AddWorkExperienceCommand>(workExperienceViewModel);
@@ -68,7 +68,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPut("{workExperienceId}")]
-        public async Task<IActionResult> UpdateWorkExperience(Guid employeeId, int workExperienceId, WorkExperienceViewModel workExperienceViewModel)
+        public async Task<IActionResult> UpdateWorkExperience([FromRoute] Guid employeeId, [FromRoute] int workExperienceId, [FromBody] WorkExperienceViewModel workExperienceViewModel)
         {
             var requestDto = mapper.Map<UpdateWorkExperienceCommand>(workExperienceViewModel);
 
@@ -82,7 +82,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpDelete("{workExperienceId}")]
-        public async Task<IActionResult> DeleteWorkExperience(Guid employeeId, int workExperienceId)
+        public async Task<IActionResult> DeleteWorkExperience([FromRoute] Guid employeeId, [FromRoute] int workExperienceId)
         {
             var requestDto = new DeleteWorkExperienceCommand()
             {
