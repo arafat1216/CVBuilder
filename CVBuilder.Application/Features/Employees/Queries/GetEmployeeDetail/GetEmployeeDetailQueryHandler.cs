@@ -18,22 +18,25 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail
         }
         public async Task<EmployeeDetailsDto> Handle(GetEmployeeDetailQuery request, CancellationToken cancellationToken)
         {
+            
+            // Get Employee Details
+            var employeeDetails = await GetEmployeeDetails(request.Id);
+
+
             // Checks If Employee Exists
-
-            var employeeExists = await repository.EmployeeExistsAsync(request.Id);
-
-            if (!employeeExists)
+            if (employeeDetails == null)
             {
                 throw new Exceptions.NotFoundException(nameof(Employee), request.Id);
             }
 
-            // Get Employee Details
-            var employeeDetails = await repository.GetEmployeeByIdAsync(request.Id);
             var employeeDetailsDto = mapper.Map<EmployeeDetailsDto>(employeeDetails);
 
-           
-
             return employeeDetailsDto;
+        }
+
+        private async Task<Employee?> GetEmployeeDetails(Guid employeeId)
+        {
+            return await repository.GetEmployeeByIdAsync(employeeId);
         }
     }
 }

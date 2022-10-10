@@ -18,28 +18,29 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
         public async Task<Unit> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
 
-            #region check if employee exists
+            // check if employee exists
 
-            var employeeExists = await repository.EmployeeExistsAsync(request.EmployeeId);
+            var employeeExists = await EmployeeExists(request.EmployeeId);
 
             if (!employeeExists)
             {
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
             }
 
-            #endregion
 
-
-            #region mapping incoming request to employee
+            // mapping incoming request to employee
 
             var employee = mapper.Map<Employee>(request);
 
-            #endregion
-
-
+            
             await repository.UpdateEmployeeAsync(employee);
 
             return Unit.Value;
+        }
+
+        private async Task<bool> EmployeeExists(Guid employeeId)
+        {
+            return await repository.EmployeeExistsAsync(employeeId);
         }
     }
 }

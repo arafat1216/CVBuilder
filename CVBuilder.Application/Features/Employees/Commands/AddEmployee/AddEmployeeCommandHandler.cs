@@ -18,26 +18,27 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
         public async Task<AddEmployeeCommandResponse> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
         {
 
-            #region mapping incoming request to employee entity
+            // mapping incoming request to employee entity
 
             var employee = mapper.Map<Employee>(request);
 
-            #endregion
 
 
-            #region hashing password
+            // hashing password
 
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            employee.Password = hashedPassword;
-
-            #endregion
-
+            employee.Password = GetHashedPassword(request.Password);
+            
 
             employee = await repository.AddEmployeeAsync(employee);
 
             var response = mapper.Map<AddEmployeeCommandResponse>(employee);
 
             return response;
+        }
+
+        private string GetHashedPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }
