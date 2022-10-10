@@ -8,14 +8,15 @@ namespace CVBuilder.Infrastructure.Repositories
     public class BaseRepository<T> : IAsyncRepository<T> where T : class
     {
         protected readonly ApplicationDbContext context;
-
+        protected readonly DbSet<T> dbSet;
         public BaseRepository(ApplicationDbContext context)
         {
             this.context = context;
+            dbSet = context.Set<T>();
         }
         public async Task<T> AddAsync(T entity)
         {
-            await context.Set<T>().AddAsync(entity);
+            await dbSet.AddAsync(entity);
             await context.SaveChangesAsync();
 
             return entity;
@@ -23,20 +24,20 @@ namespace CVBuilder.Infrastructure.Repositories
 
         public async Task DeleteAsync(T entity)
         {
-            context.Set<T>().Remove(entity);
+            dbSet.Remove(entity);
             await context.SaveChangesAsync();
         }
 
         public async Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> predicate)
         {
-            var query = context.Set<T>().AsQueryable();
+            var query = dbSet.AsQueryable();
 
             return await query.Where(predicate).ToListAsync<T>();
         }
 
         public async Task UpdateAsync(T entity)
         {
-            context.Set<T>().Update(entity);
+            dbSet.Update(entity);
             await context.SaveChangesAsync();
         }
     }

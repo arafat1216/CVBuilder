@@ -8,14 +8,16 @@ namespace CVBuilder.Infrastructure.Repositories
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly ApplicationDbContext context;
+        private readonly DbSet<Employee> dbset;
 
         public EmployeeRepository(ApplicationDbContext context)
         {
             this.context = context;
+            dbset = context.Set<Employee>();
         }
         public async Task<Employee> AddEmployeeAsync(Employee employee)
         {
-            await context.Employees.AddAsync(employee);
+            await dbset.AddAsync(employee);
 
             await context.SaveChangesAsync();
 
@@ -24,29 +26,29 @@ namespace CVBuilder.Infrastructure.Repositories
 
         public async Task DeleteEmployeeAsync(Employee employee)
         {
-            context.Employees.Remove(employee);
+            dbset.Remove(employee);
 
             await context.SaveChangesAsync();
         }
 
         public async Task<bool> EmployeeExistsAsync(Guid employeeId)
         {
-            return await context.Employees.AnyAsync(e => e.EmployeeId == employeeId);
+            return await dbset.AnyAsync(e => e.EmployeeId == employeeId);
         }
 
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
-            return await context.Employees.ToListAsync();
+            return await dbset.ToListAsync();
         }
 
         public async Task<Employee?> GetEmployeeByEmailAsync(string email)
         {
-            return await context.Employees.Where(e => e.Email == email).FirstOrDefaultAsync();
+            return await dbset.Where(e => e.Email == email).FirstOrDefaultAsync();
         }
 
         public async Task<Employee?> GetEmployeeByIdAsync(Guid employeeId)
         {
-            return await context.Employees
+            return await dbset
                 .Include(e => e.Skills)
                 .Include(e=> e.Degrees)
                 .Include(e => e.WorkExperiences)
@@ -64,14 +66,14 @@ namespace CVBuilder.Infrastructure.Repositories
             employeeToBeUpdated.Role = employee.Role;
             employeeToBeUpdated.Email = employee.Email;
 
-            context.Employees.Update(employeeToBeUpdated);
+            dbset.Update(employeeToBeUpdated);
 
             await context.SaveChangesAsync();
         }
 
         public async Task UpdateEmployeePasswordAsync(Employee employee)
         {
-            context.Employees.Update(employee);
+            dbset.Update(employee);
 
             await context.SaveChangesAsync();
         }

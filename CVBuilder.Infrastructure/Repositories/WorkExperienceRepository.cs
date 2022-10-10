@@ -13,12 +13,12 @@ namespace CVBuilder.Infrastructure.Repositories
 
         public async Task<bool> ExistsAsync(Guid employeeId, int id)
         {
-            return await context.WorkExperiences.AnyAsync(e => e.EmployeeId == employeeId && e.WorkExperienceId == id);
+            return await dbSet.AnyAsync(e => e.EmployeeId == employeeId && e.WorkExperienceId == id);
         }
 
         public async Task<WorkExperience?> GetWorkExperienceByIdAsync(Guid employeeId, int id)
         {
-            return await context.WorkExperiences
+            return await dbSet
                 .Where(e => e.EmployeeId == employeeId && e.WorkExperienceId == id)
                 .FirstOrDefaultAsync();
         }
