@@ -27,7 +27,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSkills(Guid employeeId)
+        public async Task<IActionResult> GetAllSkills([FromRoute] Guid employeeId)
         {
             var requestDto = new GetSkillsListQuery()
             {
@@ -40,7 +40,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("{skillId}")]
-        public async Task<IActionResult> GetSkillDetails(Guid employeeId, int skillId)
+        public async Task<IActionResult> GetSkillDetails([FromRoute] Guid employeeId, [FromRoute] int skillId)
         {
             var requestDto = new GetSkillDetailsQuery()
             {
@@ -54,7 +54,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSkill(Guid employeeId, SkillViewModel skillViewModel)
+        public async Task<IActionResult> AddSkill([FromRoute] Guid employeeId, [FromBody] SkillViewModel skillViewModel)
         {
 
             var requestDto = mapper.Map<AddSkillCommand>(skillViewModel);
@@ -69,7 +69,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPut("{skillId}")]
-        public async Task<IActionResult> UpdateSkill(Guid employeeId, int skillId, SkillViewModel skillViewModel)
+        public async Task<IActionResult> UpdateSkill([FromRoute] Guid employeeId, [FromRoute] int skillId, [FromBody]SkillViewModel skillViewModel)
         {
 
             var requestDto = mapper.Map<UpdateSkillCommand>(skillViewModel);
@@ -85,7 +85,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpDelete("{skillId}")]
-        public async Task<IActionResult> DeleteSkill(Guid employeeId, int skillId)
+        public async Task<IActionResult> DeleteSkill([FromRoute] Guid employeeId, [FromRoute] int skillId)
         {
             var requestDto = new DeleteSkillCommand()
             {
