@@ -1,8 +1,10 @@
-﻿using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
+﻿using AutoMapper;
+using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperienceDetails;
 using CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperiencesList;
+using CVBuilder.Application.ViewModels.WorkExperience;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +18,12 @@ namespace CVBuilder.Api.Controllers
     public class WorkExperiencesController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public WorkExperiencesController(IMediator mediator)
+        public WorkExperiencesController(IMediator mediator, IMapper mapper)
         {
             this.mediator = mediator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -50,26 +54,31 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddWorkExperience(Guid employeeId, AddWorkExperienceCommand addWorkExperienceCommand)
+        public async Task<IActionResult> AddWorkExperience(Guid employeeId, WorkExperienceViewModel workExperienceViewModel)
         {
-            if (employeeId != addWorkExperienceCommand.EmployeeId)
-                return BadRequest();
 
-            var response = await mediator.Send(addWorkExperienceCommand);
+            var requestDto = mapper.Map<AddWorkExperienceCommand>(workExperienceViewModel);
+
+            requestDto.EmployeeId = employeeId;
+
+            var response = await mediator.Send(requestDto);
 
             return CreatedAtAction(nameof(GetWorkExperienceDetails), new { employeeId = response.EmployeeId, workExperienceId = response.WorkExperienceId }, response);
-        
+
         }
 
         [HttpPut("{workExperienceId}")]
-        public async Task<IActionResult> UpdateWorkExperience(Guid employeeId, int workExperienceId, UpdateWorkExperienceCommand updateWorkExperienceCommand)
+        public async Task<IActionResult> UpdateWorkExperience(Guid employeeId, int workExperienceId, WorkExperienceViewModel workExperienceViewModel)
         {
-            if ((employeeId != updateWorkExperienceCommand.EmployeeId) || (workExperienceId != updateWorkExperienceCommand.WorkExperienceId))
-                return BadRequest();
+            var requestDto = mapper.Map<UpdateWorkExperienceCommand>(workExperienceViewModel);
 
-            await mediator.Send(updateWorkExperienceCommand);
+            requestDto.EmployeeId = employeeId;
 
-            return NoContent();
+            requestDto.WorkExperienceId = workExperienceId;
+
+            await mediator.Send(requestDto);
+
+            return Ok(requestDto);
         }
 
         [HttpDelete("{workExperienceId}")]

@@ -17,6 +17,7 @@ using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperien
 using CVBuilder.Application.ViewModels.Degree;
 using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Application.ViewModels.Skill;
+using CVBuilder.Application.ViewModels.WorkExperience;
 using CVBuilder.Domain.Entities;
 
 namespace CVBuilder.Application.Profiles
@@ -67,8 +68,10 @@ namespace CVBuilder.Application.Profiles
             // Work Experince Mappings
             CreateMap<WorkExperience, WorkExperienceDetailsDto>();
             CreateMap<WorkExperience, WorkExperiencesListDto>();
+            CreateMap<WorkExperienceViewModel, AddWorkExperienceCommand>();
             CreateMap<AddWorkExperienceCommand, WorkExperience>();
             CreateMap<WorkExperience, AddWorkExperienceCommandResponse>();
+            CreateMap<WorkExperienceViewModel, UpdateWorkExperienceCommand>();
             CreateMap<UpdateWorkExperienceCommand, WorkExperience>();
         }
     }
