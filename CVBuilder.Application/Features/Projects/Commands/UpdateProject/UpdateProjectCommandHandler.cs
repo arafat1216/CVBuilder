@@ -17,25 +17,27 @@ namespace CVBuilder.Application.Features.Projects.Commands.UpdateProject
         }
         public async Task<Unit> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            #region check if project exists
+            // check if project exists
 
-            var projectExists = await repository.ExistsAsync(request.EmployeeId, request.ProjectId);
+            var projectExists = await ProjectExists(request.EmployeeId, request.ProjectId);
 
             if (!projectExists)
                 throw new Exceptions.NotFoundException(nameof(Project), request.ProjectId);
 
-            #endregion
 
-            
-            #region mapping incoming request to project entity
+
+            // mapping incoming request to project entity
 
             var projectToUpdate = mapper.Map<Project>(request);
-
-            #endregion
 
             await repository.UpdateAsync(projectToUpdate);
 
             return Unit.Value;
+        }
+
+        private async Task<bool> ProjectExists(Guid employeeId, int projectId)
+        {
+            return await repository.ExistsAsync(employeeId, projectId);
         }
     }
 }

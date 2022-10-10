@@ -18,20 +18,23 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectDetails
         }
         public async Task<ProjectDetailsDto> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
         {
-            #region fetch project details
+            // fetch project details
 
-            var projectDetails = await repository.GetProjectByIdAsync(request.EmployeeId, request.ProjectId);
+            var projectDetails = await GetProjectDetails(request.EmployeeId, request.ProjectId);
 
-            #endregion
 
-            #region check if project exists
+            // check if project exists
 
             if (projectDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Project), request.ProjectId);
 
-            #endregion
 
             return mapper.Map<ProjectDetailsDto>(projectDetails);
+        }
+
+        private async Task<Project?> GetProjectDetails(Guid employeeId, int projectId)
+        {
+            return await repository.GetProjectByIdAsync(employeeId, projectId);
         }
     }
 }

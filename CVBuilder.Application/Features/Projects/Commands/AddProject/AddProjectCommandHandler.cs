@@ -19,25 +19,28 @@ namespace CVBuilder.Application.Features.Projects.Commands.AddProject
         }
         public async Task<AddProjectCommandResponse> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
-            #region check if employee exists
+            // check if employee exists
 
-            var employeeExists = await employeeRepository.EmployeeExistsAsync(request.EmployeeId);
+            var employeeExists = await EmployeeExists(request.EmployeeId);
 
             if (!employeeExists)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
-            #endregion
 
-            
-            #region mapping incoming request to project entity
+
+            // mapping incoming request to project entity
 
             var projectToCreate = mapper.Map<Project>(request);
 
-            #endregion
-
+            
             var response = await projectRepository.AddAsync(projectToCreate);
 
             return mapper.Map<AddProjectCommandResponse>(response);
+        }
+
+        private async Task<bool> EmployeeExists(Guid employeeId)
+        {
+            return await employeeRepository.EmployeeExistsAsync(employeeId);
         }
     }
 }

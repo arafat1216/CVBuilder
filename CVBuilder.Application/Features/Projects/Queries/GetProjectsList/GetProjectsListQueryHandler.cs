@@ -20,28 +20,30 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
         }
         public async Task<List<ProjectDetailsDto>> Handle(GetProjectsListQuery request, CancellationToken cancellationToken)
         {
-            #region check if employee exists
+            // check if employee exists
 
-            var employeeExits = await employeeRepository.EmployeeExistsAsync(request.EmployeeId);
+            var employeeExits = await EmployeeExists(request.EmployeeId);
 
             if (!employeeExits)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
-            #endregion
 
-            #region fetch projects list
+            // fetch projects list
 
             var projectsList = await projectRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
 
-            #endregion
-
-            #region mapping projects list to project view model
+            
+            // mapping projects list to project view model
 
             var projectsListDto = mapper.Map<List<ProjectDetailsDto>>(projectsList);
 
-            #endregion
 
-            return projectsListDto; 
+            return projectsListDto;
+        }
+
+        private async Task<bool> EmployeeExists(Guid employeeId)
+        {
+            return await employeeRepository.EmployeeExistsAsync(employeeId);
         }
     }
 }

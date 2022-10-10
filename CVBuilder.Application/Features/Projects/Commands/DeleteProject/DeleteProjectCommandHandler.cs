@@ -17,18 +17,22 @@ namespace CVBuilder.Application.Features.Projects.Commands.DeleteProject
         }
         public async Task<Unit> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
         {
-            #region fetch project
+            // fetch project
 
-            var projectToDelete = await repository.GetProjectByIdAsync(request.EmployeeId, request.ProjectId);
+            var projectToDelete = await GetProjectToDelete(request.EmployeeId, request.ProjectId);
 
-            #endregion
 
             if (projectToDelete == null)
                 throw new Exceptions.NotFoundException(nameof(Project), request.ProjectId);
 
             await repository.DeleteAsync(projectToDelete);
 
-            return Unit.Value;  
+            return Unit.Value;
+        }
+
+        private async Task<Project?> GetProjectToDelete(Guid employeeId, int projectId)
+        {
+            return await repository.GetProjectByIdAsync(employeeId, projectId);
         }
     }
 }
