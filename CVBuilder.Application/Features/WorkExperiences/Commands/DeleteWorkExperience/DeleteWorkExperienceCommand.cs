@@ -6,5 +6,6 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExpe
     {
         public Guid EmployeeId { get; set; }
         public int WorkExperienceId { get; set; }
+        public bool SoftDelete { get; set; }
     }
 }

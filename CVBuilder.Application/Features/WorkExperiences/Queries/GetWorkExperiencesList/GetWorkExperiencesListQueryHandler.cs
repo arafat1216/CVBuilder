@@ -30,7 +30,8 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
 
             // fetch work experiences list
 
-            var workExperiencesList = await workExperienceRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
+            var workExperiencesList = await workExperienceRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId && 
+            !e.IsDeleted);
 
             
             var resultDtos = mapper.Map<List<WorkExperienceDetailsDto>>(workExperiencesList);

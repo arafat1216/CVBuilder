@@ -101,12 +101,13 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpDelete("{workExperienceId}")]
-        public async Task<IActionResult> DeleteWorkExperience([FromRoute] Guid employeeId, [FromRoute] int workExperienceId)
+        public async Task<IActionResult> DeleteWorkExperience([FromRoute] Guid employeeId, [FromRoute] int workExperienceId, [FromQuery] bool softDelete)
         {
             var requestDto = new DeleteWorkExperienceCommand()
             {
                 EmployeeId = employeeId,
                 WorkExperienceId = workExperienceId,
+                SoftDelete = softDelete
             };
 
             await mediator.Send(requestDto);

@@ -26,6 +26,16 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExpe
                 throw new Exceptions.NotFoundException(nameof(WorkExperience), request.WorkExperienceId);
 
 
+            if (request.SoftDelete)
+            {
+                workExperienceToDelete.IsDeleted = true;
+
+                await repository.UpdateAsync(workExperienceToDelete);
+
+                return Unit.Value;
+            }
+
+
             await repository.DeleteAsync(workExperienceToDelete);
 
             return Unit.Value;
