@@ -27,6 +27,15 @@ namespace CVBuilder.Application.Features.Employees.Commands.DeleteEmployee
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
             
+            if (request.SoftDelete)
+            {
+                employee.IsDeleted = true;
+
+                await repository.UpdateEmployeePartiallyAsync(employee);
+
+                return Unit.Value;
+            }
+
 
             await repository.DeleteEmployeeAsync(employee);
 

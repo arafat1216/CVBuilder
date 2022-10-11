@@ -38,7 +38,7 @@ namespace CVBuilder.Infrastructure.Repositories
 
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
-            return await dbset.ToListAsync();
+            return await dbset.Where(e => !e.IsDeleted).ToListAsync();
         }
 
         public async Task<Employee?> GetEmployeeByEmailAsync(string email)
