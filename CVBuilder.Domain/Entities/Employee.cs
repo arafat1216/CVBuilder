@@ -11,6 +11,7 @@ namespace CVBuilder.Domain.Entities
         public string PhoneNo { get; set; }
         public string Address { get; set; }
         public Role Role { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         //Navigation Properties
         public ICollection<Skill> Skills { get; set; } = new List<Skill>();

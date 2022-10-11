@@ -8,6 +8,8 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         // Navigation Property
         public Guid EmployeeId { get; set; }
     }
