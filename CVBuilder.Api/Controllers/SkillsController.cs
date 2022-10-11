@@ -2,6 +2,7 @@
 using CVBuilder.Application.Dtos.Skill;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.DeleteSkill;
+using CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillDetails;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillsList;
@@ -90,7 +91,18 @@ namespace CVBuilder.Api.Controllers
         [HttpPatch("{skillId}")]
         public async Task<IActionResult> UpdateSkillPartially([FromRoute] Guid employeeId, [FromRoute] int skillId, [FromBody] JsonPatchDocument patchDocument)
         {
-            return Ok();
+
+            var partialUpdateSkillCommand = new PartialUpdateSkillCommand();
+
+            patchDocument.ApplyTo(partialUpdateSkillCommand);
+
+            partialUpdateSkillCommand.EmployeeId = employeeId;
+
+            partialUpdateSkillCommand.SkillId = skillId;
+
+            await mediator.Send(partialUpdateSkillCommand);
+
+            return Ok("Updated Successfully");
 
         }
 
