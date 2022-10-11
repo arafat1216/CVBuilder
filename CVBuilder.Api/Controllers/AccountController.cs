@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Authentication;
+using CVBuilder.Application.Exceptions;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
 using CVBuilder.Application.ViewModels.Account;
@@ -32,7 +33,6 @@ namespace CVBuilder.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
         {
-
             var token = await service.AuthenticateUserAsync(loginViewModel);
 
             logger.LogInformation($"Logged in at {DateTime.Now}");
@@ -70,6 +70,7 @@ namespace CVBuilder.Api.Controllers
             catch (Exception ex)
             {
                 logger.LogError($"Password Update Failed: {ex.Message}");
+                throw new BadRequestException("Can Not Update Password");
             }
 
             logger.LogInformation($"Password Successfully Updated");
