@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
 using CVBuilder.Application.Features.Employees.Commands.DeleteEmployee;
+using CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmployee;
 using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeesList;
@@ -71,10 +72,17 @@ namespace CVBuilder.Api.Controllers
 
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateEmployeePartially([FromRoute] Guid id, [FromBody] JsonPatchDocument<UpdateEmployeeViewModel> patchDocument)
+        public async Task<IActionResult> UpdateEmployeePartially([FromRoute] Guid id, [FromBody] JsonPatchDocument patchDocument)
         {
-            
-            return Ok();  
+            var requestDto = new PartialUpdateEmployeeCommand();
+
+            patchDocument.ApplyTo(requestDto);
+
+            requestDto.EmployeeId = id;
+
+            await mediator.Send(requestDto);
+
+            return Ok("Updated Successfully");  
         }
 
         [HttpDelete("{id}")]

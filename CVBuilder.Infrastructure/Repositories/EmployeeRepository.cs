@@ -50,13 +50,17 @@ namespace CVBuilder.Infrastructure.Repositories
         {
             return await dbset
                 .Include(e => e.Skills)
-                .Include(e=> e.Degrees)
+                .Include(e => e.Degrees)
                 .Include(e => e.WorkExperiences)
                 .Include(e => e.Projects)
                 .Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
         }
 
-        
+        public async Task<Employee?> GetEmployeeDetailsAsync(Guid employeeId)
+        {
+            return await dbset.Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
+        }
+
         public async Task UpdateEmployeeAsync(Employee employee)
         {
             var employeeToBeUpdated = await GetEmployeeByIdAsync(employee.EmployeeId);
@@ -67,6 +71,13 @@ namespace CVBuilder.Infrastructure.Repositories
             employeeToBeUpdated.Email = employee.Email;
 
             dbset.Update(employeeToBeUpdated);
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateEmployeePartiallyAsync(Employee employee)
+        {
+            dbset.Update(employee);
 
             await context.SaveChangesAsync();
         }
