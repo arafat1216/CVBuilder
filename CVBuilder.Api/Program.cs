@@ -1,3 +1,4 @@
+using CVBuilder.Api;
 using CVBuilder.Api.Middleware;
 using CVBuilder.Application;
 using CVBuilder.Infrastructure;
@@ -11,7 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<UnhandledExceptionFilter>();
+})
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -76,9 +80,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
 
-app.UseCustomExceptionHandler();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
