@@ -30,7 +30,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
 
             // fetch projects list
 
-            var projectsList = await projectRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
+            var projectsList = await projectRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId && !e.IsDeleted);
 
             
             // mapping projects list to project view model

@@ -98,12 +98,13 @@ namespace CVBuilder.Api.Controllers
 
 
         [HttpDelete("{projectId}")]
-        public async Task<IActionResult> DeleteProject([FromRoute] Guid employeeId, [FromRoute] int projectId)
+        public async Task<IActionResult> DeleteProject([FromRoute] Guid employeeId, [FromRoute] int projectId, [FromQuery] bool softDelete)
         {
             var requestDto = new DeleteProjectCommand()
             {
                 EmployeeId = employeeId,
                 ProjectId = projectId,
+                SoftDelete = softDelete,
             };
 
             await mediator.Send(requestDto);

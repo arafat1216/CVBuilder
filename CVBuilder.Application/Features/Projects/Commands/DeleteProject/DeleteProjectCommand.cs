@@ -6,5 +6,7 @@ namespace CVBuilder.Application.Features.Projects.Commands.DeleteProject
     {
         public Guid EmployeeId { get; set; }
         public int ProjectId { get; set; }
+        public bool SoftDelete { get; set; }
+
     }
 }

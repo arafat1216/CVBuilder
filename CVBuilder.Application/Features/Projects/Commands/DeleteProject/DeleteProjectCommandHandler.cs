@@ -24,6 +24,16 @@ namespace CVBuilder.Application.Features.Projects.Commands.DeleteProject
 
             if (projectToDelete == null)
                 throw new Exceptions.NotFoundException(nameof(Project), request.ProjectId);
+            
+            if (request.SoftDelete)
+            {
+                projectToDelete.IsDeleted = true;
+
+                await repository.UpdateAsync(projectToDelete);
+
+                return Unit.Value;
+            }
+
 
             await repository.DeleteAsync(projectToDelete);
 
