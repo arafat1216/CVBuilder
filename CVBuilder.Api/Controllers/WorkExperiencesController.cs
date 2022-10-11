@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExperience;
+using CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperienceDetails;
 using CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperiencesList;
@@ -8,6 +9,7 @@ using CVBuilder.Application.ViewModels.WorkExperience;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVBuilder.Api.Controllers
@@ -79,6 +81,23 @@ namespace CVBuilder.Api.Controllers
             await mediator.Send(requestDto);
 
             return Ok(requestDto);
+        }
+
+        [HttpPatch("{workExperienceId}")]
+        public async Task<IActionResult> UpdateWorkExperiencePartially([FromRoute] Guid employeeId, [FromRoute] int workExperienceId, [FromBody] JsonPatchDocument patchDocument)
+        {
+
+            var requestDto = new PartialUpdateWorkExperienceCommand();
+
+            patchDocument.ApplyTo(requestDto);
+
+            requestDto.EmployeeId = employeeId;
+
+            requestDto.WorkExperienceId = workExperienceId;
+
+            await mediator.Send(requestDto);
+
+            return Ok("Updated Successfully");
         }
 
         [HttpDelete("{workExperienceId}")]
