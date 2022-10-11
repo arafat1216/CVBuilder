@@ -31,7 +31,7 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
 
             // fetch skills list
 
-            var skills = await skillRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
+            var skills = await skillRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId && !e.IsDeleted);
 
             
             // mapping skill entity to skill view model

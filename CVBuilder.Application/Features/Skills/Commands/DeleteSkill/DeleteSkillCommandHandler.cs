@@ -22,6 +22,16 @@ namespace CVBuilder.Application.Features.Skills.Commands.DeleteSkill
                 throw new Exceptions.NotFoundException(nameof(Skill), request.SkillId);
 
 
+            if (request.SoftDelete)
+            {
+                skillToDelete.IsDeleted = true;
+
+                await repository.UpdateAsync(skillToDelete);
+
+                return Unit.Value;
+            }
+
+
             await repository.DeleteAsync(skillToDelete);
 
             return Unit.Value;
