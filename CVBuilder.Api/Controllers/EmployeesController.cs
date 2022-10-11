@@ -8,6 +8,7 @@ using CVBuilder.Application.ViewModels.Employee;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVBuilder.Api.Controllers
@@ -66,6 +67,14 @@ namespace CVBuilder.Api.Controllers
             await mediator.Send(requestDto);
 
             return Ok(requestDto);
+        }
+
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateEmployeePartially([FromRoute] Guid id, [FromBody] JsonPatchDocument<UpdateEmployeeViewModel> patchDocument)
+        {
+            
+            return Ok();  
         }
 
         [HttpDelete("{id}")]

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CVBuilder.Application.Dtos.Skill;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.DeleteSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
@@ -8,6 +9,7 @@ using CVBuilder.Application.ViewModels.Skill;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVBuilder.Api.Controllers
@@ -81,6 +83,16 @@ namespace CVBuilder.Api.Controllers
             await mediator.Send(requestDto);
 
             return Ok(requestDto);
+
+        }
+
+
+        [HttpPatch("{skillId}")]
+        public async Task<IActionResult> UpdateSkillPartially([FromRoute] Guid employeeId, [FromRoute] int skillId, [FromBody] JsonPatchDocument patchDocument)
+        {
+            
+
+            return Ok();
 
         }
 
