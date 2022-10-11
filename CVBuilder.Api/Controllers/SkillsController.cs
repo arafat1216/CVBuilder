@@ -90,8 +90,6 @@ namespace CVBuilder.Api.Controllers
         [HttpPatch("{skillId}")]
         public async Task<IActionResult> UpdateSkillPartially([FromRoute] Guid employeeId, [FromRoute] int skillId, [FromBody] JsonPatchDocument patchDocument)
         {
-            
-
             return Ok();
 
         }

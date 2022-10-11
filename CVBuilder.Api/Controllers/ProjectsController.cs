@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Features.Projects.Commands.AddProject;
 using CVBuilder.Application.Features.Projects.Commands.DeleteProject;
+using CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject;
 using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
 using CVBuilder.Application.Features.Projects.Queries.GetProjectDetails;
 using CVBuilder.Application.Features.Projects.Queries.GetProjectsList;
@@ -8,6 +9,7 @@ using CVBuilder.Application.ViewModels.Project;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVBuilder.Api.Controllers
@@ -77,6 +79,23 @@ namespace CVBuilder.Api.Controllers
 
             return Ok(requestDto);
         }
+
+        [HttpPatch("{projectId}")]
+        public async Task<IActionResult> UpdateProjectPartially([FromRoute] Guid employeeId, [FromRoute] int projectId, [FromBody] JsonPatchDocument patchDocument)
+        {
+            var paritalUpdateProjectCommand = new PartialUpdateProjectCommand();
+
+            patchDocument.ApplyTo(paritalUpdateProjectCommand);
+
+            paritalUpdateProjectCommand.EmployeeId = employeeId;
+
+            paritalUpdateProjectCommand.ProjectId = projectId;
+
+            await mediator.Send(paritalUpdateProjectCommand);
+
+            return NoContent();
+        }
+
 
         [HttpDelete("{projectId}")]
         public async Task<IActionResult> DeleteProject([FromRoute] Guid employeeId, [FromRoute] int projectId)
