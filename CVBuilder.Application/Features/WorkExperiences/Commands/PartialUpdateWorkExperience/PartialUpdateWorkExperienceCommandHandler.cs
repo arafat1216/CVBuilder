@@ -14,12 +14,12 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateW
         }
         public async Task<Unit> Handle(PartialUpdateWorkExperienceCommand request, CancellationToken cancellationToken)
         {
-            var workExperienceDetails = await repository.GetWorkExperienceByIdAsync(request.EmployeeId, request.WorkExperienceId);
+            var workExperienceDetails = await GetWorkExperienceDetails(request.EmployeeId, request.WorkExperienceId);
 
             if (workExperienceDetails == null)
                 throw new Exceptions.NotFoundException(nameof(WorkExperience), request.WorkExperienceId);
 
-            
+
             workExperienceDetails.Designation = request.Designation ?? workExperienceDetails.Designation;
 
             workExperienceDetails.Company = request.Company ?? workExperienceDetails.Company;
@@ -31,6 +31,11 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateW
             await repository.UpdateAsync(workExperienceDetails);
 
             return Unit.Value;
+        }
+
+        private async Task<WorkExperience?> GetWorkExperienceDetails(Guid employeeId, int workExperienceId)
+        {
+            return await repository.GetWorkExperienceByIdAsync(employeeId, workExperienceId);
         }
     }
 }
