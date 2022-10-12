@@ -8,6 +8,7 @@ using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree;
 using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
+using CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmployee;
 using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
 using CVBuilder.Application.Features.Projects.Commands.AddProject;
 using CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject;
@@ -41,7 +42,9 @@ namespace CVBuilder.Application.Profiles
             CreateMap<Employee, AddEmployeeCommandResponse>();
             CreateMap<UpdateEmployeeViewModel, UpdateEmployeeCommand>();
             CreateMap<UpdateEmployeeCommand, Employee>();
-            
+            CreateMap<PartialUpdateEmployeeCommand, Employee>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
 
             // Skill Mappings
             CreateMap<Skill, SkillDetailsDto>();

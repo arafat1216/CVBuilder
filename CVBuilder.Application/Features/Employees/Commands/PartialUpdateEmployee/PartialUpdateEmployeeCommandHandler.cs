@@ -1,4 +1,5 @@
-﻿using CVBuilder.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
@@ -7,10 +8,12 @@ namespace CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmploye
     public class PartialUpdateEmployeeCommandHandler : IRequestHandler<PartialUpdateEmployeeCommand>
     {
         private readonly IEmployeeRepository repository;
+        private readonly IMapper mapper;
 
-        public PartialUpdateEmployeeCommandHandler(IEmployeeRepository repository)
+        public PartialUpdateEmployeeCommandHandler(IEmployeeRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
         public async Task<Unit> Handle(PartialUpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
@@ -19,15 +22,8 @@ namespace CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmploye
             if (employeeDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
-            employeeDetails.FullName = request.FullName ?? employeeDetails.FullName;
 
-            employeeDetails.Address = request.Address ?? employeeDetails.Address;
-
-            employeeDetails.PhoneNo = request.PhoneNo ?? employeeDetails.PhoneNo;
-
-            employeeDetails.Email = request.Email ?? employeeDetails.Email;
-
-            employeeDetails.Role = request.Role ?? employeeDetails.Role;
+            mapper.Map(request, employeeDetails);
 
             await repository.UpdateEmployeePartiallyAsync(employeeDetails);
 
