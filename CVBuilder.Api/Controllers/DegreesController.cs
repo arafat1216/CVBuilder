@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.DeleteDegree;
+using CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree;
 using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails;
 using CVBuilder.Application.Features.Degrees.Queries.GetDegreesList;
@@ -8,6 +9,7 @@ using CVBuilder.Application.ViewModels.Degree;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVBuilder.Api.Controllers
@@ -81,6 +83,23 @@ namespace CVBuilder.Api.Controllers
 
             return Ok(requestDto);
         }
+
+        [HttpPatch("{degreeId}")]
+        public async Task<IActionResult> UpdateDegreePartially([FromRoute] Guid employeeId, [FromRoute] int degreeId, [FromBody] JsonPatchDocument patchDocument)
+        {
+            var requestDto = new PartialUpdateDegreeCommand();
+
+            patchDocument.ApplyTo(requestDto);
+
+            requestDto.EmployeeId = employeeId;
+
+            requestDto.DegreeId = degreeId;
+
+            await mediator.Send(requestDto);
+            
+            return Ok("Updated Successfully");
+        }
+
 
         [HttpDelete("{degreeId}")]
         public async Task<IActionResult> DeleteDegree([FromRoute] Guid employeeId, [FromRoute] int degreeId)

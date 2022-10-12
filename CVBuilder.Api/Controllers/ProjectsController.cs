@@ -93,7 +93,7 @@ namespace CVBuilder.Api.Controllers
 
             await mediator.Send(paritalUpdateProjectCommand);
 
-            return NoContent();
+            return Ok("Updated Successfully");
         }
 
 
