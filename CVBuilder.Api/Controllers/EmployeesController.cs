@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CVBuilder.Api.Controllers
 {
@@ -21,6 +22,7 @@ namespace CVBuilder.Api.Controllers
     {
         private readonly IMediator mediator;
         private readonly IMapper mapper;
+        const int maximumPageSize = 20;
 
         public EmployeesController(IMediator mediator, IMapper mapper)
         {
@@ -29,10 +31,23 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
-            var dtos = await mediator.Send(new GetEmployeesListQuery());
-            return Ok(dtos);
+
+            if (pageSize > maximumPageSize)
+                pageSize = maximumPageSize;
+
+            var requestDto = new GetEmployeesListQuery()
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+            };
+
+            var (employees, metaData) = await mediator.Send(requestDto);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
+
+            return Ok(employees);
         }
 
 

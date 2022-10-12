@@ -1,10 +1,11 @@
-﻿using CVBuilder.Domain.Entities;
+﻿using CVBuilder.Application.Models.Pagination;
+using CVBuilder.Domain.Entities;
 
 namespace CVBuilder.Application.Contracts.Persistence
 {
     public interface IEmployeeRepository
     {
-        Task<List<Employee>> GetAllEmployeesAsync();
+        Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesAsync(int pageNumber, int pageSize);
         Task<Employee> AddEmployeeAsync(Employee employee);
         Task<Employee?> GetEmployeeByIdAsync(Guid employeeId);
         Task<Employee?> GetEmployeeByEmailAsync(string email);

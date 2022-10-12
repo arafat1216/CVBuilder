@@ -1,4 +1,5 @@
 ﻿using CVBuilder.Application.Contracts.Persistence;
+using CVBuilder.Application.Models.Pagination;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -36,9 +37,24 @@ namespace CVBuilder.Infrastructure.Repositories
             return await dbset.AnyAsync(e => e.EmployeeId == employeeId);
         }
 
-        public async Task<List<Employee>> GetAllEmployeesAsync()
+        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesAsync(int pageNumber, int pageSize)
         {
-            return await dbset.Where(e => !e.IsDeleted).ToListAsync();
+            var collection = dbset as IQueryable<Employee>;
+
+            collection = collection.Where(e => !e.IsDeleted);
+
+            var totalItems = await collection.CountAsync();
+
+            var paginationMetaData = new PaginationMetaData(totalItems, pageNumber, pageSize);
+
+            var collectionToReturn = await collection
+                .OrderBy(e => e.FullName)
+                .Skip(pageSize*(pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (collectionToReturn, paginationMetaData);
+
         }
 
         public async Task<Employee?> GetEmployeeByEmailAsync(string email)
