@@ -1,4 +1,5 @@
-﻿using CVBuilder.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
@@ -7,10 +8,12 @@ namespace CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree
     public class PartialUpdateDegreeCommandHandler : IRequestHandler<PartialUpdateDegreeCommand>
     {
         private readonly IDegreeRepository repository;
+        private readonly IMapper mapper;
 
-        public PartialUpdateDegreeCommandHandler(IDegreeRepository repository)
+        public PartialUpdateDegreeCommandHandler(IDegreeRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
         public async Task<Unit> Handle(PartialUpdateDegreeCommand request, CancellationToken cancellationToken)
         {
@@ -20,9 +23,7 @@ namespace CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree
                 throw new Exceptions.NotFoundException(nameof(Degree), request.DegreeId);
 
 
-            degreeDetails.Name = request.Name ?? degreeDetails.Name;
-
-            degreeDetails.Institute = request.Institute ?? degreeDetails.Institute;
+            mapper.Map(request, degreeDetails);
 
             await repository.UpdateAsync(degreeDetails);
 
