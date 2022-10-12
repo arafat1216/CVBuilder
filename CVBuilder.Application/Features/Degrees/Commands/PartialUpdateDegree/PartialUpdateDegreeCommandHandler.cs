@@ -14,12 +14,12 @@ namespace CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree
         }
         public async Task<Unit> Handle(PartialUpdateDegreeCommand request, CancellationToken cancellationToken)
         {
-            var degreeDetails = await repository.GetDegreeByIdAsync(request.EmployeeId, request.DegreeId);
+            var degreeDetails = await GetDegreeDetails(request.EmployeeId, request.DegreeId);
 
             if (degreeDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Degree), request.DegreeId);
 
-            
+
             degreeDetails.Name = request.Name ?? degreeDetails.Name;
 
             degreeDetails.Institute = request.Institute ?? degreeDetails.Institute;
@@ -27,6 +27,11 @@ namespace CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree
             await repository.UpdateAsync(degreeDetails);
 
             return Unit.Value;
+        }
+
+        private async Task<Degree?> GetDegreeDetails(Guid employeeId, int degreeId)
+        {
+            return await repository.GetDegreeByIdAsync(employeeId, degreeId);
         }
     }
 }
