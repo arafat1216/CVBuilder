@@ -49,10 +49,10 @@ namespace CVBuilder.Infrastructure.Repositories
         public async Task<Employee?> GetEmployeeByIdAsync(Guid employeeId)
         {
             return await dbset
-                .Include(e => e.Skills)
-                .Include(e => e.Degrees)
-                .Include(e => e.WorkExperiences)
-                .Include(e => e.Projects)
+                .Include(e => e.Skills.Where(s => !s.IsDeleted))
+                .Include(e => e.Degrees.Where(d => !d.IsDeleted))
+                .Include(e => e.WorkExperiences.Where(w => !w.IsDeleted))
+                .Include(e => e.Projects.Where(p => !p.IsDeleted))
                 .Where(e => e.EmployeeId == employeeId).FirstOrDefaultAsync();
         }
 

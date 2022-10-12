@@ -7,7 +7,6 @@ namespace CVBuilder.Application.Dtos.Employee
 {
     public class EmployeeDetailsDto
     {
-        public Guid EmployeeId { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PhoneNo { get; set; }
