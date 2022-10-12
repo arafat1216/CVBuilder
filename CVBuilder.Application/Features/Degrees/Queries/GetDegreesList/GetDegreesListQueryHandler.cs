@@ -30,7 +30,7 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreesList
 
             // fetch degrees list
 
-            var degrees = await degreeRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId);
+            var degrees = await degreeRepository.ListAllAsync(e => e.EmployeeId == request.EmployeeId && !e.IsDeleted);
 
 
             // mapping degree entity to degree view model

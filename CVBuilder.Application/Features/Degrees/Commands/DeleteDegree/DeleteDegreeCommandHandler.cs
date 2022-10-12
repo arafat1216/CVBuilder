@@ -25,6 +25,17 @@ namespace CVBuilder.Application.Features.Degrees.Commands.DeleteDegree
             if (degreeToDelete == null)
                 throw new Exceptions.NotFoundException(nameof(Degree), request.DegreeId);
 
+
+            if (request.SoftDelete)
+            {
+                degreeToDelete.IsDeleted = true;
+
+                await repository.UpdateAsync(degreeToDelete);
+
+                return Unit.Value;
+            }
+
+
             await repository.DeleteAsync(degreeToDelete);
 
             return Unit.Value;

@@ -71,7 +71,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpPut("{degreeId}")]
-        public async Task<IActionResult> UpdateDegree([FromRoute] Guid employeeId, [FromRoute] int degreeId, [FromBody]DegreeViewModel degreeViewModel)
+        public async Task<IActionResult> UpdateDegree([FromRoute] Guid employeeId, [FromRoute] int degreeId, [FromBody] DegreeViewModel degreeViewModel)
         {
 
             var requestDto = mapper.Map<UpdateDegreeCommand>(degreeViewModel);
@@ -96,18 +96,20 @@ namespace CVBuilder.Api.Controllers
             requestDto.DegreeId = degreeId;
 
             await mediator.Send(requestDto);
-            
+
             return Ok("Updated Successfully");
         }
 
 
         [HttpDelete("{degreeId}")]
-        public async Task<IActionResult> DeleteDegree([FromRoute] Guid employeeId, [FromRoute] int degreeId)
+        public async Task<IActionResult> DeleteDegree([FromRoute] Guid employeeId, [FromRoute] int degreeId, [FromQuery]
+        bool softDelete)
         {
-            var requestDto = new DeleteDegreeCommand() 
-            { 
+            var requestDto = new DeleteDegreeCommand()
+            {
                 DegreeId = degreeId,
                 EmployeeId = employeeId,
+                SoftDelete = softDelete,
             };
 
             await mediator.Send(requestDto);

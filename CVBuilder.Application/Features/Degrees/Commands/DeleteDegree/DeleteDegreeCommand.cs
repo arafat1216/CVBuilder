@@ -6,5 +6,6 @@ namespace CVBuilder.Application.Features.Degrees.Commands.DeleteDegree
     {
         public Guid EmployeeId { get; set; }
         public int DegreeId { get; set; }
+        public bool SoftDelete { get; set; }
     }
 }
