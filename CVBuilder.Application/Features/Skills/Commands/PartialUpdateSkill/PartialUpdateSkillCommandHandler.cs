@@ -15,7 +15,7 @@ namespace CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill
 
         public async Task<Unit> Handle(PartialUpdateSkillCommand request, CancellationToken cancellationToken)
         {
-            var skillDetails = await repository.GetSkillByIdAsync(request.EmployeeId, request.SkillId);
+            var skillDetails = await GetSkillDetails(request.EmployeeId, request.SkillId);
 
             if (skillDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.SkillId);
@@ -25,6 +25,11 @@ namespace CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill
             await repository.UpdateAsync(skillDetails);
 
             return Unit.Value;
+        }
+
+        private async Task<Skill?> GetSkillDetails(Guid employeeId, int skillId)
+        {
+            return await repository.GetSkillByIdAsync(employeeId, skillId);
         }
     }
 }
