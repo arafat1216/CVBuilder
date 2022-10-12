@@ -1,4 +1,5 @@
-﻿using CVBuilder.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
@@ -7,10 +8,12 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateW
     public class PartialUpdateWorkExperienceCommandHandler : IRequestHandler<PartialUpdateWorkExperienceCommand>
     {
         private readonly IWorkExperienceRepository repository;
+        private readonly IMapper mapper;
 
-        public PartialUpdateWorkExperienceCommandHandler(IWorkExperienceRepository repository)
+        public PartialUpdateWorkExperienceCommandHandler(IWorkExperienceRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
         public async Task<Unit> Handle(PartialUpdateWorkExperienceCommand request, CancellationToken cancellationToken)
         {
@@ -20,14 +23,8 @@ namespace CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateW
                 throw new Exceptions.NotFoundException(nameof(WorkExperience), request.WorkExperienceId);
 
 
-            workExperienceDetails.Designation = request.Designation ?? workExperienceDetails.Designation;
-
-            workExperienceDetails.Company = request.Company ?? workExperienceDetails.Company;
-
-            workExperienceDetails.StartDate = request.StartDate ?? workExperienceDetails.StartDate;
-
-            workExperienceDetails.EndDate = request.EndDate ?? workExperienceDetails.EndDate;
-
+            mapper.Map(request, workExperienceDetails);
+            
             await repository.UpdateAsync(workExperienceDetails);
 
             return Unit.Value;

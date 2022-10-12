@@ -16,6 +16,7 @@ using CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
+using CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.ViewModels.Account;
 using CVBuilder.Application.ViewModels.Degree;
@@ -83,6 +84,8 @@ namespace CVBuilder.Application.Profiles
             CreateMap<WorkExperience, AddWorkExperienceCommandResponse>();
             CreateMap<WorkExperienceViewModel, UpdateWorkExperienceCommand>();
             CreateMap<UpdateWorkExperienceCommand, WorkExperience>();
+            CreateMap<PartialUpdateWorkExperienceCommand, WorkExperience>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             // Update Password Mappings
             CreateMap<UpdatePasswordViewModel, UpdatePasswordCommand>();
