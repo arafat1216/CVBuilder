@@ -14,7 +14,7 @@ namespace CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject
         }
         public async Task<Unit> Handle(PartialUpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            var projectDetails = await repository.GetProjectByIdAsync(request.EmployeeId, request.ProjectId);
+            var projectDetails = await GetProjectDetails(request.EmployeeId, request.ProjectId);
 
             if (projectDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.ProjectId);
@@ -29,6 +29,11 @@ namespace CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject
             await repository.UpdateAsync(projectDetails);
 
             return Unit.Value;
+        }
+
+        private async Task<Project?> GetProjectDetails(Guid employeeId, int projectId)
+        {
+            return await repository.GetProjectByIdAsync(employeeId, projectId);
         }
     }
 }
