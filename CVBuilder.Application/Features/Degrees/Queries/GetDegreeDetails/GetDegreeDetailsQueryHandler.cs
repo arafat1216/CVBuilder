@@ -38,7 +38,7 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreeDetails
             return degreeDetailsDto;
         }
 
-        private async Task<Degree> GetDegreeDetails(Guid employeeId, int degreeId)
+        private async Task<Degree?> GetDegreeDetails(Guid employeeId, int degreeId)
         {
             return await repository.GetDegreeByIdAsync(employeeId, degreeId);
         }
