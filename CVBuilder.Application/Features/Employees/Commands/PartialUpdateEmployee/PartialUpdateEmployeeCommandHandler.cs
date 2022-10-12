@@ -14,7 +14,7 @@ namespace CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmploye
         }
         public async Task<Unit> Handle(PartialUpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employeeDetails = await repository.GetEmployeeDetailsAsync(request.EmployeeId);
+            var employeeDetails = await GetEmployeeDetails(request.EmployeeId);
 
             if (employeeDetails == null)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
@@ -28,10 +28,15 @@ namespace CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmploye
             employeeDetails.Email = request.Email ?? employeeDetails.Email;
 
             employeeDetails.Role = request.Role ?? employeeDetails.Role;
-            
+
             await repository.UpdateEmployeePartiallyAsync(employeeDetails);
 
             return Unit.Value;
+        }
+
+        private async Task<Employee?> GetEmployeeDetails(Guid employeeId)
+        {
+            return await repository.GetEmployeeDetailsAsync(employeeId);
         }
     }
 }
