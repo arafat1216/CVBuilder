@@ -1,4 +1,5 @@
-﻿using CVBuilder.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
 using MediatR;
 
@@ -7,10 +8,12 @@ namespace CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject
     public class PartialUpdateProjectCommandHandler : IRequestHandler<PartialUpdateProjectCommand>
     {
         private readonly IProjectRepository repository;
+        private readonly IMapper mapper;
 
-        public PartialUpdateProjectCommandHandler(IProjectRepository repository)
+        public PartialUpdateProjectCommandHandler(IProjectRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
         public async Task<Unit> Handle(PartialUpdateProjectCommand request, CancellationToken cancellationToken)
         {
@@ -20,11 +23,7 @@ namespace CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject
                 throw new Exceptions.NotFoundException(nameof(Skill), request.ProjectId);
 
 
-            projectDetails.Name = request.Name ?? projectDetails.Name;
-
-            projectDetails.Description = request.Description ?? projectDetails.Description;
-
-            projectDetails.Link = request.Link ?? projectDetails.Link;
+            mapper.Map(request, projectDetails);
 
             await repository.UpdateAsync(projectDetails);
 
