@@ -95,9 +95,15 @@ namespace CVBuilder.Api.Controllers
 
             requestDto.EmployeeId = id;
 
+            if (!TryValidateModel(requestDto))
+            {
+                return ValidationProblem();
+            }
+
             await mediator.Send(requestDto);
 
-            return Ok("Updated Successfully");  
+            return Ok("Updated Successfully");
+
         }
 
         [HttpDelete("{id}")]

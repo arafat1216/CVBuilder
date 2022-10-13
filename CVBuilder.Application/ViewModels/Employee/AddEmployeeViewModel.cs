@@ -13,7 +13,7 @@ namespace CVBuilder.Application.ViewModels.Employee
         public string Email { get; set; }
 
         [Required]
-        [RegularExpression(@"(^(01){1}[3-9]{1}\d{8})$")]
+        [RegularExpression(@"(^(01){1}[3-9]{1}\d{8})$",ErrorMessage ="Invalid Phone Number")]
         public string PhoneNo { get; set; }
 
         [Required]
