@@ -1,10 +1,8 @@
 using CVBuilder.Api;
-using CVBuilder.Api.Middleware;
 using CVBuilder.Application;
 using CVBuilder.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
