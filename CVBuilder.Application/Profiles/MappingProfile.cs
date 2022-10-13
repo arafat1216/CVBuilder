@@ -27,6 +27,7 @@ using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Application.ViewModels.Skill;
 using CVBuilder.Application.ViewModels.WorkExperience;
 using CVBuilder.Domain.Entities;
+using CVBuilder.Domain.Enums;
 
 namespace CVBuilder.Application.Profiles
 {
@@ -35,7 +36,8 @@ namespace CVBuilder.Application.Profiles
         public MappingProfile()
         {
             // Employee Mappings
-            CreateMap<Employee, EmployeesListDto>();
+            CreateMap<Employee, EmployeesListDto>()
+                .ForMember(e => e.Role, op => op.MapFrom(o => o.Role));
             CreateMap<Employee, EmployeeDetailsDto>();
             CreateMap<AddEmployeeViewModel, AddEmployeeCommand>();
             CreateMap<AddEmployeeCommand, Employee>();
@@ -45,7 +47,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<PartialUpdateEmployeeCommand, Employee>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-
+            
             // Skill Mappings
             CreateMap<Skill, SkillDetailsDto>();
             CreateMap<Skill, SkillsListDto>();
