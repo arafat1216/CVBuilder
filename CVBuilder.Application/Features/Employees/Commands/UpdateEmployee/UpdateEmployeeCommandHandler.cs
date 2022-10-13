@@ -20,9 +20,9 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
 
             // check if employee exists
 
-            var employeeExists = await EmployeeExists(request.EmployeeId);
+            var employeeToUpdate = await GetEmployeeToUpdate(request.EmployeeId);
 
-            if (!employeeExists)
+            if (employeeToUpdate == null)
             {
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
             }
@@ -30,17 +30,18 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
 
             // mapping incoming request to employee
 
-            var employee = mapper.Map<Employee>(request);
+            mapper.Map(request, employeeToUpdate);
 
-            
-            await repository.UpdateEmployeeAsync(employee);
+
+            await repository.UpdateEmployeeAsync(employeeToUpdate);
 
             return Unit.Value;
         }
 
-        private async Task<bool> EmployeeExists(Guid employeeId)
+        private async Task<Employee?> GetEmployeeToUpdate(Guid employeeId)
         {
-            return await repository.EmployeeExistsAsync(employeeId);
+            return await repository.GetEmployeeDetailsAsync(employeeId);
         }
+
     }
 }

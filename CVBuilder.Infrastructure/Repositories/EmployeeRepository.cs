@@ -79,25 +79,12 @@ namespace CVBuilder.Infrastructure.Repositories
 
         public async Task UpdateEmployeeAsync(Employee employee)
         {
-            var employeeToBeUpdated = await GetEmployeeByIdAsync(employee.EmployeeId);
-            employeeToBeUpdated.FullName = employee.FullName;
-            employeeToBeUpdated.Address = employee.Address;
-            employeeToBeUpdated.PhoneNo = employee.PhoneNo;
-            employeeToBeUpdated.Role = employee.Role;
-            employeeToBeUpdated.Email = employee.Email;
-
-            dbset.Update(employeeToBeUpdated);
-
-            await context.SaveChangesAsync();
-        }
-
-        public async Task UpdateEmployeePartiallyAsync(Employee employee)
-        {
             dbset.Update(employee);
 
             await context.SaveChangesAsync();
         }
 
+        
         public async Task UpdateEmployeePasswordAsync(Employee employee)
         {
             dbset.Update(employee);

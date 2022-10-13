@@ -31,7 +31,7 @@ namespace CVBuilder.Application.Features.Employees.Commands.DeleteEmployee
             {
                 employee.IsDeleted = true;
 
-                await repository.UpdateEmployeePartiallyAsync(employee);
+                await repository.UpdateEmployeeAsync(employee);
 
                 return Unit.Value;
             }

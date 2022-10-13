@@ -25,7 +25,7 @@ namespace CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmploye
 
             mapper.Map(request, employeeDetails);
 
-            await repository.UpdateEmployeePartiallyAsync(employeeDetails);
+            await repository.UpdateEmployeeAsync(employeeDetails);
 
             return Unit.Value;
         }
