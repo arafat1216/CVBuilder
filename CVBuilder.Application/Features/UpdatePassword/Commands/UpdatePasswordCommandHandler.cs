@@ -1,6 +1,8 @@
-﻿using CVBuilder.Application.Contracts.Persistence;
+﻿using CVBuilder.Application.Contracts.Authentication;
+using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,14 @@ namespace CVBuilder.Application.Features.UpdatePassword.Commands
     public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand>
     {
         private readonly IEmployeeRepository repository;
+        private readonly ILogger<UpdatePasswordCommandHandler> logger;
+        private readonly IApplicationUser applicationUser;
 
-        public UpdatePasswordCommandHandler(IEmployeeRepository repository)
+        public UpdatePasswordCommandHandler(IEmployeeRepository repository, ILogger<UpdatePasswordCommandHandler> logger, IApplicationUser applicationUser)
         {
             this.repository = repository;
+            this.logger = logger;
+            this.applicationUser = applicationUser;
         }
         public async Task<Unit> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
         {
@@ -36,6 +42,8 @@ namespace CVBuilder.Application.Features.UpdatePassword.Commands
             employee.Password = GetHashedPassword(request.NewPassword);
 
             await repository.UpdateEmployeePasswordAsync(employee);
+
+            logger.LogInformation($"Password Updated  By {applicationUser.GetUserId()}");
 
             return Unit.Value;
         }
