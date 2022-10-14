@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
 {
@@ -9,11 +11,15 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
     {
         private readonly IEmployeeRepository repository;
         private readonly IMapper mapper;
+        private readonly ILogger<UpdateEmployeeCommandHandler> logger;
+        private readonly IApplicationUser applicationUser;
 
-        public UpdateEmployeeCommandHandler(IEmployeeRepository repository, IMapper mapper)
+        public UpdateEmployeeCommandHandler(IEmployeeRepository repository, IMapper mapper, ILogger<UpdateEmployeeCommandHandler> logger, IApplicationUser applicationUser)
         {
             this.repository = repository;
             this.mapper = mapper;
+            this.logger = logger;
+            this.applicationUser = applicationUser;
         }
         public async Task<Unit> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
@@ -34,6 +40,8 @@ namespace CVBuilder.Application.Features.Employees.Commands.UpdateEmployee
 
 
             await repository.UpdateEmployeeAsync(employeeToUpdate);
+
+            logger.LogInformation($"Employee With Id: {request.EmployeeId} Updated By {applicationUser.GetUserId()}");
 
             return Unit.Value;
         }
