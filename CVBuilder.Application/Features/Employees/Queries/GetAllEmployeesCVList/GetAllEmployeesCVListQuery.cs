@@ -9,5 +9,6 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetAllEmployeesCVList
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public string? SearchBySkill { get; set; }
+        public string? searchByDegree { get; set; }
     }
 }

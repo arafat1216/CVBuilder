@@ -21,7 +21,7 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetAllEmployeesCVList
 
         public async Task<(List<EmployeeDetailsDto>, PaginationMetaData)> Handle(GetAllEmployeesCVListQuery request, CancellationToken cancellationToken)
         {
-            var (employees, metaData) = await repository.GetAllEmployeesCVAsync(request.SearchBySkill, request.PageNumber, request.PageSize);
+            var (employees, metaData) = await repository.GetAllEmployeesCVAsync(request.SearchBySkill, request.searchByDegree, request.PageNumber, request.PageSize);
 
             var employeesDto = mapper.Map<List<EmployeeDetailsDto>>(employees);
 

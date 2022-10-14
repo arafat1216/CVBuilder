@@ -52,7 +52,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("Get-All-Employees-CV")]
-        public async Task<IActionResult> GetAllEmployeesCV([FromQuery] string? searchBySkill, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
+        public async Task<IActionResult> GetAllEmployeesCV([FromQuery] string? searchBySkill, [FromQuery] string? searchByDegree, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
             if (pageNumber > maximumPageSize)
                 pageNumber = maximumPageSize;
@@ -60,6 +60,7 @@ namespace CVBuilder.Api.Controllers
             var requestDto = new GetAllEmployeesCVListQuery()
             {
                 SearchBySkill = searchBySkill,
+                searchByDegree = searchByDegree,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
             };

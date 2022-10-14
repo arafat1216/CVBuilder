@@ -7,6 +7,7 @@ namespace CVBuilder.Application.Features.Degrees.Commands.UpdateDegree
         public Guid EmployeeId { get; set; }
         public int DegreeId { get; set; }
         public string Name { get; set; }
+        public string Subject { get; set; }
         public string Institute { get; set; }
     }
 }
