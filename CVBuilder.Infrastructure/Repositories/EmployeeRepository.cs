@@ -49,12 +49,43 @@ namespace CVBuilder.Infrastructure.Repositories
 
             var collectionToReturn = await collection
                 .OrderBy(e => e.FullName)
-                .Skip(pageSize*(pageNumber - 1))
+                .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
 
             return (collectionToReturn, paginationMetaData);
 
+        }
+
+        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(string? searchBySkill, int pageNumber, int pageSize)
+        {
+            var collection = dbset as IQueryable<Employee>;
+            collection = collection
+                .Include(e => e.Skills.Where(s => !s.IsDeleted))
+                .Include(e => e.Degrees.Where(d => !d.IsDeleted))
+                .Include(e => e.WorkExperiences.Where(w => !w.IsDeleted))
+                .Include(e => e.Projects.Where(p => !p.IsDeleted))
+                .Where(e => !e.IsDeleted);
+
+            if (!string.IsNullOrEmpty(searchBySkill))
+            {
+                searchBySkill = searchBySkill.Trim();
+
+                collection = collection.Where(e => e.Skills.Any(s => s.Name == searchBySkill && !s.IsDeleted));
+
+            }
+
+            var totalItems = await collection.CountAsync();
+
+            var paginationMetaData = new PaginationMetaData(totalItems, pageNumber, pageSize);
+
+            var collectionToReturn = await collection
+                .OrderBy(e => e.FullName)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (collectionToReturn, paginationMetaData);
         }
 
         public async Task<Employee?> GetEmployeeByEmailAsync(string email)
@@ -84,7 +115,7 @@ namespace CVBuilder.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        
+
         public async Task UpdateEmployeePasswordAsync(Employee employee)
         {
             dbset.Update(employee);

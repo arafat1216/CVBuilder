@@ -3,6 +3,7 @@ using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
 using CVBuilder.Application.Features.Employees.Commands.DeleteEmployee;
 using CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmployee;
 using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
+using CVBuilder.Application.Features.Employees.Queries.GetAllEmployeesCVList;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeesList;
 using CVBuilder.Application.ViewModels.Employee;
@@ -49,6 +50,27 @@ namespace CVBuilder.Api.Controllers
 
             return Ok(employees);
         }
+
+        [HttpGet("Get-All-Employees-CV")]
+        public async Task<IActionResult> GetAllEmployeesCV([FromQuery] string? searchBySkill, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
+        {
+            if (pageNumber > maximumPageSize)
+                pageNumber = maximumPageSize;
+
+            var requestDto = new GetAllEmployeesCVListQuery()
+            {
+                SearchBySkill = searchBySkill,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+            };
+
+            var (employees, metaData) = await mediator.Send(requestDto);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
+
+            return Ok(employees);
+        }
+
 
 
         [HttpGet("{id}")]
