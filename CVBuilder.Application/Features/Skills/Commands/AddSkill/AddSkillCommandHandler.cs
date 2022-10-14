@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace CVBuilder.Application.Features.Skills.Commands.AddSkill
 {
@@ -10,12 +12,16 @@ namespace CVBuilder.Application.Features.Skills.Commands.AddSkill
         private readonly ISkillRepository skillRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<AddSkillCommandHandler> logger;
+        private readonly IApplicationUser applicationUser;
 
-        public AddSkillCommandHandler(ISkillRepository skillRepository, IEmployeeRepository employeeRepository, IMapper mapper)
+        public AddSkillCommandHandler(ISkillRepository skillRepository, IEmployeeRepository employeeRepository, IMapper mapper, ILogger<AddSkillCommandHandler> logger, IApplicationUser applicationUser)
         {
             this.skillRepository = skillRepository;
             this.employeeRepository = employeeRepository;
             this.mapper = mapper;
+            this.logger = logger;
+            this.applicationUser = applicationUser;
         }
         public async Task<AddSkillCommandResponse> Handle(AddSkillCommand request, CancellationToken cancellationToken)
         {
@@ -32,6 +38,9 @@ namespace CVBuilder.Application.Features.Skills.Commands.AddSkill
             var skillToAdd = mapper.Map<Skill>(request);
 
             var response = await skillRepository.AddAsync(skillToAdd);
+
+            logger.LogInformation($"Skill With Id: {response.SkillId} Added For Employee: {response.EmployeeId} By {applicationUser.GetUserId()}");
+
 
             return mapper.Map<AddSkillCommandResponse>(response);
         }

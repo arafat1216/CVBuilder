@@ -1,5 +1,6 @@
 using CVBuilder.Api;
 using CVBuilder.Application;
+using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -59,6 +60,8 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IApplicationUser, ApplicationUser>();
 
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)

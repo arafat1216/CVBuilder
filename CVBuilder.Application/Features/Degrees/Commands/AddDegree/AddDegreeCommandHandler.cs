@@ -33,6 +33,7 @@ namespace CVBuilder.Application.Features.Degrees.Commands.AddDegree
             var degreeToAdd = mapper.Map<Degree>(request);
 
             
+
             var response = await degreeRepository.AddAsync(degreeToAdd);
 
             return mapper.Map<AddDegreeCommandResponse>(response);

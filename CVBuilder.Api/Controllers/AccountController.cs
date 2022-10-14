@@ -35,8 +35,6 @@ namespace CVBuilder.Api.Controllers
         {
             var token = await service.AuthenticateUserAsync(loginViewModel);
 
-            logger.LogInformation($"Logged in at {DateTime.Now}");
-
             return Ok(token);
         }
 

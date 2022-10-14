@@ -21,11 +21,13 @@ namespace CVBuilder.Api.Controllers
     {
         private readonly IMediator mediator;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public DegreesController(IMediator mediator, IMapper mapper)
+        public DegreesController(IMediator mediator, IMapper mapper, ILogger<DegreesController> logger)
         {
             this.mediator = mediator;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
 
@@ -67,6 +69,9 @@ namespace CVBuilder.Api.Controllers
 
             var response = await mediator.Send(requestDto);
 
+
+            logger.LogInformation($"Degree With Id: {response.DegreeId} Added For Employee: {response.EmployeeId} By {User.Identity.Name}");
+
             return CreatedAtAction(nameof(GetDegreeDetails), new { employeeId = response.EmployeeId, degreeId = response.DegreeId }, response);
         }
 
@@ -80,6 +85,8 @@ namespace CVBuilder.Api.Controllers
             requestDto.DegreeId = degreeId;
 
             await mediator.Send(requestDto);
+
+            logger.LogInformation($"Degree With Id: {degreeId} Updated For Employee: {employeeId} By {User.Identity.Name}");
 
             return Ok(requestDto);
         }
