@@ -6,7 +6,8 @@ namespace CVBuilder.Application.Contracts.Persistence
     public interface IEmployeeRepository
     {
         Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesAsync(int pageNumber, int pageSize);
-        Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(string? searchBySkill, string? searchByDegree, int pageNumber, int pageSize);
+        Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(string? searchBySkill, string? searchByDegree,
+            string? searchByProject, int pageNumber, int pageSize);
         Task<Employee> AddEmployeeAsync(Employee employee);
         Task<Employee?> GetEmployeeByIdAsync(Guid employeeId);
         Task<Employee?> GetEmployeeByEmailAsync(string email);

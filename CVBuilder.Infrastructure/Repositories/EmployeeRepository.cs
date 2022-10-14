@@ -57,7 +57,7 @@ namespace CVBuilder.Infrastructure.Repositories
 
         }
 
-        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(string? searchBySkill, string? searchByDegree, int pageNumber, int pageSize)
+        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(string? searchBySkill, string? searchByDegree, string? searchByProject, int pageNumber, int pageSize)
         {
             var collection = dbset as IQueryable<Employee>;
             collection = collection
@@ -79,7 +79,14 @@ namespace CVBuilder.Infrastructure.Repositories
             {
                 searchByDegree = searchByDegree.Trim();
 
-                collection = collection.Where(e => e.Degrees.Any(d => d.Subject.Equals(searchByDegree)));
+                collection = collection.Where(e => e.Degrees.Any(d => d.Subject.Equals(searchByDegree) && !d.IsDeleted));
+            }
+
+            if (!string.IsNullOrEmpty(searchByProject))
+            {
+                searchByProject = searchByProject.Trim();
+
+                collection = collection.Where(e => e.Projects.Any(p => p.Name.Equals(searchByProject) && !p.IsDeleted));
             }
 
             var totalItems = await collection.CountAsync();
