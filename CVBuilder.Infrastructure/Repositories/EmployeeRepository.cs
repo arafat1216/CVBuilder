@@ -69,24 +69,18 @@ namespace CVBuilder.Infrastructure.Repositories
 
             if (!string.IsNullOrEmpty(searchBySkill))
             {
-                searchBySkill = searchBySkill.Trim();
-
-                collection = collection.Where(e => e.Skills.Any(s => s.Name == searchBySkill && !s.IsDeleted));
+                collection = ApplySearchBySkillFilter(searchBySkill, collection);
 
             }
 
             if (!string.IsNullOrEmpty(searchByDegree))
             {
-                searchByDegree = searchByDegree.Trim();
-
-                collection = collection.Where(e => e.Degrees.Any(d => d.Subject.Equals(searchByDegree) && !d.IsDeleted));
+                collection = ApplySearchByDegreeFilter(searchByDegree, collection);
             }
 
             if (!string.IsNullOrEmpty(searchByProject))
             {
-                searchByProject = searchByProject.Trim();
-
-                collection = collection.Where(e => e.Projects.Any(p => p.Name.Equals(searchByProject) && !p.IsDeleted));
+                collection = ApplySearchByProjectFilter(searchByProject, collection);
             }
 
             var totalItems = await collection.CountAsync();
@@ -100,6 +94,27 @@ namespace CVBuilder.Infrastructure.Repositories
                 .ToListAsync();
 
             return (collectionToReturn, paginationMetaData);
+        }
+
+        private IQueryable<Employee> ApplySearchByProjectFilter(string searchByProject, IQueryable<Employee> collection)
+        {
+            searchByProject = searchByProject.Trim();
+
+            return collection.Where(e => e.Projects.Any(p => p.Name.Equals(searchByProject) && !p.IsDeleted));
+        }
+
+        private IQueryable<Employee> ApplySearchByDegreeFilter(string searchByDegree, IQueryable<Employee> collection)
+        {
+            searchByDegree = searchByDegree.Trim();
+
+            return collection.Where(e => e.Degrees.Any(d => d.Subject.Equals(searchByDegree) && !d.IsDeleted));
+        }
+
+        private IQueryable<Employee> ApplySearchBySkillFilter(string searchBySkill, IQueryable<Employee> collection)
+        {
+            searchBySkill = searchBySkill.Trim();
+
+            return collection.Where(e => e.Skills.Any(s => s.Name == searchBySkill && !s.IsDeleted));
         }
 
         public async Task<Employee?> GetEmployeeByEmailAsync(string email)
