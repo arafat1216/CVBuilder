@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Contracts.Authentication;
+using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Exceptions;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
@@ -20,13 +21,17 @@ namespace CVBuilder.Api.Controllers
         private readonly IMediator mediator;
         private readonly IMapper mapper;
         private readonly ILogger<AccountController> logger;
+        private readonly IPdfGeneratorService pdfGeneratorService;
+        private readonly ITemplateGeneratorService templateGeneratorService;
 
-        public AccountController(IAuthenticationService service, IMediator mediator, IMapper mapper, ILogger<AccountController> logger)
+        public AccountController(IAuthenticationService service, IMediator mediator, IMapper mapper, ILogger<AccountController> logger, IPdfGeneratorService pdfGeneratorService, ITemplateGeneratorService templateGeneratorService)
         {
             this.service = service;
             this.mediator = mediator;
             this.mapper = mapper;
             this.logger = logger;
+            this.pdfGeneratorService = pdfGeneratorService;
+            this.templateGeneratorService = templateGeneratorService;
         }
 
         [HttpPost("login")]
@@ -50,6 +55,23 @@ namespace CVBuilder.Api.Controllers
             var result = await mediator.Send(requestDto);
 
             return Ok(result);
+        }
+
+        [HttpGet("download-cv")]
+        public async Task<IActionResult> DownloadCv()
+        {
+            var userId = Guid.Parse(User.Identity.Name);
+
+            var requestDto = new GetEmployeeDetailQuery()
+            {
+                Id = userId,
+            };
+
+            var employeeDetails = await mediator.Send(requestDto);
+
+            var file = await pdfGeneratorService.GeneratePdf(employeeDetails);
+
+            return File(file,"application/octet-stream","Resume.pdf");
         }
 
         [HttpPost("update-password")]

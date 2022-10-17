@@ -1,9 +1,12 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
+using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Application.Models.Authentication;
 using CVBuilder.Infrastructure.Data;
 using CVBuilder.Infrastructure.Repositories;
 using CVBuilder.Infrastructure.Services;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +35,9 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IWorkExperienceRepository, WorkExperienceRepository>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+            services.AddScoped<ITemplateGeneratorService, TemplateGeneratorService>();
+            services.AddScoped<IPdfGeneratorService, PdfGeneratorService>();
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

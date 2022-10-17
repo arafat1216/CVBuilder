@@ -1,0 +1,171 @@
+﻿@model CVBuilder.Application.Dtos.Employee.EmployeeDetailsDto
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <style>
+
+        body {
+            color: #3C4048;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+
+        header {
+            text-align: center;
+        }
+
+        .contact-details {
+            list-style: none;
+            padding:0;
+            padding-bottom: 20px;
+        }
+
+        .skills-list {
+            list-style: none;
+            padding:0;
+            margin-bottom: 30px;
+        }
+
+            .skills-list li {
+                padding-bottom: 5px;
+                display: inline-block;
+                padding: 0 10px;
+                background-color:lightgrey;
+                border-radius:5px;
+            }
+
+        .contact-details li {
+            padding-bottom: 5px;
+            display: inline-block;
+            padding-right: 10px;
+            font-size: 18px;
+            border-right: 2px solid darkgray;
+        }
+
+            .contact-details li:last-child {
+                border-right: none;
+            }
+
+
+        .section-title {
+            text-transform: uppercase;
+            color: dimgray;
+        }
+
+        .section-body {
+            padding-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="Title">
+            <h1>@Model.FullName</h1>
+        </div>
+        <div class="contact-info">
+            <ul class="contact-details">
+                <li><b>Email:</b> @Model.Email</li>
+                <li><b>Phone No:</b> @Model.PhoneNo</li>
+                <li><b>Address:</b> @Model.Address</li>
+            </ul>
+        </div>
+        <hr>
+    </header>
+    <section class="work-experience-section">
+        <div class="section-title">
+            <h2>Work Experience</h2>
+        </div>
+        <hr />
+        <div class="section-body">
+            @foreach (var item in Model.WorkExperiences)
+            {
+                <div style="margin-bottom:30px">
+                    <h3>@item.Designation</h3>
+                    <p>@item.Company</p>
+                </div>
+
+            }
+
+        </div>
+        <hr />
+    </section>
+    <section class="skills-section">
+        <div class="row">
+            <div class="section-title">
+                <h2>Key Skills</h2>
+            </div>
+            <hr />
+            <div class="section-body">
+                <ul class="skills-list">
+                    @foreach (var item in Model.Skills)
+                    {
+                        <li><h3>@item.Name</h3></li>
+                    }
+                </ul>
+
+
+            </div>
+        </div>
+        <hr />
+    </section>
+    <section class="education-section">
+        <div class="row">
+            <div class="section-title">
+                <h2>Education</h2>
+            </div>
+            <hr />
+            <div class="section-body">
+                @foreach (var item in Model.Degrees)
+                {
+                    <div style="margin-bottom:30px">
+                        <h3>@item.Name</h3>
+                        @if (!string.IsNullOrEmpty(item.Subject))
+                        {
+                            <p>Subject: @item.Subject</p>
+                        }
+                        <p>@item.Institute</p>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+        <hr />
+    </section>
+    <section class="project-section">
+        <div class="row">
+            <div class="section-title">
+                <h2>Projects</h2>
+            </div>
+            <hr />
+            <div class="section-body">
+                @foreach (var item in Model.Projects)
+                {
+                    <div style="margin-bottom:30px">
+                        <h3>@item.Name</h3>
+                        <p> Description: @item.Description</p>
+                        @if (!string.IsNullOrEmpty(item.Link))
+                        {
+                            <p>Link: @item.Link</p>
+                        }
+                    </div>
+
+                }
+
+            </div>
+        </div>
+        
+    </section>
+
+
+</body>
+</html>
