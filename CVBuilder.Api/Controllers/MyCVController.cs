@@ -6,6 +6,7 @@ using CVBuilder.Application.Features.Projects.Queries.GetProjectsList;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillsList;
 using CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperiencesList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace CVBuilder.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MyCVController : ControllerBase
     {
         private readonly IMediator mediator;

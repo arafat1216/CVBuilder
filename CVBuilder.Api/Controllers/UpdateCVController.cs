@@ -5,8 +5,11 @@ using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceReques
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddWorkExperienceRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateDegreeRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateProjectRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateSkillRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateWorkExperienceRequest;
 using CVBuilder.Application.ViewModels.UpdateResourceRequest;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +18,7 @@ namespace CVBuilder.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UpdateCVController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -100,10 +104,50 @@ namespace CVBuilder.Api.Controllers
         }
 
 
+        [HttpPatch("update-skill")]
+        public async Task<IActionResult> UpdateSkill([FromQuery] int skillId, [FromBody] JsonPatchDocument patchDocument)
+        {
+            var requestDto = new UpdateSkillRequestCommand();
+
+            patchDocument.ApplyTo(requestDto);
+
+            requestDto.SkillId = skillId;
+
+            if (!TryValidateModel(requestDto))
+            {
+                return ValidationProblem();
+            }
+
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
+        }
+
+
         [HttpPost("add-work-experience")]
         public async Task<IActionResult> AddWorkExperience([FromBody] AddWorkExperienceRequestViewModel viewModel)
         {
             var requestDto = mapper.Map<AddWorkExperienceRequestCommand>(viewModel);
+
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
+        }
+
+
+        [HttpPatch("update-work-experience")]
+        public async Task<IActionResult> UpdateWorkExperience([FromQuery] int workExperienceId, [FromBody] JsonPatchDocument patchDocument)
+        {
+            var requestDto = new UpdateWorkExperienceRequestCommand();
+
+            patchDocument.ApplyTo(requestDto);
+
+            requestDto.WorkExperienceId = workExperienceId;
+
+            if (!TryValidateModel(requestDto))
+            {
+                return ValidationProblem();
+            }
 
             var response = await mediator.Send(requestDto);
 
