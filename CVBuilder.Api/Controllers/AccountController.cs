@@ -2,11 +2,14 @@
 using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Exceptions;
+using CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmployee;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
+using CVBuilder.Application.Features.UpdatePersonalDetails.Commands;
 using CVBuilder.Application.ViewModels.Account;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -98,6 +101,24 @@ namespace CVBuilder.Api.Controllers
             return NoContent();
         }
 
+        [HttpPatch("update-personal-details")]
+        public async Task<IActionResult> UpdatePersonalDetails([FromBody] JsonPatchDocument document)
+        {
+            var requestDto = new UpdatePersonalDetailsCommand();
+
+            document.ApplyTo(requestDto);   
+
+            requestDto.EmployeeId = Guid.Parse(User.Identity.Name);
+
+            if (!TryValidateModel(requestDto))
+            {
+                return ValidationProblem();
+            }
+
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
+        }
 
     }
 }
