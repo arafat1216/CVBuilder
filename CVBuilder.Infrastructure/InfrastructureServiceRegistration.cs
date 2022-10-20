@@ -33,6 +33,12 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<IWorkExperienceRepository, WorkExperienceRepository>();
+            services.AddScoped<IResourceRequestRepository, ResourceRequestRepository>();
+            services.AddScoped<IDegreeUpdateRepository, DegreeUpdateRepository>();
+            services.AddScoped<IPersonalDetailsUpdateRepository, PersonalDetailsUpdateRepository>();
+            services.AddScoped<IProjectUpdateRepository, ProjectUpdateRepository>();
+            services.AddScoped<ISkillUpdateRepository, SkillUpdateRepository>();
+            services.AddScoped<IWorkExperienceUpdateRepository, WorkExperienceUpdateRepository>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             services.AddScoped<ITemplateGeneratorService, TemplateGeneratorService>();
