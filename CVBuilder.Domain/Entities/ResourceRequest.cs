@@ -19,11 +19,11 @@
 
 
         // Navigation Property
-        public DegreeUpdateRequest DegreeUpdateRequest { get; set; } = new DegreeUpdateRequest();
-        public PersonalDetailsUpdateRequest PersonalDetailsUpdateRequest { get; set; } = new PersonalDetailsUpdateRequest();
-        public ProjectUpdateRequest ProjectUpdateRequest { get; set; } = new ProjectUpdateRequest();
-        public SkillUpdateRequest SkillUpdateRequest { get; set; } = new SkillUpdateRequest();
-        public WorkExperienceUpdateRequest WorkExperienceUpdateRequest { get; set; } = new WorkExperienceUpdateRequest();
+        public DegreeUpdateRequest? DegreeUpdateRequest { get; set; } 
+        public PersonalDetailsUpdateRequest? PersonalDetailsUpdateRequest { get; set; } 
+        public ProjectUpdateRequest? ProjectUpdateRequest { get; set; } 
+        public SkillUpdateRequest? SkillUpdateRequest { get; set; } 
+        public WorkExperienceUpdateRequest? WorkExperienceUpdateRequest { get; set; } 
 
     }
 }
