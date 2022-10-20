@@ -2,6 +2,7 @@
 using CVBuilder.Application.Dtos.Degree;
 using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Application.Dtos.Project;
+using CVBuilder.Application.Dtos.ResourceRequests;
 using CVBuilder.Application.Dtos.Skill;
 using CVBuilder.Application.Dtos.WorkExperience;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
@@ -17,6 +18,7 @@ using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
+using CVBuilder.Application.Features.UpdatePersonalDetails.Commands;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
@@ -97,6 +99,16 @@ namespace CVBuilder.Application.Profiles
 
             // Update Password Mappings
             CreateMap<UpdatePasswordViewModel, UpdatePasswordCommand>();
+
+
+            // Personal Details Update Mappings
+            CreateMap<UpdatePersonalDetailsCommand, PersonalDetailsUpdateRequest>();
+            CreateMap<PersonalDetailsUpdateRequest, UpdatePersonalDetailsCommandResponse>();
+
+
+            // Resource Requests Mappings
+            CreateMap<ResourceRequest, ResourceRequestsListDto>();
+            CreateMap<ResourceRequest, UpdatePersonalDetailsCommandResponse>();
 
             
         }
