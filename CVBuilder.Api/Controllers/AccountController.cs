@@ -46,37 +46,7 @@ namespace CVBuilder.Api.Controllers
             return Ok(token);
         }
 
-        [HttpGet("view-cv")]
-        public async Task<IActionResult> GetMyCv()
-        {
-            var userId = Guid.Parse(User.Identity.Name);
-            var requestDto = new GetEmployeeDetailQuery()
-            {
-                Id = userId,
-            };
-
-            var result = await mediator.Send(requestDto);
-
-            return Ok(result);
-        }
-
-        [HttpGet("download-cv")]
-        public async Task<IActionResult> DownloadCv()
-        {
-            var userId = Guid.Parse(User.Identity.Name);
-
-            var requestDto = new GetEmployeeDetailQuery()
-            {
-                Id = userId,
-            };
-
-            var employeeDetails = await mediator.Send(requestDto);
-
-            var file = await pdfGeneratorService.GeneratePdf(employeeDetails);
-
-            return File(file,"application/octet-stream","Resume.pdf");
-        }
-
+        
         [HttpPost("update-password")]
         public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordViewModel updatePasswordViewModel)
         {
@@ -100,6 +70,7 @@ namespace CVBuilder.Api.Controllers
 
             return NoContent();
         }
+
 
         [HttpPatch("update-personal-details")]
         public async Task<IActionResult> UpdatePersonalDetails([FromBody] JsonPatchDocument document)
