@@ -14,6 +14,12 @@ using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
 using CVBuilder.Application.Features.Projects.Commands.AddProject;
 using CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject;
 using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
+using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddDegreeRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddProjectRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddSkillRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddWorkExperienceRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateDegreeRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateProjectRequest;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
@@ -27,6 +33,7 @@ using CVBuilder.Application.ViewModels.Degree;
 using CVBuilder.Application.ViewModels.Employee;
 using CVBuilder.Application.ViewModels.Project;
 using CVBuilder.Application.ViewModels.Skill;
+using CVBuilder.Application.ViewModels.UpdateResourceRequest;
 using CVBuilder.Application.ViewModels.WorkExperience;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
@@ -105,6 +112,33 @@ namespace CVBuilder.Application.Profiles
             CreateMap<UpdatePersonalDetailsCommand, PersonalDetailsUpdateRequest>();
             CreateMap<PersonalDetailsUpdateRequest, UpdatePersonalDetailsCommandResponse>();
 
+            // Add Degree Request Mappings
+            CreateMap<AddDegreeRequestViewModel, AddDegreeRequestCommand>();
+            CreateMap<AddDegreeRequestCommand, DegreeUpdateRequest>();
+            CreateMap<ResourceRequest, AddDegreeRequestCommandResponse>();
+
+            // Update Degree Request Mappings
+            CreateMap<UpdateDegreeRequestCommand, DegreeUpdateRequest>();
+            CreateMap<ResourceRequest, UpdateDegreeRequestCommandResponse>();
+
+            // Add Project Request Mappings
+            CreateMap<AddProjectRequestViewModel, AddProjectRequestCommand>();
+            CreateMap<AddProjectRequestCommand, ProjectUpdateRequest>();
+            CreateMap<ResourceRequest, AddProjectRequestCommandResponse>();
+
+            // Update Project Request Mappings
+            CreateMap<UpdateProjectRequestCommand, ProjectUpdateRequest>();
+            CreateMap<ResourceRequest, UpdateProjectRequestCommandResponse>();
+
+            // Add Skill Request Mappings
+            CreateMap<AddSkillRequestViewModel, AddSkillRequestCommand>();
+            CreateMap<AddSkillRequestCommand, SkillUpdateRequest>();
+            CreateMap<ResourceRequest, AddSkillRequestCommandResponse>();
+
+            // Add Work Experience Request Mappings
+            CreateMap<AddWorkExperienceRequestViewModel, AddWorkExperienceRequestCommand>();
+            CreateMap<AddWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
+            CreateMap<ResourceRequest, AddWorkExperienceRequestCommandResponse>();
 
             // Resource Requests Mappings
             CreateMap<ResourceRequest, ResourceRequestsListDto>();

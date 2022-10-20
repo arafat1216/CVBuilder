@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CVBuilder.Application.ViewModels.Degree
+namespace CVBuilder.Application.ViewModels.UpdateResourceRequest
 {
-    public class DegreeViewModel
+    public class AddDegreeRequestViewModel
     {
         [Required]
         public string Name { get; set; }
@@ -11,5 +11,8 @@ namespace CVBuilder.Application.ViewModels.Degree
 
         [Required]
         public string Institute { get; set; }
+
+        [Required]
+        public string Reason { get; set; }
     }
 }
