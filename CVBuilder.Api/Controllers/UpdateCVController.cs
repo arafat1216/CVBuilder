@@ -3,6 +3,10 @@ using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceReques
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddProjectRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddSkillRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddWorkExperienceRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteDegreeRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteProjectRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteSkillRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteWorkExperienceRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateDegreeRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateProjectRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateSkillRequest;
@@ -61,6 +65,13 @@ namespace CVBuilder.Api.Controllers
             return Ok(response);
         }
 
+        [HttpDelete("delete-degree")]
+        public async Task<IActionResult> DeleteDegree([FromQuery] int degreeId, [FromBody] DeleteDegreeRequestCommand requestDto)
+        {    
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
+        }
 
         [HttpPost("add-project")]
         public async Task<IActionResult> AddProject([FromBody] AddProjectRequestViewModel viewModel)
@@ -87,6 +98,15 @@ namespace CVBuilder.Api.Controllers
                 return ValidationProblem();
             }
 
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
+        }
+
+
+        [HttpDelete("delete-project")]
+        public async Task<IActionResult> DeleteProject([FromQuery] int projectId, [FromBody] DeleteProjectRequestCommand requestDto)
+        {
             var response = await mediator.Send(requestDto);
 
             return Ok(response);
@@ -124,6 +144,15 @@ namespace CVBuilder.Api.Controllers
         }
 
 
+        [HttpDelete("delete-skill")]
+        public async Task<IActionResult> DeleteSkill([FromQuery] int skillId, [FromBody] DeleteSkillRequestCommand requestDto)
+        {
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
+        }
+
+
         [HttpPost("add-work-experience")]
         public async Task<IActionResult> AddWorkExperience([FromBody] AddWorkExperienceRequestViewModel viewModel)
         {
@@ -149,6 +178,15 @@ namespace CVBuilder.Api.Controllers
                 return ValidationProblem();
             }
 
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
+        }
+
+
+        [HttpDelete("delete-work-experience")]
+        public async Task<IActionResult> DeleteWorkExperience([FromQuery] int workExperienceId, [FromBody] DeleteWorkExperienceRequestCommand requestDto)
+        {
             var response = await mediator.Send(requestDto);
 
             return Ok(response);

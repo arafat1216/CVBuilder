@@ -1,4 +1,6 @@
-﻿namespace CVBuilder.Application.Dtos.ResourceRequests
+﻿using Newtonsoft.Json;
+
+namespace CVBuilder.Application.Dtos.ResourceRequests
 {
     public class ResourceRequestDetailsDto
     {
@@ -9,11 +11,20 @@
         public string Reason { get; set; }
         public string Status { get; set; }
         public Guid? ReviewedBy { get; set; }
-        public Object ResourceDetails { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public DegreeUpdateRequestDto? DegreeUpdateRequest { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public PersonalDetailsUpdateRequestDto? PersonalDetailsUpdateRequest { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ProjectUpdateRequestDto? ProjectUpdateRequest { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public SkillUpdateRequestDto? SkillUpdateRequest { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public WorkExperienceUpdateRequestDto? WorkExperienceUpdateRequest { get; set; }
     }
 }

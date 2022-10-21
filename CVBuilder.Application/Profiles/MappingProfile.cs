@@ -18,6 +18,10 @@ using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceReques
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddProjectRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddSkillRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddWorkExperienceRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteDegreeRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteProjectRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteSkillRequest;
+using CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteWorkExperienceRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateDegreeRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateProjectRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateSkillRequest;
@@ -58,7 +62,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<PartialUpdateEmployeeCommand, Employee>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            
+
             // Skill Mappings
             CreateMap<Skill, SkillDetailsDto>();
             CreateMap<Skill, SkillsListDto>();
@@ -95,6 +99,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<PartialUpdateProjectCommand, Project>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
+
             // Work Experince Mappings
             CreateMap<WorkExperience, WorkExperienceDetailsDto>();
             CreateMap<WorkExperience, WorkExperiencesListDto>();
@@ -106,6 +111,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<PartialUpdateWorkExperienceCommand, WorkExperience>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
+
             // Update Password Mappings
             CreateMap<UpdatePasswordViewModel, UpdatePasswordCommand>();
 
@@ -116,17 +122,17 @@ namespace CVBuilder.Application.Profiles
             CreateMap<PersonalDetailsUpdateRequest, PersonalDetailsUpdateRequestDto>();
             CreateMap<PersonalDetailsUpdateRequest, PartialUpdateEmployeeCommand>();
 
-            // Add Degree Request Mappings
+            // Degree Request Mappings
             CreateMap<AddDegreeRequestViewModel, AddDegreeRequestCommand>();
             CreateMap<AddDegreeRequestCommand, DegreeUpdateRequest>();
             CreateMap<ResourceRequest, AddDegreeRequestCommandResponse>();
             CreateMap<DegreeUpdateRequest, DegreeUpdateRequestDto>();
             CreateMap<DegreeUpdateRequest, AddDegreeCommand>();
             CreateMap<DegreeUpdateRequest, PartialUpdateDegreeCommand>();
-
-            // Update Degree Request Mappings
             CreateMap<UpdateDegreeRequestCommand, DegreeUpdateRequest>();
             CreateMap<ResourceRequest, UpdateDegreeRequestCommandResponse>();
+            CreateMap<DeleteDegreeRequestCommand, DegreeUpdateRequest>();
+            CreateMap<ResourceRequest, DeleteDegreeRequestCommandResponse>();
 
             // Add Project Request Mappings
             CreateMap<AddProjectRequestViewModel, AddProjectRequestCommand>();
@@ -135,10 +141,11 @@ namespace CVBuilder.Application.Profiles
             CreateMap<ProjectUpdateRequest, ProjectUpdateRequestDto>();
             CreateMap<ProjectUpdateRequest, AddProjectCommand>();
             CreateMap<ProjectUpdateRequest, PartialUpdateProjectCommand>();
-            // Update Project Request Mappings
             CreateMap<UpdateProjectRequestCommand, ProjectUpdateRequest>();
             CreateMap<ResourceRequest, UpdateProjectRequestCommandResponse>();
-           
+            CreateMap<DeleteProjectRequestCommand, ProjectUpdateRequest>();
+            CreateMap<ResourceRequest, DeleteProjectRequestCommandResponse>();
+
 
             // Add Skill Request Mappings
             CreateMap<AddSkillRequestViewModel, AddSkillRequestCommand>();
@@ -147,10 +154,11 @@ namespace CVBuilder.Application.Profiles
             CreateMap<SkillUpdateRequest, SkillUpdateRequestDto>();
             CreateMap<SkillUpdateRequest, AddSkillCommand>();
             CreateMap<SkillUpdateRequest, PartialUpdateSkillCommand>();
-
-            // Update Skill Request Mappings
             CreateMap<UpdateSkillRequestCommand, SkillUpdateRequest>();
             CreateMap<ResourceRequest, UpdateSkillRequestCommandResponse>();
+            CreateMap<DeleteSkillRequestCommand, SkillUpdateRequest>();
+            CreateMap<ResourceRequest, DeleteSkillRequestCommandResponse>();
+
 
             // Add Work Experience Request Mappings
             CreateMap<AddWorkExperienceRequestViewModel, AddWorkExperienceRequestCommand>();
@@ -159,17 +167,18 @@ namespace CVBuilder.Application.Profiles
             CreateMap<WorkExperienceUpdateRequest, WorkExperienceUpdateRequestDto>();
             CreateMap<WorkExperienceUpdateRequest, AddWorkExperienceCommand>();
             CreateMap<WorkExperienceUpdateRequest, PartialUpdateWorkExperienceCommand>();
-
-            // Update Work Experience Request Mappings
             CreateMap<UpdateWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
             CreateMap<ResourceRequest, UpdateWorkExperienceRequestCommandResponse>();
+            CreateMap<DeleteWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
+            CreateMap<ResourceRequest, DeleteWorkExperienceRequestCommandResponse>();
+
 
             // Resource Requests Mappings
             CreateMap<ResourceRequest, ResourceRequestsListDto>();
             CreateMap<ResourceRequest, UpdatePersonalDetailsCommandResponse>();
             CreateMap<ResourceRequest, ResourceRequestDetailsDto>();
 
-            
+
         }
     }
 }

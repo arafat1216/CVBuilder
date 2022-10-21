@@ -25,7 +25,7 @@ namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourc
         public async Task<UpdateWorkExperienceRequestCommandResponse> Handle(UpdateWorkExperienceRequestCommand request, CancellationToken cancellationToken)
         {
             // check if work experience exists
-            bool workExperienceExists = await GetDegreeExists(request.WorkExperienceId);
+            bool workExperienceExists = await WorkExperienceExists(request.WorkExperienceId);
 
             // create new reosource request 
             ResourceRequest resourceRequest = CreateResourceRequest(request);
@@ -50,7 +50,7 @@ namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourc
             };
         }
 
-        private async Task<bool> GetDegreeExists(int workExperienceId)
+        private async Task<bool> WorkExperienceExists(int workExperienceId)
         {
             return await workExperienceRepository.ExistsAsync(applicationUser.GetUserId(), workExperienceId);
         }

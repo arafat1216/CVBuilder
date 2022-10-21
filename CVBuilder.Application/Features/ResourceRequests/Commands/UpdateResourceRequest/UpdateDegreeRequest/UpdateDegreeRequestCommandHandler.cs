@@ -25,7 +25,7 @@ namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourc
         {
             // check if degree exists
 
-            var degreeExists = await GetDegreeExists(request.DegreeId);
+            var degreeExists = await DegreeExists(request.DegreeId);
 
             if (!degreeExists)
                 throw new Exceptions.NotFoundException(nameof(Degree), request.DegreeId);
@@ -55,7 +55,7 @@ namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourc
             };
         }
 
-        private async Task<bool> GetDegreeExists(int degreeId)
+        private async Task<bool> DegreeExists(int degreeId)
         {
             return await degreeRepository.ExistsAsync(applicationUser.GetUserId(), degreeId);
         }

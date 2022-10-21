@@ -22,7 +22,7 @@ namespace CVBuilder.Api.Controllers
         {
             this.mediator = mediator;
         }
-
+        
         [HttpGet("my-requests")]
         public async Task<IActionResult> GetMyRequests([FromQuery] string? status, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
@@ -42,8 +42,9 @@ namespace CVBuilder.Api.Controllers
 
             return Ok(requestsList);
         }
-
+        
         [HttpGet("all-requests")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetAllRequests([FromQuery] Status? status, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
             if (pageSize > maximumPageSize)
@@ -64,6 +65,7 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("{requestId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetRequestDetails([FromRoute] int requestId)
         {
             var requestDto = new GetRequestDetailsQuery() 
@@ -78,6 +80,7 @@ namespace CVBuilder.Api.Controllers
 
 
         [HttpPut("{requestId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateRequest([FromRoute] int requestId, [FromQuery] bool approved)
         {
             var requestDto = new UpdateRequestCommand()

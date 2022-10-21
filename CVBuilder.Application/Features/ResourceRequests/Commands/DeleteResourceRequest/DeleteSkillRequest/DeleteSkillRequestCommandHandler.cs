@@ -5,24 +5,24 @@ using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
 using MediatR;
 
-namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateSkillRequest
+namespace CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteSkillRequest
 {
-    public class UpdateSkillRequestCommandHandler : IRequestHandler<UpdateSkillRequestCommand, UpdateSkillRequestCommandResponse>
+    public class DeleteSkillRequestCommandHandler : IRequestHandler<DeleteSkillRequestCommand, DeleteSkillRequestCommandResponse>
     {
-        private readonly IResourceRequestRepository resourceRequestRepository;
         private readonly ISkillRepository skillRepository;
+        private readonly IResourceRequestRepository resourceRequestRepository;
         private readonly IApplicationUser applicationUser;
         private readonly IMapper mapper;
 
-        public UpdateSkillRequestCommandHandler(IResourceRequestRepository resourceRequestRepository, ISkillRepository skillRepository, IApplicationUser applicationUser, IMapper mapper)
+        public DeleteSkillRequestCommandHandler(ISkillRepository skillRepository, IResourceRequestRepository resourceRequestRepository, IApplicationUser applicationUser, IMapper mapper)
         {
-            this.resourceRequestRepository = resourceRequestRepository;
             this.skillRepository = skillRepository;
+            this.resourceRequestRepository = resourceRequestRepository;
             this.applicationUser = applicationUser;
             this.mapper = mapper;
         }
 
-        public async Task<UpdateSkillRequestCommandResponse> Handle(UpdateSkillRequestCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteSkillRequestCommandResponse> Handle(DeleteSkillRequestCommand request, CancellationToken cancellationToken)
         {
             // check if skill exists
             bool skillExists = await SkillExists(request.SkillId);
@@ -30,24 +30,23 @@ namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourc
             if (!skillExists)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.SkillId);
 
-            // create new resource request
-            ResourceRequest resourceRequest = CreateResourceRequest(request);
+            ResourceRequest resourceRequest = CreateRequest(request);
 
-            var skillUpdateRequest = mapper.Map<SkillUpdateRequest>(request);
+            SkillUpdateRequest skillUpdateRequest = mapper.Map<SkillUpdateRequest>(request);
 
             resourceRequest.SkillUpdateRequest = skillUpdateRequest;
 
             var response = await resourceRequestRepository.AddAsync(resourceRequest);
 
-            return mapper.Map<UpdateSkillRequestCommandResponse>(response);
+            return mapper.Map<DeleteSkillRequestCommandResponse>(response);
         }
 
-        private ResourceRequest CreateResourceRequest(UpdateSkillRequestCommand request)
+        private ResourceRequest CreateRequest(DeleteSkillRequestCommand request)
         {
             return new ResourceRequest()
             {
                 AppliedBy = applicationUser.GetUserId(),
-                RequestType = RequestType.Modify.ToString(),
+                RequestType = RequestType.Remove.ToString(),
                 ResourceType = ResourceType.Skill.ToString(),
                 Reason = request.Reason
             };

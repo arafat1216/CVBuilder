@@ -5,24 +5,24 @@ using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
 using MediatR;
 
-namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateProjectRequest
+namespace CVBuilder.Application.Features.ResourceRequests.Commands.DeleteResourceRequest.DeleteProjectRequest
 {
-    public class UpdateProjectRequestCommandHandler : IRequestHandler<UpdateProjectRequestCommand, UpdateProjectRequestCommandResponse>
+    public class DeleteProjectRequestCommandHandler : IRequestHandler<DeleteProjectRequestCommand, DeleteProjectRequestCommandResponse>
     {
-        private readonly IResourceRequestRepository resourceRequestRepository;
         private readonly IProjectRepository projectRepository;
+        private readonly IResourceRequestRepository resourceRequestRepository;
         private readonly IApplicationUser applicationUser;
         private readonly IMapper mapper;
 
-        public UpdateProjectRequestCommandHandler(IResourceRequestRepository resourceRequestRepository, IProjectRepository projectRepository, IApplicationUser applicationUser, IMapper mapper)
+        public DeleteProjectRequestCommandHandler(IProjectRepository projectRepository, IResourceRequestRepository resourceRequestRepository, IApplicationUser applicationUser, IMapper mapper)
         {
-            this.resourceRequestRepository = resourceRequestRepository;
             this.projectRepository = projectRepository;
+            this.resourceRequestRepository = resourceRequestRepository;
             this.applicationUser = applicationUser;
             this.mapper = mapper;
         }
 
-        public async Task<UpdateProjectRequestCommandResponse> Handle(UpdateProjectRequestCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteProjectRequestCommandResponse> Handle(DeleteProjectRequestCommand request, CancellationToken cancellationToken)
         {
             // check if project exists
             var projectExists = await ProjectExists(request.ProjectId);
@@ -30,27 +30,28 @@ namespace CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourc
             if (!projectExists)
                 throw new Exceptions.NotFoundException(nameof(Project), request.ProjectId);
 
-            // create resource request
             ResourceRequest resourceRequest = CreateResourceRequest(request);
 
-            var projectUpdateRequest = mapper.Map<ProjectUpdateRequest>(request);
+            ProjectUpdateRequest projectUpdateRequest = mapper.Map<ProjectUpdateRequest>(request);
 
             resourceRequest.ProjectUpdateRequest = projectUpdateRequest;
 
             var response = await resourceRequestRepository.AddAsync(resourceRequest);
 
-            return mapper.Map<UpdateProjectRequestCommandResponse>(response);
+            return mapper.Map<DeleteProjectRequestCommandResponse>(response);
+
         }
 
-        private ResourceRequest CreateResourceRequest(UpdateProjectRequestCommand request)
+        private ResourceRequest CreateResourceRequest(DeleteProjectRequestCommand request)
         {
             return new ResourceRequest()
             {
                 AppliedBy = applicationUser.GetUserId(),
-                RequestType = RequestType.Modify.ToString(),
+                RequestType = RequestType.Remove.ToString(),
                 ResourceType = ResourceType.Project.ToString(),
                 Reason = request.Reason
             };
+
         }
 
         private async Task<bool> ProjectExists(int projectId)
