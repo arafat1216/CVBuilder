@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\ResourceRequests\Queries\GetAllRequestsList\" />
+    <Folder Include="Features\ResourceRequests\Queries\GetRequestDetails\" />
     <Folder Include="ViewModels\Skill\" />
   </ItemGroup>
 

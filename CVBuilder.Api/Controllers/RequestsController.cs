@@ -1,8 +1,8 @@
-﻿using CVBuilder.Application.Features.ResourceRequests.Queries.ListAllRequests;
+﻿using CVBuilder.Application.Features.ResourceRequests.Queries.GetMyRequestsList;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CVBuilder.Api.Controllers
 {
@@ -12,6 +12,7 @@ namespace CVBuilder.Api.Controllers
     public class RequestsController : ControllerBase
     {
         private readonly IMediator mediator;
+        const int maximumPageSize = 20;
 
         public RequestsController(IMediator mediator)
         {
@@ -19,17 +20,34 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("my-requests")]
-        public async Task<IActionResult> GetMyRequests()
+        public async Task<IActionResult> GetMyRequests([FromQuery] string? status, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
-            var requestDto = new ListAllResourceRequestsQuery();
+            if (pageSize > maximumPageSize)
+                pageSize = maximumPageSize;
 
-            var response = await mediator.Send(requestDto);
+            var requestDto = new GetMyRequestsListQuery()
+            {
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+                Status = status,
+            };
 
-            return Ok(response);  
+            var (requestsList, metaData) = await mediator.Send(requestDto);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
+
+            return Ok(requestsList);
         }
 
-        [HttpPost("{requestId}")]
-        public async Task<IActionResult> PostRequest([FromRoute] int requestId, [FromQuery] bool approve)
+        [HttpGet("all-requests")]
+        public async Task<IActionResult> GetAllRequests()
+        {
+            return Ok();
+        }
+
+
+        [HttpPut("{requestId}")]
+        public async Task<IActionResult> UpdateRequest([FromRoute] int requestId, [FromQuery] bool approve)
         {
             return Ok();
         }
