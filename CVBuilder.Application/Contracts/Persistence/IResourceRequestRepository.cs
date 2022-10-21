@@ -5,6 +5,7 @@ namespace CVBuilder.Application.Contracts.Persistence
     public interface IResourceRequestRepository : IAsyncRepository<ResourceRequest>
     {
         Task<ResourceRequest?> GetResourceRequestByIdAsync(int id);
+        Task<IReadOnlyList<ResourceRequest>> GetAllResourceRequestsAsync();
 
     }
 }

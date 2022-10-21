@@ -11,6 +11,11 @@ namespace CVBuilder.Infrastructure.Repositories
         {
         }
 
+        public async Task<IReadOnlyList<ResourceRequest>> GetAllResourceRequestsAsync()
+        {
+            return await dbSet.ToListAsync();
+        }
+
         public async Task<ResourceRequest?> GetResourceRequestByIdAsync(int id)
         {
             return await dbSet.Where(r => r.RequestId == id).FirstOrDefaultAsync();
