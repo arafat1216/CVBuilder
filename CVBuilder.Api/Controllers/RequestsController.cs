@@ -1,4 +1,7 @@
-﻿using CVBuilder.Application.Features.ResourceRequests.Queries.GetMyRequestsList;
+﻿using CVBuilder.Application.Features.ResourceRequests.Queries.GetAllRequestsList;
+using CVBuilder.Application.Features.ResourceRequests.Queries.GetMyRequestsList;
+using CVBuilder.Application.Features.ResourceRequests.Queries.GetRequestDetails;
+using CVBuilder.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,9 +43,36 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("all-requests")]
-        public async Task<IActionResult> GetAllRequests()
+        public async Task<IActionResult> GetAllRequests([FromQuery] Status? status, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
-            return Ok();
+            if (pageSize > maximumPageSize)
+                pageSize = maximumPageSize;
+
+            var requestDto = new GetAllRequestsListQuery()
+            {
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+                Status = status.ToString(),
+            };
+
+            var (requestsList, metaData) = await mediator.Send(requestDto);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
+
+            return Ok(requestsList);
+        }
+
+        [HttpGet("{requestId}")]
+        public async Task<IActionResult> GetRequestDetails([FromRoute] int requestId)
+        {
+            var requestDto = new GetRequestDetailsQuery() 
+            {
+                RequestId = requestId
+            };
+
+            var response = await mediator.Send(requestDto);
+
+            return Ok(response);
         }
 
 

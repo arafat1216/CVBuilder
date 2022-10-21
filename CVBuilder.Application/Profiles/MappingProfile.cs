@@ -113,11 +113,13 @@ namespace CVBuilder.Application.Profiles
             // Personal Details Update Mappings
             CreateMap<UpdatePersonalDetailsCommand, PersonalDetailsUpdateRequest>();
             CreateMap<PersonalDetailsUpdateRequest, UpdatePersonalDetailsCommandResponse>();
+            CreateMap<PersonalDetailsUpdateRequest, PersonalDetailsUpdateRequestDto>();
 
             // Add Degree Request Mappings
             CreateMap<AddDegreeRequestViewModel, AddDegreeRequestCommand>();
             CreateMap<AddDegreeRequestCommand, DegreeUpdateRequest>();
             CreateMap<ResourceRequest, AddDegreeRequestCommandResponse>();
+            CreateMap<DegreeUpdateRequest, DegreeUpdateRequestDto>();
 
             // Update Degree Request Mappings
             CreateMap<UpdateDegreeRequestCommand, DegreeUpdateRequest>();
@@ -127,7 +129,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<AddProjectRequestViewModel, AddProjectRequestCommand>();
             CreateMap<AddProjectRequestCommand, ProjectUpdateRequest>();
             CreateMap<ResourceRequest, AddProjectRequestCommandResponse>();
-
+            CreateMap<ProjectUpdateRequest, ProjectUpdateRequestDto>();
             // Update Project Request Mappings
             CreateMap<UpdateProjectRequestCommand, ProjectUpdateRequest>();
             CreateMap<ResourceRequest, UpdateProjectRequestCommandResponse>();
@@ -136,6 +138,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<AddSkillRequestViewModel, AddSkillRequestCommand>();
             CreateMap<AddSkillRequestCommand, SkillUpdateRequest>();
             CreateMap<ResourceRequest, AddSkillRequestCommandResponse>();
+            CreateMap<SkillUpdateRequest, SkillUpdateRequestDto>();
 
             // Update Skill Request Mappings
             CreateMap<UpdateSkillRequestCommand, SkillUpdateRequest>();
@@ -145,6 +148,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<AddWorkExperienceRequestViewModel, AddWorkExperienceRequestCommand>();
             CreateMap<AddWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
             CreateMap<ResourceRequest, AddWorkExperienceRequestCommandResponse>();
+            CreateMap<WorkExperienceUpdateRequest, WorkExperienceUpdateRequestDto>();
 
             // Update Work Experience Request Mappings
             CreateMap<UpdateWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
@@ -153,6 +157,7 @@ namespace CVBuilder.Application.Profiles
             // Resource Requests Mappings
             CreateMap<ResourceRequest, ResourceRequestsListDto>();
             CreateMap<ResourceRequest, UpdatePersonalDetailsCommandResponse>();
+            CreateMap<ResourceRequest, ResourceRequestDetailsDto>();
 
             
         }
