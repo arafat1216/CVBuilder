@@ -1,6 +1,7 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Contracts.Persistence;
+using CVBuilder.Application.Contracts.UpdateResourceHelper;
 using CVBuilder.Application.Models.Authentication;
 using CVBuilder.Infrastructure.Data;
 using CVBuilder.Infrastructure.Repositories;
@@ -44,6 +45,7 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<ITemplateGeneratorService, TemplateGeneratorService>();
             services.AddScoped<IPdfGeneratorService, PdfGeneratorService>();
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            services.AddScoped<IUpdateResourceHelperService, UpdateResourceHelperService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

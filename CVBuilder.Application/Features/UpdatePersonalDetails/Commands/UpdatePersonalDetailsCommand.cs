@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CVBuilder.Domain.Enums;
+using MediatR;
 using System.ComponentModel.DataAnnotations;
 
 namespace CVBuilder.Application.Features.UpdatePersonalDetails.Commands
@@ -16,6 +17,8 @@ namespace CVBuilder.Application.Features.UpdatePersonalDetails.Commands
         public string? PhoneNo { get; set; }
 
         public string? Address { get; set; }
-        
+
+        public Role? Role { get; set; }
+
     }
 }

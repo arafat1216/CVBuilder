@@ -1,4 +1,5 @@
-﻿using CVBuilder.Application.Features.ResourceRequests.Queries.GetAllRequestsList;
+﻿using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateRequest;
+using CVBuilder.Application.Features.ResourceRequests.Queries.GetAllRequestsList;
 using CVBuilder.Application.Features.ResourceRequests.Queries.GetMyRequestsList;
 using CVBuilder.Application.Features.ResourceRequests.Queries.GetRequestDetails;
 using CVBuilder.Domain.Enums;
@@ -77,9 +78,17 @@ namespace CVBuilder.Api.Controllers
 
 
         [HttpPut("{requestId}")]
-        public async Task<IActionResult> UpdateRequest([FromRoute] int requestId, [FromQuery] bool approve)
+        public async Task<IActionResult> UpdateRequest([FromRoute] int requestId, [FromQuery] bool approved)
         {
-            return Ok();
+            var requestDto = new UpdateRequestCommand()
+            {
+                RequestId = requestId,
+                IsApproved = approved
+            };
+
+            await mediator.Send(requestDto);
+            
+            return NoContent();
         }
     }
 }

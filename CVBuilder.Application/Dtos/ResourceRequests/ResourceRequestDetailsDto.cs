@@ -10,10 +10,10 @@
         public string Status { get; set; }
         public Guid? ReviewedBy { get; set; }
         public Object ResourceDetails { get; set; }
-        //public DegreeUpdateRequestDto? DegreeUpdateRequest { get; set; }
-        //public PersonalDetailsUpdateRequestDto? PersonalDetailsUpdateRequest { get; set; }
-        //public ProjectUpdateRequestDto? ProjectUpdateRequest { get; set; }
-        //public SkillUpdateRequestDto? SkillUpdateRequest { get; set; }
-        //public WorkExperienceUpdateRequestDto? WorkExperienceUpdateRequest{ get; set; }
+        public DegreeUpdateRequestDto? DegreeUpdateRequest { get; set; }
+        public PersonalDetailsUpdateRequestDto? PersonalDetailsUpdateRequest { get; set; }
+        public ProjectUpdateRequestDto? ProjectUpdateRequest { get; set; }
+        public SkillUpdateRequestDto? SkillUpdateRequest { get; set; }
+        public WorkExperienceUpdateRequestDto? WorkExperienceUpdateRequest { get; set; }
     }
 }
