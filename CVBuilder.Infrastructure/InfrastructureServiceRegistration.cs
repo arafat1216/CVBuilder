@@ -2,6 +2,7 @@
 using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Application.Contracts.UpdateResourceHelper;
+using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Application.Models.Authentication;
 using CVBuilder.Infrastructure.Data;
 using CVBuilder.Infrastructure.Repositories;
@@ -40,12 +41,20 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IProjectUpdateRepository, ProjectUpdateRepository>();
             services.AddScoped<ISkillUpdateRepository, SkillUpdateRepository>();
             services.AddScoped<IWorkExperienceUpdateRepository, WorkExperienceUpdateRepository>();
+            
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+            
             services.AddScoped<ITemplateGeneratorService, TemplateGeneratorService>();
             services.AddScoped<IPdfGeneratorService, PdfGeneratorService>();
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
-            services.AddScoped<IUpdateResourceHelperService, UpdateResourceHelperService>();
+            
+            services.AddScoped<IUpdateResourceService, UpdateResourceService>();
+            services.AddScoped<IUpdateDegreeService, UpdateDegreeService>();
+            services.AddScoped<IUpdatePersonalDetailsService, UpdatePersonalDetailsService>();
+            services.AddScoped<IUpdateProjectService, UpdateProjectService>();
+            services.AddScoped<IUpdateSkillService, UpdateSkillService>();
+            services.AddScoped<IUpdateWorkExperienceService, UpdateWorkExperienceService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

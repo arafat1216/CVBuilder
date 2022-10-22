@@ -6,12 +6,14 @@ using CVBuilder.Application.Dtos.ResourceRequests;
 using CVBuilder.Application.Dtos.Skill;
 using CVBuilder.Application.Dtos.WorkExperience;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
+using CVBuilder.Application.Features.Degrees.Commands.DeleteDegree;
 using CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree;
 using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Application.Features.Employees.Commands.AddEmployee;
 using CVBuilder.Application.Features.Employees.Commands.PartialUpdateEmployee;
 using CVBuilder.Application.Features.Employees.Commands.UpdateEmployee;
 using CVBuilder.Application.Features.Projects.Commands.AddProject;
+using CVBuilder.Application.Features.Projects.Commands.DeleteProject;
 using CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject;
 using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
 using CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRequest.AddDegreeRequest;
@@ -27,11 +29,13 @@ using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceReq
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateSkillRequest;
 using CVBuilder.Application.Features.ResourceRequests.Commands.UpdateResourceRequest.UpdateWorkExperienceRequest;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
+using CVBuilder.Application.Features.Skills.Commands.DeleteSkill;
 using CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill;
 using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Application.Features.UpdatePassword.Commands;
 using CVBuilder.Application.Features.UpdatePersonalDetails.Commands;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
+using CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.ViewModels.Account;
@@ -133,8 +137,10 @@ namespace CVBuilder.Application.Profiles
             CreateMap<ResourceRequest, UpdateDegreeRequestCommandResponse>();
             CreateMap<DeleteDegreeRequestCommand, DegreeUpdateRequest>();
             CreateMap<ResourceRequest, DeleteDegreeRequestCommandResponse>();
+            CreateMap<DegreeUpdateRequest, DeleteDegreeCommand>();
 
-            // Add Project Request Mappings
+
+            // Project Request Mappings
             CreateMap<AddProjectRequestViewModel, AddProjectRequestCommand>();
             CreateMap<AddProjectRequestCommand, ProjectUpdateRequest>();
             CreateMap<ResourceRequest, AddProjectRequestCommandResponse>();
@@ -145,9 +151,10 @@ namespace CVBuilder.Application.Profiles
             CreateMap<ResourceRequest, UpdateProjectRequestCommandResponse>();
             CreateMap<DeleteProjectRequestCommand, ProjectUpdateRequest>();
             CreateMap<ResourceRequest, DeleteProjectRequestCommandResponse>();
+            CreateMap<ProjectUpdateRequest, DeleteProjectCommand>();
 
 
-            // Add Skill Request Mappings
+            // Skill Request Mappings
             CreateMap<AddSkillRequestViewModel, AddSkillRequestCommand>();
             CreateMap<AddSkillRequestCommand, SkillUpdateRequest>();
             CreateMap<ResourceRequest, AddSkillRequestCommandResponse>();
@@ -158,9 +165,10 @@ namespace CVBuilder.Application.Profiles
             CreateMap<ResourceRequest, UpdateSkillRequestCommandResponse>();
             CreateMap<DeleteSkillRequestCommand, SkillUpdateRequest>();
             CreateMap<ResourceRequest, DeleteSkillRequestCommandResponse>();
+            CreateMap<SkillUpdateRequest, DeleteSkillCommand>();
 
 
-            // Add Work Experience Request Mappings
+            // Work Experience Request Mappings
             CreateMap<AddWorkExperienceRequestViewModel, AddWorkExperienceRequestCommand>();
             CreateMap<AddWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
             CreateMap<ResourceRequest, AddWorkExperienceRequestCommandResponse>();
@@ -171,6 +179,7 @@ namespace CVBuilder.Application.Profiles
             CreateMap<ResourceRequest, UpdateWorkExperienceRequestCommandResponse>();
             CreateMap<DeleteWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
             CreateMap<ResourceRequest, DeleteWorkExperienceRequestCommandResponse>();
+            CreateMap<WorkExperienceUpdateRequest, DeleteWorkExperienceCommand>();
 
 
             // Resource Requests Mappings
