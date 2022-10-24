@@ -1,6 +1,5 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.Contracts.UpdateResourceHelper;
 using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;

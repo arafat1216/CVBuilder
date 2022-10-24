@@ -1,7 +1,6 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Contracts.Persistence;
-using CVBuilder.Application.Contracts.UpdateResourceHelper;
 using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Application.Models.Authentication;
 using CVBuilder.Infrastructure.Data;
