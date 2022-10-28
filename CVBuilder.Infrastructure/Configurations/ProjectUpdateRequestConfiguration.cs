@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CVBuilder.Infrastructure.Configurations
 {
-    public class ProjectConfiguration : IEntityTypeConfiguration<Project>
+    public class ProjectUpdateRequestConfiguration : IEntityTypeConfiguration<ProjectUpdateRequest>
     {
-        public void Configure(EntityTypeBuilder<Project> builder)
+        public void Configure(EntityTypeBuilder<ProjectUpdateRequest> builder)
         {
             builder.OwnsOne(p => p.ProjectDetails,
                 navigationBuilder =>

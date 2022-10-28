@@ -2,6 +2,7 @@
 using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
+using CVBuilder.Domain.ValueObjects;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -24,19 +25,29 @@ namespace CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill
 
         public async Task<Unit> Handle(PartialUpdateSkillCommand request, CancellationToken cancellationToken)
         {
-            var skillDetails = await GetSkillDetails(request.EmployeeId, request.SkillId);
+            var skill = await GetSkillDetails(request.EmployeeId, request.SkillId);
 
-            if (skillDetails == null)
+            if (skill == null)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.SkillId);
 
 
-            mapper.Map(request, skillDetails);
 
-            await repository.UpdateAsync(skillDetails);
+            request = UpdateRequest(request, skill.SkillDetails);
+
+            mapper.Map(request, skill);
+
+            await repository.UpdateAsync(skill);
 
             logger.LogInformation($"Skill With Id: {request.SkillId} Updated For Employee: {request.EmployeeId} By {applicationUser.GetUserId()}");
 
             return Unit.Value;
+        }
+
+        private PartialUpdateSkillCommand UpdateRequest(PartialUpdateSkillCommand request, SkillDetails skillDetails)
+        {
+            request.Name = request.Name ?? skillDetails.Name;
+
+            return request;
         }
 
         private async Task<Skill?> GetSkillDetails(Guid employeeId, int skillId)

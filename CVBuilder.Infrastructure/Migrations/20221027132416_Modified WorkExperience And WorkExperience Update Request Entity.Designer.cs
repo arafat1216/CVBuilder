@@ -4,6 +4,7 @@ using CVBuilder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CVBuilder.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221027132416_Modified WorkExperience And WorkExperience Update Request Entity")]
+    partial class ModifiedWorkExperienceAndWorkExperienceUpdateRequestEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -548,11 +550,11 @@ namespace CVBuilder.Infrastructure.Migrations
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Designation");
 
-                            b1.Property<DateTime?>("EndDate")
+                            b1.Property<DateTime>("EndDate")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("EndDate");
 
-                            b1.Property<DateTime?>("StartDate")
+                            b1.Property<DateTime>("StartDate")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("StartDate");
 
@@ -591,11 +593,11 @@ namespace CVBuilder.Infrastructure.Migrations
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Designation");
 
-                            b1.Property<DateTime?>("EndDate")
+                            b1.Property<DateTime>("EndDate")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("EndDate");
 
-                            b1.Property<DateTime?>("StartDate")
+                            b1.Property<DateTime>("StartDate")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("StartDate");
 

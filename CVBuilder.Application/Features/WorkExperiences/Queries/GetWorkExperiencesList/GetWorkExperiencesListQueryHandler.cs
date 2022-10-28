@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperiencesList
 {
-    public class GetWorkExperiencesListQueryHandler : IRequestHandler<GetWorkExperiencesListQuery, List<WorkExperienceDetailsDto>>
+    public class GetWorkExperiencesListQueryHandler : IRequestHandler<GetWorkExperiencesListQuery, List<WorkExperiencesListDto>>
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly IWorkExperienceRepository workExperienceRepository;
@@ -18,7 +18,7 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
             this.workExperienceRepository = workExperienceRepository;
             this.mapper = mapper;
         }
-        public async Task<List<WorkExperienceDetailsDto>> Handle(GetWorkExperiencesListQuery request, CancellationToken cancellationToken)
+        public async Task<List<WorkExperiencesListDto>> Handle(GetWorkExperiencesListQuery request, CancellationToken cancellationToken)
         {
             // check if employee exists
 
@@ -34,7 +34,7 @@ namespace CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperien
             !e.IsDeleted);
 
             
-            var resultDtos = mapper.Map<List<WorkExperienceDetailsDto>>(workExperiencesList);
+            var resultDtos = mapper.Map<List<WorkExperiencesListDto>>(workExperiencesList);
 
             return resultDtos;
         }

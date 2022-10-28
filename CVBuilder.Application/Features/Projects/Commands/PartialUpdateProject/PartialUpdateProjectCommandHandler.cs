@@ -2,6 +2,7 @@
 using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
+using CVBuilder.Domain.ValueObjects;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -23,19 +24,32 @@ namespace CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject
         }
         public async Task<Unit> Handle(PartialUpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            var projectDetails = await GetProjectDetails(request.EmployeeId, request.ProjectId);
+            var project = await GetProjectDetails(request.EmployeeId, request.ProjectId);
 
-            if (projectDetails == null)
+            if (project == null)
                 throw new Exceptions.NotFoundException(nameof(Skill), request.ProjectId);
 
 
-            mapper.Map(request, projectDetails);
+            request = UpdateRequest(request, project.ProjectDetails);
 
-            await repository.UpdateAsync(projectDetails);
+            mapper.Map(request, project);
+
+            await repository.UpdateAsync(project);
 
             logger.LogInformation($"Project With Id: {request.ProjectId} Updated For Employee: {request.EmployeeId} By {applicationUser.GetUserId()}");
 
             return Unit.Value;
+        }
+
+        private PartialUpdateProjectCommand UpdateRequest(PartialUpdateProjectCommand request, ProjectDetails projectDetails)
+        {
+            request.Name = request.Name ?? projectDetails.Name;
+
+            request.Description = request.Description ?? projectDetails.Description;
+
+            request.Link = request.Link ?? projectDetails.Link;
+
+            return request;
         }
 
         private async Task<Project?> GetProjectDetails(Guid employeeId, int projectId)

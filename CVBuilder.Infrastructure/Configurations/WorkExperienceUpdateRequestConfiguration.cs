@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CVBuilder.Infrastructure.Configurations
 {
-    public class WorkExperinceConfiguration : IEntityTypeConfiguration<WorkExperience>
+    public class WorkExperienceUpdateRequestConfiguration : IEntityTypeConfiguration<WorkExperienceUpdateRequest>
     {
-        public void Configure(EntityTypeBuilder<WorkExperience> builder)
+        public void Configure(EntityTypeBuilder<WorkExperienceUpdateRequest> builder)
         {
             builder.OwnsOne(w => w.WorkExperienceDetails,
                 navigationBuilder =>
@@ -16,7 +16,6 @@ namespace CVBuilder.Infrastructure.Configurations
                     navigationBuilder.Property(w => w.StartDate).HasColumnName("StartDate");
                     navigationBuilder.Property(w => w.EndDate).HasColumnName("EndDate");
                 });
-
         }
     }
 }

@@ -2,6 +2,7 @@
 using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
+using CVBuilder.Domain.ValueObjects;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -23,19 +24,33 @@ namespace CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree
         }
         public async Task<Unit> Handle(PartialUpdateDegreeCommand request, CancellationToken cancellationToken)
         {
-            var degreeDetails = await GetDegreeDetails(request.EmployeeId, request.DegreeId);
+            var degree = await GetDegreeDetails(request.EmployeeId, request.DegreeId);
 
-            if (degreeDetails == null)
+            if (degree == null)
                 throw new Exceptions.NotFoundException(nameof(Degree), request.DegreeId);
 
 
-            mapper.Map(request, degreeDetails);
 
-            await repository.UpdateAsync(degreeDetails);
+            request = UpdateRequest(request, degree.DegreeDetails);
+
+            mapper.Map(request, degree);
+
+            await repository.UpdateAsync(degree);
 
             logger.LogInformation($"Degree With Id: {request.DegreeId} Updated For Employee: {request.EmployeeId} By {applicationUser.GetUserId()}");
 
             return Unit.Value;
+        }
+
+        private PartialUpdateDegreeCommand UpdateRequest(PartialUpdateDegreeCommand request, DegreeDetails degreeDetails)
+        {
+            request.Name = request.Name ?? degreeDetails.Name;
+
+            request.Subject = request.Subject ?? degreeDetails.Subject;
+
+            request.Institute = request.Institute ?? degreeDetails.Institute;
+
+            return request;
         }
 
         private async Task<Degree?> GetDegreeDetails(Guid employeeId, int degreeId)

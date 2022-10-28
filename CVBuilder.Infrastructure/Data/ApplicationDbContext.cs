@@ -22,7 +22,6 @@ namespace CVBuilder.Infrastructure.Data
         public DbSet<SkillUpdateRequest> SkillUpdateRequests { get; set; }
         public DbSet<WorkExperienceUpdateRequest> WorkExperienceUpdateRequests { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);

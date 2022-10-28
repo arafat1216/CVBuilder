@@ -100,21 +100,21 @@ namespace CVBuilder.Infrastructure.Repositories
         {
             searchByProject = searchByProject.Trim();
 
-            return collection.Where(e => e.Projects.Any(p => p.Name.Equals(searchByProject) && !p.IsDeleted));
+            return collection.Where(e => e.Projects.Any(p => p.ProjectDetails.Name.Equals(searchByProject) && !p.IsDeleted));
         }
 
         private IQueryable<Employee> ApplySearchByDegreeFilter(string searchByDegree, IQueryable<Employee> collection)
         {
             searchByDegree = searchByDegree.Trim();
 
-            return collection.Where(e => e.Degrees.Any(d => d.Subject.Equals(searchByDegree) && !d.IsDeleted));
+            return collection.Where(e => e.Degrees.Any(d => d.DegreeDetails.Subject.Equals(searchByDegree) && !d.IsDeleted));
         }
 
         private IQueryable<Employee> ApplySearchBySkillFilter(string searchBySkill, IQueryable<Employee> collection)
         {
             searchBySkill = searchBySkill.Trim();
 
-            return collection.Where(e => e.Skills.Any(s => s.Name == searchBySkill && !s.IsDeleted));
+            return collection.Where(e => e.Skills.Any(s => s.SkillDetails.Name == searchBySkill && !s.IsDeleted));
         }
 
         public async Task<Employee?> GetEmployeeByEmailAsync(string email)

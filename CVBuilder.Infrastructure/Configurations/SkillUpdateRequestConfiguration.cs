@@ -4,16 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CVBuilder.Infrastructure.Configurations
 {
-    public class SkillConfiguration : IEntityTypeConfiguration<Skill>
+    public class SkillUpdateRequestConfiguration : IEntityTypeConfiguration<SkillUpdateRequest>
     {
-        public void Configure(EntityTypeBuilder<Skill> builder)
+        public void Configure(EntityTypeBuilder<SkillUpdateRequest> builder)
         {
             builder.OwnsOne(s => s.SkillDetails,
-                navigationBuilder =>
+              navigationBuilder =>
                 {
                     navigationBuilder.Property(s => s.Name).HasColumnName("Name");
                 });
-
         }
     }
 }

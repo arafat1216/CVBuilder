@@ -1,11 +1,11 @@
-﻿namespace CVBuilder.Domain.Entities
+﻿using CVBuilder.Domain.ValueObjects;
+
+namespace CVBuilder.Domain.Entities
 {
     public class Degree
     {
         public int DegreeId { get; set; }
-        public string Name { get; set; }
-        public string Subject { get; set; }
-        public string Institute { get; set; }
+        public DegreeDetails DegreeDetails { get; set; }
         public bool IsDeleted { get; set; } = false;
 
         // Navigation Property

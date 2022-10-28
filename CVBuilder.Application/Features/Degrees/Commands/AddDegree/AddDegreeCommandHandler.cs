@@ -2,6 +2,7 @@
 using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Domain.Entities;
+using CVBuilder.Domain.ValueObjects;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -32,13 +33,12 @@ namespace CVBuilder.Application.Features.Degrees.Commands.AddDegree
             if (!employeeExists)
                 throw new Exceptions.NotFoundException(nameof(Employee), request.EmployeeId);
 
-            
+
 
             // mapping incoming request to degree entity
 
-            var degreeToAdd = mapper.Map<Degree>(request);
 
-            
+            var degreeToAdd = mapper.Map<Degree>(request);
 
             var response = await degreeRepository.AddAsync(degreeToAdd);
 

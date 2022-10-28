@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
 {
-    public class GetSkillsListQueryHandler : IRequestHandler<GetSkillsListQuery, List<SkillDetailsDto>>
+    public class GetSkillsListQueryHandler : IRequestHandler<GetSkillsListQuery, List<SkillsListDto>>
     {
         private readonly ISkillRepository skillRepository;
         private readonly IEmployeeRepository employeeRepository;
@@ -18,7 +18,7 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
             this.employeeRepository = employeeRepository;
             this.mapper = mapper;
         }
-        public async Task<List<SkillDetailsDto>> Handle(GetSkillsListQuery request, CancellationToken cancellationToken)
+        public async Task<List<SkillsListDto>> Handle(GetSkillsListQuery request, CancellationToken cancellationToken)
         {
             // check if user exists
 
@@ -36,7 +36,7 @@ namespace CVBuilder.Application.Features.Skills.Queries.GetSkillsList
             
             // mapping skill entity to skill view model
 
-            return mapper.Map<List<SkillDetailsDto>>(skills);
+            return mapper.Map<List<SkillsListDto>>(skills);
 
         }
 

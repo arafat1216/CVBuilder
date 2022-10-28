@@ -46,7 +46,7 @@ using CVBuilder.Application.ViewModels.Skill;
 using CVBuilder.Application.ViewModels.UpdateResourceRequest;
 using CVBuilder.Application.ViewModels.WorkExperience;
 using CVBuilder.Domain.Entities;
-using CVBuilder.Domain.Enums;
+using CVBuilder.Domain.ValueObjects;
 
 namespace CVBuilder.Application.Profiles
 {
@@ -68,52 +68,122 @@ namespace CVBuilder.Application.Profiles
 
 
             // Skill Mappings
-            CreateMap<Skill, SkillDetailsDto>();
-            CreateMap<Skill, SkillsListDto>();
+            CreateMap<Skill, SkillDetailsDto>()
+                .IncludeMembers(src => src.SkillDetails);
+
+            CreateMap<SkillDetails, SkillDetailsDto>();
+
+            CreateMap<Skill, SkillsListDto>()
+                .IncludeMembers(src => src.SkillDetails);
+
+            CreateMap<SkillDetails, SkillsListDto>();
+
             CreateMap<SkillViewModel, AddSkillCommand>();
-            CreateMap<AddSkillCommand, Skill>();
-            CreateMap<Skill, AddSkillCommandResponse>();
+
+            CreateMap<AddSkillCommand, Skill>()
+                .ForMember(dest => dest.SkillDetails, src => src.MapFrom(src => new SkillDetails(src.Name)));
+
+            CreateMap<Skill, AddSkillCommandResponse>()
+                .IncludeMembers(src => src.SkillDetails);
+
+            CreateMap<SkillDetails, AddSkillCommandResponse>();
+
             CreateMap<SkillViewModel, UpdateSkillCommand>();
-            CreateMap<UpdateSkillCommand, Skill>();
+
+            CreateMap<UpdateSkillCommand, Skill>()
+                 .ForMember(dest => dest.SkillDetails, src => src.MapFrom(src => new SkillDetails(src.Name)));
+
             CreateMap<PartialUpdateSkillCommand, Skill>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ForMember(dest => dest.SkillDetails, src => src.MapFrom(src => new SkillDetails(src.Name)));
 
 
             // Degree Mappings
-            CreateMap<Degree, DegreeDetailsDto>();
-            CreateMap<Degree, DegreesListDto>();
-            CreateMap<DegreeViewModel, AddDegreeCommand>();
-            CreateMap<AddDegreeCommand, Degree>();
-            CreateMap<Degree, AddDegreeCommandResponse>();
-            CreateMap<DegreeViewModel, UpdateDegreeCommand>();
-            CreateMap<UpdateDegreeCommand, Degree>();
-            CreateMap<PartialUpdateDegreeCommand, Degree>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<Degree, DegreeDetailsDto>()
+                .IncludeMembers(src => src.DegreeDetails);
+            
+            CreateMap<DegreeDetails, DegreeDetailsDto>();
 
+            CreateMap<Degree, DegreesListDto>()
+                .IncludeMembers(src => src.DegreeDetails);
+
+            CreateMap<DegreeDetails, DegreesListDto>();
+            
+            CreateMap<DegreeViewModel, AddDegreeCommand>();
+
+            CreateMap<AddDegreeCommand, Degree>()
+                .ForMember(dest => dest.DegreeDetails, src => src.MapFrom(src => new DegreeDetails(src.Name, src.Subject, src.Institute)));
+
+            CreateMap<Degree, AddDegreeCommandResponse>()
+                .IncludeMembers(src => src.DegreeDetails);
+
+            CreateMap<DegreeDetails, AddDegreeCommandResponse>();
+            
+            CreateMap<DegreeViewModel, UpdateDegreeCommand>();
+
+            CreateMap<UpdateDegreeCommand, Degree>()
+                .ForMember(dest => dest.DegreeDetails, src => src.MapFrom(src => new DegreeDetails(src.Name, src.Subject, src.Institute)));
+
+            CreateMap<PartialUpdateDegreeCommand, Degree>()
+                .ForMember(dest => dest.DegreeDetails, src => src.MapFrom(src => new DegreeDetails(src.Name, src.Subject, src.Institute)));
 
 
             // Project Mappings
-            CreateMap<Project, ProjectDetailsDto>();
-            CreateMap<Project, ProjectsListDto>();
+            CreateMap<Project, ProjectDetailsDto>()
+                .IncludeMembers(src => src.ProjectDetails);
+
+            CreateMap<ProjectDetails, ProjectDetailsDto>();
+
+            CreateMap<Project, ProjectsListDto>()
+                .IncludeMembers(src => src.ProjectDetails);
+
+            CreateMap<ProjectDetails, ProjectsListDto>();
+
             CreateMap<ProjectViewModel, AddProjectCommand>();
-            CreateMap<AddProjectCommand, Project>();
-            CreateMap<Project, AddProjectCommandResponse>();
+
+            CreateMap<AddProjectCommand, Project>()
+                .ForMember(dest => dest.ProjectDetails, src => src.MapFrom(src => new ProjectDetails(src.Name, src.Description, src.Link)));
+
+            CreateMap<Project, AddProjectCommandResponse>()
+                .IncludeMembers(src => src.ProjectDetails);
+
+            CreateMap<ProjectDetails, AddProjectCommandResponse>();
+
             CreateMap<ProjectViewModel, UpdateProjectCommand>();
-            CreateMap<UpdateProjectCommand, Project>();
+
+            CreateMap<UpdateProjectCommand, Project>()
+                .ForMember(dest => dest.ProjectDetails, src => src.MapFrom(src => new ProjectDetails(src.Name, src.Description, src.Link)));
+
             CreateMap<PartialUpdateProjectCommand, Project>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ForMember(dest => dest.ProjectDetails, src => src.MapFrom(src => new ProjectDetails(src.Name, src.Description, src.Link)));
 
+            // Work Experience Mappings
+            CreateMap<WorkExperience, WorkExperienceDetailsDto>()
+                .IncludeMembers(src => src.WorkExperienceDetails);
 
-            // Work Experince Mappings
-            CreateMap<WorkExperience, WorkExperienceDetailsDto>();
-            CreateMap<WorkExperience, WorkExperiencesListDto>();
+            CreateMap<WorkExperienceDetails, WorkExperienceDetailsDto>();
+
+            CreateMap<WorkExperience, WorkExperiencesListDto>()
+                .IncludeMembers(src => src.WorkExperienceDetails);
+
+            CreateMap<WorkExperienceDetails, WorkExperiencesListDto>();
+
             CreateMap<WorkExperienceViewModel, AddWorkExperienceCommand>();
-            CreateMap<AddWorkExperienceCommand, WorkExperience>();
-            CreateMap<WorkExperience, AddWorkExperienceCommandResponse>();
+
+            CreateMap<AddWorkExperienceCommand, WorkExperience>()
+                .ForMember(dest => dest.WorkExperienceDetails, src => src.MapFrom(src => new WorkExperienceDetails(src.Designation, src.Company, src.StartDate, src.EndDate)));
+
+            CreateMap<WorkExperience, AddWorkExperienceCommandResponse>()
+                .IncludeMembers(src => src.WorkExperienceDetails);
+
+            CreateMap<WorkExperienceDetails, AddWorkExperienceCommandResponse>();
+
             CreateMap<WorkExperienceViewModel, UpdateWorkExperienceCommand>();
-            CreateMap<UpdateWorkExperienceCommand, WorkExperience>();
+
+            CreateMap<UpdateWorkExperienceCommand, WorkExperience>()
+                .ForMember(dest => dest.WorkExperienceDetails, src => src.MapFrom(src => new WorkExperienceDetails(src.Designation, src.Company, src.StartDate, src.EndDate)));
+
             CreateMap<PartialUpdateWorkExperienceCommand, WorkExperience>()
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ForMember(dest => dest.WorkExperienceDetails, src => src.MapFrom(src => new WorkExperienceDetails(src.Designation, src.Company, src.StartDate, src.EndDate)));
 
 
             // Update Password Mappings
@@ -126,59 +196,145 @@ namespace CVBuilder.Application.Profiles
             CreateMap<PersonalDetailsUpdateRequest, PersonalDetailsUpdateRequestDto>();
             CreateMap<PersonalDetailsUpdateRequest, PartialUpdateEmployeeCommand>();
 
+
             // Degree Request Mappings
+            CreateMap<DegreeUpdateRequest, DegreeUpdateRequestDto>()
+                .IncludeMembers(src => src.DegreeDetails);
+
+            CreateMap<DegreeDetails, DegreeUpdateRequestDto>();
+
             CreateMap<AddDegreeRequestViewModel, AddDegreeRequestCommand>();
-            CreateMap<AddDegreeRequestCommand, DegreeUpdateRequest>();
+
+            CreateMap<AddDegreeRequestCommand, DegreeUpdateRequest>()
+                .ForMember(dest => dest.DegreeDetails, src => src.MapFrom(src => new DegreeDetails(src.Name, src.Subject, src.Institute)));
+
             CreateMap<ResourceRequest, AddDegreeRequestCommandResponse>();
-            CreateMap<DegreeUpdateRequest, DegreeUpdateRequestDto>();
-            CreateMap<DegreeUpdateRequest, AddDegreeCommand>();
-            CreateMap<DegreeUpdateRequest, PartialUpdateDegreeCommand>();
-            CreateMap<UpdateDegreeRequestCommand, DegreeUpdateRequest>();
+
+            CreateMap<DegreeUpdateRequest, AddDegreeCommand>()
+                .IncludeMembers(src => src.DegreeDetails);
+
+            CreateMap<DegreeDetails, AddDegreeCommand>();
+
+            CreateMap<UpdateDegreeRequestCommand, DegreeUpdateRequest>()
+                .ForMember(dest => dest.DegreeDetails, src => src.MapFrom(src => new DegreeDetails(src.Name, src.Subject, src.Institute)));
+
             CreateMap<ResourceRequest, UpdateDegreeRequestCommandResponse>();
+
+            CreateMap<DegreeUpdateRequest, PartialUpdateDegreeCommand>()
+                .IncludeMembers(src => src.DegreeDetails);
+
+            CreateMap<DegreeDetails, PartialUpdateDegreeCommand>();
+
             CreateMap<DeleteDegreeRequestCommand, DegreeUpdateRequest>();
+
             CreateMap<ResourceRequest, DeleteDegreeRequestCommandResponse>();
+
             CreateMap<DegreeUpdateRequest, DeleteDegreeCommand>();
 
 
+
             // Project Request Mappings
+            CreateMap<ProjectUpdateRequest, ProjectUpdateRequestDto>()
+                .IncludeMembers(src => src.ProjectDetails);
+
+            CreateMap<ProjectDetails, ProjectUpdateRequestDto>();
+
             CreateMap<AddProjectRequestViewModel, AddProjectRequestCommand>();
-            CreateMap<AddProjectRequestCommand, ProjectUpdateRequest>();
+
+            CreateMap<AddProjectRequestCommand, ProjectUpdateRequest>()
+                .ForMember(dest => dest.ProjectDetails, src => src.MapFrom(src => new ProjectDetails(src.Name, src.Description, src.Link)));
+
             CreateMap<ResourceRequest, AddProjectRequestCommandResponse>();
-            CreateMap<ProjectUpdateRequest, ProjectUpdateRequestDto>();
-            CreateMap<ProjectUpdateRequest, AddProjectCommand>();
-            CreateMap<ProjectUpdateRequest, PartialUpdateProjectCommand>();
-            CreateMap<UpdateProjectRequestCommand, ProjectUpdateRequest>();
+            
+            CreateMap<ProjectUpdateRequest, AddProjectCommand>()
+                .IncludeMembers(src => src.ProjectDetails);
+
+            CreateMap<ProjectDetails, AddProjectCommand>();
+
+            CreateMap<UpdateProjectRequestCommand, ProjectUpdateRequest>()
+                .ForMember(dest => dest.ProjectDetails, src => src.MapFrom(src => new ProjectDetails(src.Name, src.Description, src.Link)));
+
             CreateMap<ResourceRequest, UpdateProjectRequestCommandResponse>();
+
+            CreateMap<ProjectUpdateRequest, PartialUpdateProjectCommand>()
+                .IncludeMembers(src => src.ProjectDetails);
+
+            CreateMap<ProjectDetails, PartialUpdateProjectCommand>();
+
             CreateMap<DeleteProjectRequestCommand, ProjectUpdateRequest>();
+
             CreateMap<ResourceRequest, DeleteProjectRequestCommandResponse>();
+
             CreateMap<ProjectUpdateRequest, DeleteProjectCommand>();
 
 
             // Skill Request Mappings
+            CreateMap<SkillUpdateRequest, SkillUpdateRequestDto>()
+                .IncludeMembers(src => src.SkillDetails);
+
+            CreateMap<SkillDetails, SkillUpdateRequestDto>();
+
             CreateMap<AddSkillRequestViewModel, AddSkillRequestCommand>();
-            CreateMap<AddSkillRequestCommand, SkillUpdateRequest>();
+
+            CreateMap<AddSkillRequestCommand, SkillUpdateRequest>()
+                .ForMember(dest => dest.SkillDetails, src => src.MapFrom(src => new SkillDetails(src.Name)));
+
             CreateMap<ResourceRequest, AddSkillRequestCommandResponse>();
-            CreateMap<SkillUpdateRequest, SkillUpdateRequestDto>();
-            CreateMap<SkillUpdateRequest, AddSkillCommand>();
-            CreateMap<SkillUpdateRequest, PartialUpdateSkillCommand>();
-            CreateMap<UpdateSkillRequestCommand, SkillUpdateRequest>();
+            
+            CreateMap<SkillUpdateRequest, AddSkillCommand>()
+                .IncludeMembers(src => src.SkillDetails);
+
+            CreateMap<SkillDetails, AddSkillCommand>();
+
+            CreateMap<UpdateSkillRequestCommand, SkillUpdateRequest>()
+                .ForMember(dest => dest.SkillDetails, src => src.MapFrom(src => new SkillDetails(src.Name)));
+
             CreateMap<ResourceRequest, UpdateSkillRequestCommandResponse>();
+
+            CreateMap<SkillUpdateRequest, PartialUpdateSkillCommand>()
+                .IncludeMembers(src => src.SkillDetails);
+
+            CreateMap<SkillDetails, PartialUpdateSkillCommand>();
+
             CreateMap<DeleteSkillRequestCommand, SkillUpdateRequest>();
+
             CreateMap<ResourceRequest, DeleteSkillRequestCommandResponse>();
+
             CreateMap<SkillUpdateRequest, DeleteSkillCommand>();
 
 
             // Work Experience Request Mappings
+            CreateMap<WorkExperienceUpdateRequest, WorkExperienceUpdateRequestDto>()
+                .IncludeMembers(src => src.WorkExperienceDetails);
+
+            CreateMap<WorkExperienceDetails, WorkExperienceUpdateRequestDto>();
+
             CreateMap<AddWorkExperienceRequestViewModel, AddWorkExperienceRequestCommand>();
-            CreateMap<AddWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
+
+            CreateMap<AddWorkExperienceRequestCommand, WorkExperienceUpdateRequest>()
+                .ForMember(dest => dest.WorkExperienceDetails, src => src.MapFrom(src => new WorkExperienceDetails(src.Designation, src.Company, src.StartDate, src.EndDate)));
+
             CreateMap<ResourceRequest, AddWorkExperienceRequestCommandResponse>();
-            CreateMap<WorkExperienceUpdateRequest, WorkExperienceUpdateRequestDto>();
-            CreateMap<WorkExperienceUpdateRequest, AddWorkExperienceCommand>();
-            CreateMap<WorkExperienceUpdateRequest, PartialUpdateWorkExperienceCommand>();
-            CreateMap<UpdateWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
+
+            CreateMap<WorkExperienceUpdateRequest, AddWorkExperienceCommand>()
+                .IncludeMembers(src => src.WorkExperienceDetails);
+
+            CreateMap<WorkExperienceDetails, AddWorkExperienceCommand>();
+
+            CreateMap<UpdateWorkExperienceRequestCommand, WorkExperienceUpdateRequest>()
+                .ForMember(dest => dest.WorkExperienceDetails, src => src.MapFrom(src => new WorkExperienceDetails(src.Designation, src.Company, src.StartDate, src.EndDate)));
+
             CreateMap<ResourceRequest, UpdateWorkExperienceRequestCommandResponse>();
+
+            CreateMap<WorkExperienceUpdateRequest, PartialUpdateWorkExperienceCommand>()
+                .IncludeMembers(src => src.WorkExperienceDetails);
+
+            CreateMap<WorkExperienceDetails, PartialUpdateWorkExperienceCommand>();
+
             CreateMap<DeleteWorkExperienceRequestCommand, WorkExperienceUpdateRequest>();
+
             CreateMap<ResourceRequest, DeleteWorkExperienceRequestCommandResponse>();
+
             CreateMap<WorkExperienceUpdateRequest, DeleteWorkExperienceCommand>();
 
 

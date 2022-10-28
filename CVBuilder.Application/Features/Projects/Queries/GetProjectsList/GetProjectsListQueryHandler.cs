@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
 {
-    public class GetProjectsListQueryHandler : IRequestHandler<GetProjectsListQuery, List<ProjectDetailsDto>>
+    public class GetProjectsListQueryHandler : IRequestHandler<GetProjectsListQuery, List<ProjectsListDto>>
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly IProjectRepository projectRepository;
@@ -18,7 +18,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
             this.projectRepository = projectRepository;
             this.mapper = mapper;
         }
-        public async Task<List<ProjectDetailsDto>> Handle(GetProjectsListQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProjectsListDto>> Handle(GetProjectsListQuery request, CancellationToken cancellationToken)
         {
             // check if employee exists
 
@@ -35,7 +35,7 @@ namespace CVBuilder.Application.Features.Projects.Queries.GetProjectsList
             
             // mapping projects list to project view model
 
-            var projectsListDto = mapper.Map<List<ProjectDetailsDto>>(projectsList);
+            var projectsListDto = mapper.Map<List<ProjectsListDto>>(projectsList);
 
 
             return projectsListDto;

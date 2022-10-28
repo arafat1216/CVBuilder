@@ -4,6 +4,7 @@ using CVBuilder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CVBuilder.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221027124300_Modified Degree Entity")]
+    partial class ModifiedDegreeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,11 +144,21 @@ namespace CVBuilder.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectId"), 1L, 1);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProjectId");
 
@@ -162,6 +174,15 @@ namespace CVBuilder.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
@@ -226,6 +247,10 @@ namespace CVBuilder.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("SkillId");
 
                     b.HasIndex("EmployeeId");
@@ -240,6 +265,9 @@ namespace CVBuilder.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
@@ -263,11 +291,25 @@ namespace CVBuilder.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkExperienceId"), 1L, 1);
 
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Designation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("WorkExperienceId");
 
@@ -284,8 +326,20 @@ namespace CVBuilder.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Designation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("WorkExperienceId")
                         .HasColumnType("int");
@@ -396,35 +450,6 @@ namespace CVBuilder.Infrastructure.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsOne("CVBuilder.Domain.ValueObjects.ProjectDetails", "ProjectDetails", b1 =>
-                        {
-                            b1.Property<int>("ProjectId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Description")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Description");
-
-                            b1.Property<string>("Link")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Link");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Name");
-
-                            b1.HasKey("ProjectId");
-
-                            b1.ToTable("Projects");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProjectId");
-                        });
-
-                    b.Navigation("ProjectDetails")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CVBuilder.Domain.Entities.ProjectUpdateRequest", b =>
@@ -433,35 +458,6 @@ namespace CVBuilder.Infrastructure.Migrations
                         .WithOne("ProjectUpdateRequest")
                         .HasForeignKey("CVBuilder.Domain.Entities.ProjectUpdateRequest", "RequestId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("CVBuilder.Domain.ValueObjects.ProjectDetails", "ProjectDetails", b1 =>
-                        {
-                            b1.Property<int>("ProjectUpdateRequestId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Description")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Description");
-
-                            b1.Property<string>("Link")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Link");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Name");
-
-                            b1.HasKey("ProjectUpdateRequestId");
-
-                            b1.ToTable("ProjectUpdateRequests");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProjectUpdateRequestId");
-                        });
-
-                    b.Navigation("ProjectDetails")
                         .IsRequired();
                 });
 
@@ -472,27 +468,6 @@ namespace CVBuilder.Infrastructure.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsOne("CVBuilder.Domain.ValueObjects.SkillDetails", "SkillDetails", b1 =>
-                        {
-                            b1.Property<int>("SkillId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Name");
-
-                            b1.HasKey("SkillId");
-
-                            b1.ToTable("Skills");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SkillId");
-                        });
-
-                    b.Navigation("SkillDetails")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CVBuilder.Domain.Entities.SkillUpdateRequest", b =>
@@ -501,27 +476,6 @@ namespace CVBuilder.Infrastructure.Migrations
                         .WithOne("SkillUpdateRequest")
                         .HasForeignKey("CVBuilder.Domain.Entities.SkillUpdateRequest", "RequestId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("CVBuilder.Domain.ValueObjects.SkillDetails", "SkillDetails", b1 =>
-                        {
-                            b1.Property<int>("SkillUpdateRequestId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Name");
-
-                            b1.HasKey("SkillUpdateRequestId");
-
-                            b1.ToTable("SkillUpdateRequests");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SkillUpdateRequestId");
-                        });
-
-                    b.Navigation("SkillDetails")
                         .IsRequired();
                 });
 
@@ -532,40 +486,6 @@ namespace CVBuilder.Infrastructure.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsOne("CVBuilder.Domain.ValueObjects.WorkExperienceDetails", "WorkExperienceDetails", b1 =>
-                        {
-                            b1.Property<int>("WorkExperienceId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Company")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Company");
-
-                            b1.Property<string>("Designation")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Designation");
-
-                            b1.Property<DateTime?>("EndDate")
-                                .HasColumnType("datetime2")
-                                .HasColumnName("EndDate");
-
-                            b1.Property<DateTime?>("StartDate")
-                                .HasColumnType("datetime2")
-                                .HasColumnName("StartDate");
-
-                            b1.HasKey("WorkExperienceId");
-
-                            b1.ToTable("WorkExperiences");
-
-                            b1.WithOwner()
-                                .HasForeignKey("WorkExperienceId");
-                        });
-
-                    b.Navigation("WorkExperienceDetails")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CVBuilder.Domain.Entities.WorkExperienceUpdateRequest", b =>
@@ -574,40 +494,6 @@ namespace CVBuilder.Infrastructure.Migrations
                         .WithOne("WorkExperienceUpdateRequest")
                         .HasForeignKey("CVBuilder.Domain.Entities.WorkExperienceUpdateRequest", "RequestId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("CVBuilder.Domain.ValueObjects.WorkExperienceDetails", "WorkExperienceDetails", b1 =>
-                        {
-                            b1.Property<int>("WorkExperienceUpdateRequestId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Company")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Company");
-
-                            b1.Property<string>("Designation")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Designation");
-
-                            b1.Property<DateTime?>("EndDate")
-                                .HasColumnType("datetime2")
-                                .HasColumnName("EndDate");
-
-                            b1.Property<DateTime?>("StartDate")
-                                .HasColumnType("datetime2")
-                                .HasColumnName("StartDate");
-
-                            b1.HasKey("WorkExperienceUpdateRequestId");
-
-                            b1.ToTable("WorkExperienceUpdateRequests");
-
-                            b1.WithOwner()
-                                .HasForeignKey("WorkExperienceUpdateRequestId");
-                        });
-
-                    b.Navigation("WorkExperienceDetails")
                         .IsRequired();
                 });
 

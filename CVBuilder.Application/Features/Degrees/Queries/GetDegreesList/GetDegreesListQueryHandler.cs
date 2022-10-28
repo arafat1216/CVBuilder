@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreesList
 {
-    public class GetDegreesListQueryHandler : IRequestHandler<GetDegreesListQuery, List<DegreeDetailsDto>>
+    public class GetDegreesListQueryHandler : IRequestHandler<GetDegreesListQuery, List<DegreesListDto>>
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly IDegreeRepository degreeRepository;
@@ -18,7 +18,7 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreesList
             this.degreeRepository = degreeRepository;
             this.mapper = mapper;
         }
-        public async Task<List<DegreeDetailsDto>> Handle(GetDegreesListQuery request, CancellationToken cancellationToken)
+        public async Task<List<DegreesListDto>> Handle(GetDegreesListQuery request, CancellationToken cancellationToken)
         {
             // check if employee exits
 
@@ -35,7 +35,7 @@ namespace CVBuilder.Application.Features.Degrees.Queries.GetDegreesList
 
             // mapping degree entity to degree view model
 
-            var degreesDto = mapper.Map<List<DegreeDetailsDto>>(degrees);
+            var  degreesDto = mapper.Map<List<DegreesListDto>>(degrees);
 
 
             return degreesDto;
