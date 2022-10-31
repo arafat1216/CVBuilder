@@ -1,13 +1,16 @@
-﻿using CVBuilder.Application.Contracts.Authentication;
+﻿using AutoMapper;
+using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.PdfGenerator;
+using CVBuilder.Application.Contracts.UploadEmailToQueue;
+using CVBuilder.Application.Dtos.Email;
 using CVBuilder.Application.Features.Degrees.Queries.GetDegreesList;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.Projects.Queries.GetProjectsList;
 using CVBuilder.Application.Features.Skills.Queries.GetSkillsList;
 using CVBuilder.Application.Features.WorkExperiences.Queries.GetWorkExperiencesList;
+using CVBuilder.Application.ViewModels.SendEmail;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVBuilder.Api.Controllers
@@ -20,12 +23,16 @@ namespace CVBuilder.Api.Controllers
         private readonly IMediator mediator;
         private readonly IPdfGeneratorService pdfGeneratorService;
         private readonly IApplicationUser applicationUser;
+        private readonly IMapper mapper;
+        private readonly IUploadEmailToQueueService uploadEmailToQueueService;
 
-        public MyCVController(IMediator mediator, IPdfGeneratorService pdfGeneratorService, IApplicationUser applicationUser)
+        public MyCVController(IMediator mediator, IPdfGeneratorService pdfGeneratorService, IApplicationUser applicationUser, IMapper mapper, IUploadEmailToQueueService uploadEmailToQueueService)
         {
             this.mediator = mediator;
             this.pdfGeneratorService = pdfGeneratorService;
             this.applicationUser = applicationUser;
+            this.mapper = mapper;
+            this.uploadEmailToQueueService = uploadEmailToQueueService;
         }
 
 
@@ -113,6 +120,19 @@ namespace CVBuilder.Api.Controllers
             var responseDtos = await mediator.Send(requestDto);
 
             return Ok(responseDtos);
+        }
+
+
+        [HttpPost("send-email")]
+        public async Task<IActionResult> SendEmail([FromBody] EmailViewModel emailViewModel)
+        {
+            var requestDto = mapper.Map<EmailDto>(emailViewModel);
+
+            requestDto.SenderId = applicationUser.GetUserId();
+
+            await uploadEmailToQueueService.UploadEmailToQueue(requestDto);
+
+            return Ok("Sent Successfully");
         }
     }
 }

@@ -2,7 +2,9 @@
 using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Application.Contracts.UpdateResourceManager;
+using CVBuilder.Application.Contracts.UploadEmailToQueue;
 using CVBuilder.Application.Models.Authentication;
+using CVBuilder.Application.Models.Azure;
 using CVBuilder.Infrastructure.Data;
 using CVBuilder.Infrastructure.Repositories;
 using CVBuilder.Infrastructure.Services;
@@ -28,6 +30,8 @@ namespace CVBuilder.Infrastructure
 
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
+            services.Configure<AzureSettings>(configuration.GetSection("AzureSettings"));
+
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IEmployeeRepository,EmployeeRepository>();
             services.AddScoped<IDegreeRepository, DegreeRepository>();
@@ -48,6 +52,8 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IPdfGeneratorService, PdfGeneratorService>();
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             
+            services.AddTransient<IUploadEmailToQueueService, UploadEmailToQueueService>();
+
             services.AddScoped<IUpdateResourceService, UpdateResourceService>();
             services.AddScoped<IUpdateDegreeService, UpdateDegreeService>();
             services.AddScoped<IUpdatePersonalDetailsService, UpdatePersonalDetailsService>();

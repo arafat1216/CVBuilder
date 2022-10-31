@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CVBuilder.Application.Dtos.Degree;
+using CVBuilder.Application.Dtos.Email;
 using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Application.Dtos.Project;
 using CVBuilder.Application.Dtos.ResourceRequests;
@@ -42,6 +43,7 @@ using CVBuilder.Application.ViewModels.Account;
 using CVBuilder.Application.ViewModels.Degree;
 using CVBuilder.Application.ViewModels.Employee;
 using CVBuilder.Application.ViewModels.Project;
+using CVBuilder.Application.ViewModels.SendEmail;
 using CVBuilder.Application.ViewModels.Skill;
 using CVBuilder.Application.ViewModels.UpdateResourceRequest;
 using CVBuilder.Application.ViewModels.WorkExperience;
@@ -344,6 +346,8 @@ namespace CVBuilder.Application.Profiles
             CreateMap<ResourceRequest, ResourceRequestDetailsDto>();
 
 
+            // Email View Model Mappings
+            CreateMap<EmailViewModel, EmailDto>();
         }
     }
 }
