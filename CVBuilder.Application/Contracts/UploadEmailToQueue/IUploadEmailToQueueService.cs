@@ -4,6 +4,6 @@ namespace CVBuilder.Application.Contracts.UploadEmailToQueue
 {
     public interface IUploadEmailToQueueService
     {
-        Task UploadEmailToQueue(EmailDto emailDto);
+        Task UploadEmailToQueue(EmailDto emailDto, byte[] attachment);
     }
 }

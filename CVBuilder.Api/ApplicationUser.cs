@@ -14,5 +14,7 @@ namespace CVBuilder.Api
         {
             return Guid.Parse(contextAccessor.HttpContext.User.Identity.Name);
         }
+
+        
     }
 }

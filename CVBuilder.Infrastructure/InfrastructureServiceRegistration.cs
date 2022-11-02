@@ -32,6 +32,7 @@ namespace CVBuilder.Infrastructure
 
             services.Configure<AzureSettings>(configuration.GetSection("AzureSettings"));
 
+
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IEmployeeRepository,EmployeeRepository>();
             services.AddScoped<IDegreeRepository, DegreeRepository>();

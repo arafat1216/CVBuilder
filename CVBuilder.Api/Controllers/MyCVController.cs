@@ -12,6 +12,7 @@ using CVBuilder.Application.ViewModels.SendEmail;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CVBuilder.Api.Controllers
 {
@@ -33,6 +34,7 @@ namespace CVBuilder.Api.Controllers
             this.applicationUser = applicationUser;
             this.mapper = mapper;
             this.uploadEmailToQueueService = uploadEmailToQueueService;
+            
         }
 
 
@@ -54,14 +56,7 @@ namespace CVBuilder.Api.Controllers
         public async Task<IActionResult> DownloadCv()
         {
            
-            var requestDto = new GetEmployeeDetailQuery()
-            {
-                Id = applicationUser.GetUserId(),
-            };
-
-            var employeeDetails = await mediator.Send(requestDto);
-
-            var file = await pdfGeneratorService.GeneratePdf(employeeDetails);
+            var file = await pdfGeneratorService.GeneratePdf(applicationUser.GetUserId());
 
             return File(file, "application/octet-stream", "Resume.pdf");
         }
@@ -128,9 +123,15 @@ namespace CVBuilder.Api.Controllers
         {
             var requestDto = mapper.Map<EmailDto>(emailViewModel);
 
-            requestDto.SenderId = applicationUser.GetUserId();
+            requestDto.Id = applicationUser.GetUserId();
 
-            await uploadEmailToQueueService.UploadEmailToQueue(requestDto);
+            requestDto.Sender = User.FindFirstValue(ClaimTypes.Email);
+
+            var file = await pdfGeneratorService.GeneratePdf(applicationUser.GetUserId());
+
+            
+
+            await uploadEmailToQueueService.UploadEmailToQueue(requestDto, file);
 
             return Ok("Sent Successfully");
         }

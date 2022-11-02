@@ -4,7 +4,10 @@ namespace CVBuilder.Application.Dtos.Email
 {
     public class EmailDto
     {
-        public Guid SenderId { get; set; }
+        public Guid Id { get; set; }
+        public string Sender { get; set; }
         public List<EmailAddress> Recipients { get; set; }
+        public string AttachmentName { get; set; }
+
     }
 }
