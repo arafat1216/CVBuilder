@@ -38,7 +38,7 @@ namespace CVBuilder.Api.Controllers
         }
 
 
-        [HttpGet("view-my-cv")]
+        [HttpGet("view-cv")]
         public async Task<IActionResult> GetMyCv()
         {
             var requestDto = new GetEmployeeDetailQuery()
@@ -62,7 +62,7 @@ namespace CVBuilder.Api.Controllers
         }
 
 
-        [HttpGet("degrees-list")]
+        [HttpGet("degrees")]
         public async Task<IActionResult> GetAllDegrees()
         {
             var requestDto = new GetDegreesListQuery()
@@ -76,7 +76,7 @@ namespace CVBuilder.Api.Controllers
         }
 
 
-        [HttpGet("projects-list")]
+        [HttpGet("projects")]
         public async Task<IActionResult> GetAllProjects()
         {
             var requestDto = new GetProjectsListQuery()
@@ -90,7 +90,7 @@ namespace CVBuilder.Api.Controllers
         }
 
 
-        [HttpGet("skills-list")]
+        [HttpGet("skills")]
         public async Task<IActionResult> GetAllSkills()
         {
             var requestDto = new GetSkillsListQuery()
@@ -104,7 +104,7 @@ namespace CVBuilder.Api.Controllers
         }
 
 
-        [HttpGet("work-experiences-list")]
+        [HttpGet("work-experiences")]
         public async Task<IActionResult> GetAllWorkExperiences()
         {
             var requestDto = new GetWorkExperiencesListQuery()
