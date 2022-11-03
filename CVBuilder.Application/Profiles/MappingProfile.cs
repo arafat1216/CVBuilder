@@ -5,6 +5,7 @@ using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Application.Dtos.Project;
 using CVBuilder.Application.Dtos.ResourceRequests;
 using CVBuilder.Application.Dtos.Skill;
+using CVBuilder.Application.Dtos.UpdateCVRequestServiceResponse;
 using CVBuilder.Application.Dtos.WorkExperience;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.DeleteDegree;
@@ -222,6 +223,11 @@ namespace CVBuilder.Application.Profiles
 
             CreateMap<ResourceRequest, UpdateDegreeRequestCommandResponse>();
 
+            CreateMap<DegreeUpdateRequest, UpdateDegreeCommand>()
+                .IncludeMembers(src => src.DegreeDetails);
+
+            CreateMap<DegreeDetails, UpdateDegreeCommand>();
+
             CreateMap<DegreeUpdateRequest, PartialUpdateDegreeCommand>()
                 .IncludeMembers(src => src.DegreeDetails);
 
@@ -258,6 +264,11 @@ namespace CVBuilder.Application.Profiles
 
             CreateMap<ResourceRequest, UpdateProjectRequestCommandResponse>();
 
+            CreateMap<ProjectUpdateRequest, UpdateProjectCommand>()
+                .IncludeMembers(src => src.ProjectDetails);
+
+            CreateMap<ProjectDetails, UpdateProjectCommand>();
+
             CreateMap<ProjectUpdateRequest, PartialUpdateProjectCommand>()
                 .IncludeMembers(src => src.ProjectDetails);
 
@@ -292,6 +303,11 @@ namespace CVBuilder.Application.Profiles
                 .ForMember(dest => dest.SkillDetails, src => src.MapFrom(src => new SkillDetails(src.Name)));
 
             CreateMap<ResourceRequest, UpdateSkillRequestCommandResponse>();
+
+            CreateMap<SkillUpdateRequest, UpdateSkillCommand>()
+               .IncludeMembers(src => src.SkillDetails);
+
+            CreateMap<SkillDetails, UpdateSkillCommand>();
 
             CreateMap<SkillUpdateRequest, PartialUpdateSkillCommand>()
                 .IncludeMembers(src => src.SkillDetails);
@@ -328,6 +344,11 @@ namespace CVBuilder.Application.Profiles
 
             CreateMap<ResourceRequest, UpdateWorkExperienceRequestCommandResponse>();
 
+            CreateMap<WorkExperienceUpdateRequest, UpdateWorkExperienceCommand>()
+               .IncludeMembers(src => src.WorkExperienceDetails);
+
+            CreateMap<WorkExperienceDetails, UpdateWorkExperienceCommand>();
+
             CreateMap<WorkExperienceUpdateRequest, PartialUpdateWorkExperienceCommand>()
                 .IncludeMembers(src => src.WorkExperienceDetails);
 
@@ -348,6 +369,43 @@ namespace CVBuilder.Application.Profiles
 
             // Email View Model Mappings
             CreateMap<EmailViewModel, EmailDto>();
+
+            // Update CV Mappings
+            CreateMap<UpdateDegreeViewModel, AddDegreeRequestCommand>();
+            CreateMap<AddDegreeRequestCommandResponse, Response>();
+
+            CreateMap<UpdateDegreeViewModel, UpdateDegreeRequestCommand>();
+            CreateMap<UpdateDegreeRequestCommandResponse, Response>();
+
+            CreateMap<UpdateDegreeViewModel, DeleteDegreeRequestCommand>();
+            CreateMap<DeleteDegreeRequestCommandResponse, Response>();
+
+            CreateMap<UpdateProjectViewModel, AddProjectRequestCommand>();
+            CreateMap<AddProjectRequestCommandResponse, Response>();
+
+            CreateMap<UpdateProjectViewModel, UpdateProjectRequestCommand>();
+            CreateMap<UpdateProjectRequestCommandResponse, Response>();
+
+            CreateMap<UpdateProjectViewModel, DeleteProjectRequestCommand>();
+            CreateMap<DeleteProjectRequestCommandResponse, Response>();
+
+            CreateMap<UpdateSkillViewModel, AddSkillRequestCommand>();
+            CreateMap<AddSkillRequestCommandResponse, Response>();
+
+            CreateMap<UpdateSkillViewModel, UpdateSkillRequestCommand>();
+            CreateMap<UpdateSkillRequestCommandResponse, Response>();
+
+            CreateMap<UpdateSkillViewModel, DeleteSkillRequestCommand>();
+            CreateMap<DeleteSkillRequestCommandResponse, Response>();
+
+            CreateMap<UpdateWorkExperienceViewModel, AddWorkExperienceRequestCommand>();
+            CreateMap<AddWorkExperienceRequestCommandResponse, Response>();
+
+            CreateMap<UpdateWorkExperienceViewModel, UpdateWorkExperienceRequestCommand>();
+            CreateMap<UpdateWorkExperienceRequestCommandResponse, Response>();
+
+            CreateMap<UpdateWorkExperienceViewModel, DeleteWorkExperienceRequestCommand>();
+            CreateMap<DeleteWorkExperienceRequestCommandResponse, Response>();
         }
     }
 }

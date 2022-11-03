@@ -4,6 +4,7 @@ using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Application.Features.Projects.Commands.AddProject;
 using CVBuilder.Application.Features.Projects.Commands.DeleteProject;
 using CVBuilder.Application.Features.Projects.Commands.PartialUpdateProject;
+using CVBuilder.Application.Features.Projects.Commands.UpdateProject;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
 using MediatR;
@@ -57,7 +58,7 @@ namespace CVBuilder.Infrastructure.Services
 
         private async Task UpdateProject(ResourceRequest resourceRequest, ProjectUpdateRequest projectUpdateRequest)
         {
-            var requestDto = mapper.Map<PartialUpdateProjectCommand>(projectUpdateRequest);
+            var requestDto = mapper.Map<UpdateProjectCommand>(projectUpdateRequest);
 
             requestDto.EmployeeId = resourceRequest.AppliedBy;
 

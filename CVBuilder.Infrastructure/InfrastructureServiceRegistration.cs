@@ -1,6 +1,7 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Contracts.Persistence;
+using CVBuilder.Application.Contracts.UpdateCVRequest;
 using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Application.Contracts.UploadEmailToQueue;
 using CVBuilder.Application.Models.Authentication;
@@ -61,6 +62,7 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IUpdateProjectService, UpdateProjectService>();
             services.AddScoped<IUpdateSkillService, UpdateSkillService>();
             services.AddScoped<IUpdateWorkExperienceService, UpdateWorkExperienceService>();
+            services.AddScoped<IUpdateCVRequestService, UpdateCVRequestService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

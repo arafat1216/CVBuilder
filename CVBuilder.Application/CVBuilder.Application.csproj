@@ -21,8 +21,4 @@
     <ProjectReference Include="..\CVBuilder.Domain\CVBuilder.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\Skill\" />
-  </ItemGroup>
-
 </Project>

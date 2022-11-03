@@ -4,6 +4,7 @@ using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Application.Features.Skills.Commands.AddSkill;
 using CVBuilder.Application.Features.Skills.Commands.DeleteSkill;
 using CVBuilder.Application.Features.Skills.Commands.PartialUpdateSkill;
+using CVBuilder.Application.Features.Skills.Commands.UpdateSkill;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
 using MediatR;
@@ -57,7 +58,7 @@ namespace CVBuilder.Infrastructure.Services
 
         private async Task UpdateSkill(ResourceRequest resourceRequest, SkillUpdateRequest skillUpdateRequest)
         {
-            var requestDto = mapper.Map<PartialUpdateSkillCommand>(skillUpdateRequest);
+            var requestDto = mapper.Map<UpdateSkillCommand>(skillUpdateRequest);
 
             requestDto.EmployeeId = resourceRequest.AppliedBy;
 

@@ -4,6 +4,7 @@ using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Application.Features.WorkExperiences.Commands.AddWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateWorkExperience;
+using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
 using MediatR;
@@ -57,7 +58,7 @@ namespace CVBuilder.Infrastructure.Services
 
         private async Task UpdateWorkExperience(ResourceRequest resourceRequest, WorkExperienceUpdateRequest workExperienceUpdateRequest)
         {
-            var requestDto = mapper.Map<PartialUpdateWorkExperienceCommand>(workExperienceUpdateRequest);
+            var requestDto = mapper.Map<UpdateWorkExperienceCommand>(workExperienceUpdateRequest);
 
             requestDto.EmployeeId = resourceRequest.AppliedBy;
 

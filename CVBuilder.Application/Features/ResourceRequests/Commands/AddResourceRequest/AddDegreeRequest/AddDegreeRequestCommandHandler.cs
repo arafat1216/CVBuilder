@@ -19,6 +19,7 @@ namespace CVBuilder.Application.Features.ResourceRequests.Commands.AddResourceRe
             this.repository = repository;
             this.applicationUser = applicationUser;
             this.mapper = mapper;
+
         }
         public async Task<AddDegreeRequestCommandResponse> Handle(AddDegreeRequestCommand request, CancellationToken cancellationToken)
         {

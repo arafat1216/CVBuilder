@@ -4,6 +4,7 @@ using CVBuilder.Application.Contracts.UpdateResourceManager;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.DeleteDegree;
 using CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree;
+using CVBuilder.Application.Features.Degrees.Commands.UpdateDegree;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Domain.Enums;
 using MediatR;
@@ -57,7 +58,7 @@ namespace CVBuilder.Infrastructure.Services
 
         private async Task UpdateDegree(ResourceRequest resourceRequest, DegreeUpdateRequest degreeUpdateRequest)
         {
-            var requestDto = mapper.Map<PartialUpdateDegreeCommand>(degreeUpdateRequest);
+            var requestDto = mapper.Map<UpdateDegreeCommand>(degreeUpdateRequest);
 
             requestDto.EmployeeId = resourceRequest.AppliedBy;
 
