@@ -33,7 +33,7 @@ namespace CVBuilder.Application.Features.Employees.Commands.AddEmployee
             // hashing password
 
             employee.Password = GetHashedPassword(request.Password);
-            
+
 
             employee = await repository.AddEmployeeAsync(employee);
 

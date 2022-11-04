@@ -48,5 +48,33 @@ namespace CVBuilder.Infrastructure.Services
 
             return token;
         }
+
+        public string GenerateToken(Company company)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSettings.Key));
+
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, company.CompanyId.ToString()),
+                new Claim(ClaimTypes.Email, company.UserName),
+                new Claim(ClaimTypes.Role, company.Role.ToString())
+            };
+
+            var securityToken = new JwtSecurityToken(
+                JwtSettings.Issuer,
+                JwtSettings.Audience,
+                claims,
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddHours(1),
+                signingCredentials
+
+                );
+
+            var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
+
+            return token;
+        }
     }
 }

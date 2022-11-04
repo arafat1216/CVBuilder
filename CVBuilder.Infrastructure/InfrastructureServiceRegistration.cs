@@ -1,4 +1,5 @@
 ﻿using CVBuilder.Application.Contracts.Authentication;
+using CVBuilder.Application.Contracts.CVRequest;
 using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Application.Contracts.UpdateCVRequest;
@@ -46,6 +47,9 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IProjectUpdateRepository, ProjectUpdateRepository>();
             services.AddScoped<ISkillUpdateRepository, SkillUpdateRepository>();
             services.AddScoped<IWorkExperienceUpdateRepository, WorkExperienceUpdateRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<ICompanyDetailsRepository, CompanyDetailsRepository>();
+            services.AddScoped<ICVRequestRepository, CVRequestRepository>();
             
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
@@ -62,7 +66,10 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IUpdateProjectService, UpdateProjectService>();
             services.AddScoped<IUpdateSkillService, UpdateSkillService>();
             services.AddScoped<IUpdateWorkExperienceService, UpdateWorkExperienceService>();
+            
             services.AddScoped<IUpdateCVRequestService, UpdateCVRequestService>();
+
+            services.AddScoped<ICVRequestService, CVRequestService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

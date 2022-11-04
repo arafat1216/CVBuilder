@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CVBuilder.Application.Dtos.Company;
 using CVBuilder.Application.Dtos.Degree;
 using CVBuilder.Application.Dtos.Email;
 using CVBuilder.Application.Dtos.Employee;
@@ -7,6 +8,8 @@ using CVBuilder.Application.Dtos.ResourceRequests;
 using CVBuilder.Application.Dtos.Skill;
 using CVBuilder.Application.Dtos.UpdateCVRequestServiceResponse;
 using CVBuilder.Application.Dtos.WorkExperience;
+using CVBuilder.Application.Features.Company.Commands.AddCompany;
+using CVBuilder.Application.Features.Company.Commands.UpdateCompany;
 using CVBuilder.Application.Features.Degrees.Commands.AddDegree;
 using CVBuilder.Application.Features.Degrees.Commands.DeleteDegree;
 using CVBuilder.Application.Features.Degrees.Commands.PartialUpdateDegree;
@@ -41,6 +44,7 @@ using CVBuilder.Application.Features.WorkExperiences.Commands.DeleteWorkExperien
 using CVBuilder.Application.Features.WorkExperiences.Commands.PartialUpdateWorkExperience;
 using CVBuilder.Application.Features.WorkExperiences.Commands.UpdateWorkExperience;
 using CVBuilder.Application.ViewModels.Account;
+using CVBuilder.Application.ViewModels.Company;
 using CVBuilder.Application.ViewModels.Degree;
 using CVBuilder.Application.ViewModels.Employee;
 using CVBuilder.Application.ViewModels.Project;
@@ -406,6 +410,27 @@ namespace CVBuilder.Application.Profiles
 
             CreateMap<UpdateWorkExperienceViewModel, DeleteWorkExperienceRequestCommand>();
             CreateMap<DeleteWorkExperienceRequestCommandResponse, Response>();
+
+
+            // Company Mappings
+            CreateMap<RegisterViewModel, AddCompanyCommand>();
+            CreateMap<AddCompanyCommand, Company>();
+            CreateMap<Company, AddCompanyCommandResponse>()
+                .IncludeMembers(c=> c.CompanyDetails)
+                .ForMember(dest => dest.SubscriptionType, src => src.MapFrom(src => src.SubscriptionType));
+
+            CreateMap<Company, CompanyDetailsDto>()
+                .IncludeMembers(c => c.CompanyDetails)
+                .ForMember(dest => dest.SubscriptionType, src => src.MapFrom(src => src.SubscriptionType));
+
+            CreateMap<UpdateCompanyDetailsViewModel, UpdateCompanyDetailsCommand>();
+
+            // Company Details Mappings
+            CreateMap<AddCompanyCommand, CompanyDetails>();
+            CreateMap<CompanyDetails, AddCompanyCommandResponse>();
+            CreateMap<CompanyDetails, CompanyDetailsDto>();
+            CreateMap<UpdateCompanyDetailsCommand, CompanyDetails>();
+                
         }
     }
 }

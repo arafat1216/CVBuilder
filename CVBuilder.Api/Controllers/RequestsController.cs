@@ -24,6 +24,7 @@ namespace CVBuilder.Api.Controllers
         }
         
         [HttpGet("my-requests")]
+        [Authorize(Roles = "Admin,Basic")]
         public async Task<IActionResult> GetMyRequests([FromQuery] string? status, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
             if (pageSize > maximumPageSize)

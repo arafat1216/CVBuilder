@@ -1,5 +1,6 @@
 ﻿using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Application.Models.Pagination;
+using CVBuilder.Application.ViewModels.Company;
 using CVBuilder.Domain.Entities;
 using CVBuilder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -150,6 +151,39 @@ namespace CVBuilder.Infrastructure.Repositories
             dbset.Update(employee);
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<Employee>> GetAllEmployeesCVAsync(CVRequestViewModel cVRequestViewModel)
+        {
+            var collection = dbset as IQueryable<Employee>;
+            collection = collection
+                .Include(e => e.Skills.Where(s => !s.IsDeleted))
+                .Include(e => e.Degrees.Where(d => !d.IsDeleted))
+                .Include(e => e.WorkExperiences.Where(w => !w.IsDeleted))
+                .Include(e => e.Projects.Where(p => !p.IsDeleted))
+                .Where(e => !e.IsDeleted);
+
+            if (!string.IsNullOrEmpty(cVRequestViewModel.SearchBySkill))
+            {
+                collection = ApplySearchBySkillFilter(cVRequestViewModel.SearchBySkill, collection);
+
+            }
+
+            if (!string.IsNullOrEmpty(cVRequestViewModel.searchByDegree))
+            {
+                collection = ApplySearchByDegreeFilter(cVRequestViewModel.searchByDegree, collection);
+            }
+
+            if (!string.IsNullOrEmpty(cVRequestViewModel.searchByProject))
+            {
+                collection = ApplySearchByProjectFilter(cVRequestViewModel.searchByProject, collection);
+            }
+
+            var collectionToReturn = await collection
+                .OrderBy(e => e.FullName)
+                .ToListAsync();
+
+            return collectionToReturn;
         }
     }
 }

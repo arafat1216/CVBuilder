@@ -21,6 +21,10 @@ namespace CVBuilder.Infrastructure.Data
         public DbSet<ProjectUpdateRequest> ProjectUpdateRequests { get; set; }
         public DbSet<SkillUpdateRequest> SkillUpdateRequests { get; set; }
         public DbSet<WorkExperienceUpdateRequest> WorkExperienceUpdateRequests { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyDetails> CompanyDetails { get; set; }
+        public DbSet<CVRequest> cVRequests { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

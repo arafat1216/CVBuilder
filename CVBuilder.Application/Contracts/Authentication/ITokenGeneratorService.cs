@@ -10,5 +10,6 @@ namespace CVBuilder.Application.Contracts.Authentication
     public interface ITokenGeneratorService
     {
         string GenerateToken(Employee employee);
+        string GenerateToken(Company company);
     }
 }

@@ -23,7 +23,7 @@ namespace CVBuilder.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin,Basic")]
     public class UpdateCVController : ControllerBase
     {
         private readonly IMediator mediator;
