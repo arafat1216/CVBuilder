@@ -37,17 +37,19 @@ namespace CVBuilder.Api.Controllers
             this.updateCVRequestService = updateCVRequestService;
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateCV([FromBody] UpdateCVViewModel updateCVViewModel)
+        [HttpPatch]
+        public async Task<IActionResult> UpdateCV([FromBody] JsonPatchDocument patchDocument)
         {
+            var updateCVViewModel = new UpdateCVViewModel();
+
+            patchDocument.ApplyTo(updateCVViewModel);
+
             var responses = await updateCVRequestService.HandleRequest(updateCVViewModel);
 
             return Ok(responses);
         }
 
-
-
     }
 
-    
+
 }
