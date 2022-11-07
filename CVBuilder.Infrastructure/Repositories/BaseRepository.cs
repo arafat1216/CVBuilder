@@ -32,7 +32,7 @@ namespace CVBuilder.Infrastructure.Repositories
         {
             var query = dbSet.AsQueryable();
 
-            return await query.Where(predicate).ToListAsync<T>();
+            return await query.AsNoTracking().Where(predicate).ToListAsync<T>();
         }
 
         public async Task UpdateAsync(T entity)

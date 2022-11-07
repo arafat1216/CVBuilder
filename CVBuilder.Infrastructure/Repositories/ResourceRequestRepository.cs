@@ -30,6 +30,7 @@ namespace CVBuilder.Infrastructure.Repositories
             var collectionToReturn = await collection
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
+                .AsNoTracking()
                 .ToListAsync();
 
             return (collectionToReturn, paginationMetaData);
@@ -55,6 +56,7 @@ namespace CVBuilder.Infrastructure.Repositories
             var collectionToReturn = await collection
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
+                .AsNoTracking()
                 .ToListAsync();
 
             return (collectionToReturn, paginationMetaData);

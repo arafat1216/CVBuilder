@@ -50,6 +50,7 @@ namespace CVBuilder.Infrastructure.Repositories
 
             var collectionToReturn = await collection
                 .OrderBy(e => e.FullName)
+                .AsNoTracking()
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -90,6 +91,7 @@ namespace CVBuilder.Infrastructure.Repositories
 
             var collectionToReturn = await collection
                 .OrderBy(e => e.FullName)
+                .AsNoTracking()
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -181,6 +183,7 @@ namespace CVBuilder.Infrastructure.Repositories
 
             var collectionToReturn = await collection
                 .OrderBy(e => e.FullName)
+                .AsNoTracking()
                 .ToListAsync();
 
             return collectionToReturn;
