@@ -2,6 +2,7 @@
 using CVBuilder.Application.Models.Pagination;
 using CVBuilder.Application.ViewModels.Company;
 using CVBuilder.Domain.Entities;
+using CVBuilder.Domain.Enums;
 using CVBuilder.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,15 +60,11 @@ namespace CVBuilder.Infrastructure.Repositories
 
         }
 
-        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(string? searchBySkill, string? searchByDegree, string? searchByProject, int pageNumber, int pageSize)
+        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(RelatedData? relatedData, string? searchBySkill, string? searchByDegree, string? searchByProject, int pageNumber, int pageSize)
         {
             var collection = dbset as IQueryable<Employee>;
-            collection = collection
-                .Include(e => e.Skills.Where(s => !s.IsDeleted))
-                .Include(e => e.Degrees.Where(d => !d.IsDeleted))
-                .Include(e => e.WorkExperiences.Where(w => !w.IsDeleted))
-                .Include(e => e.Projects.Where(p => !p.IsDeleted))
-                .Where(e => !e.IsDeleted);
+
+            collection = collection.Where(e => !e.IsDeleted);
 
             if (!string.IsNullOrEmpty(searchBySkill))
             {
@@ -85,6 +82,11 @@ namespace CVBuilder.Infrastructure.Repositories
                 collection = ApplySearchByProjectFilter(searchByProject, collection);
             }
 
+            if (relatedData != null)
+            {
+                collection = LoadRelatedData(relatedData, collection);
+            }
+
             var totalItems = await collection.CountAsync();
 
             var paginationMetaData = new PaginationMetaData(totalItems, pageNumber, pageSize);
@@ -97,6 +99,50 @@ namespace CVBuilder.Infrastructure.Repositories
                 .ToListAsync();
 
             return (collectionToReturn, paginationMetaData);
+        }
+
+        private IQueryable<Employee> LoadRelatedData(RelatedData? relatedData, IQueryable<Employee> collection)
+        {
+            if (relatedData == RelatedData.All)
+            {
+                collection = collection
+                .Include(e => e.Skills.Where(s => !s.IsDeleted))
+                .Include(e => e.Degrees.Where(d => !d.IsDeleted))
+                .Include(e => e.WorkExperiences.Where(w => !w.IsDeleted))
+                .Include(e => e.Projects.Where(p => !p.IsDeleted));
+
+                return collection;
+            }
+
+            else if (relatedData == RelatedData.Degree)
+            {
+                collection = collection.Include(e => e.Degrees.Where(d => !d.IsDeleted));
+
+                return collection;
+            }
+
+            else if (relatedData == RelatedData.Project)
+            {
+                collection = collection.Include(e => e.Projects).Where(p => !p.IsDeleted);
+
+                return collection;
+            }
+
+            else if (relatedData == RelatedData.Skill)
+            {
+                collection = collection.Include(e => e.Skills.Where(s => !s.IsDeleted));
+
+                return collection;
+            }
+
+            else if (relatedData == RelatedData.WorkExperience)
+            {
+                collection = collection.Include(e => e.WorkExperiences.Where(w => !w.IsDeleted));
+
+                return collection;
+            }
+            else
+                return collection;
         }
 
         private IQueryable<Employee> ApplySearchByProjectFilter(string searchByProject, IQueryable<Employee> collection)

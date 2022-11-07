@@ -1,5 +1,6 @@
 ﻿using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Application.Models.Pagination;
+using CVBuilder.Domain.Enums;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Employees.Queries.GetAllEmployeesCVList
@@ -8,8 +9,9 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetAllEmployeesCVList
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public RelatedData? RelatedData { get; set; }
         public string? SearchBySkill { get; set; }
-        public string? searchByDegree { get; set; }
-        public string? searchByProject { get; set; }
+        public string? SearchByDegree { get; set; }
+        public string? SearchByProject { get; set; }
     }
 }

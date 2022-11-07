@@ -7,6 +7,7 @@ using CVBuilder.Application.Features.Employees.Queries.GetAllEmployeesCVList;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using CVBuilder.Application.Features.Employees.Queries.GetEmployeesList;
 using CVBuilder.Application.ViewModels.Employee;
+using CVBuilder.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -52,16 +53,17 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("all-employees-cv")]
-        public async Task<IActionResult> GetAllEmployeesCV([FromQuery] string? searchBySkill, [FromQuery] string? searchByDegree, [FromQuery] string? searchByProject, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
+        public async Task<IActionResult> GetAllEmployeesCV([FromQuery] RelatedData? relatedData, [FromQuery] string? searchBySkill, [FromQuery] string? searchByDegree, [FromQuery] string? searchByProject, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
             if (pageNumber > maximumPageSize)
                 pageNumber = maximumPageSize;
 
             var requestDto = new GetAllEmployeesCVListQuery()
             {
+                RelatedData = relatedData,
                 SearchBySkill = searchBySkill,
-                searchByDegree = searchByDegree,
-                searchByProject = searchByProject,
+                SearchByDegree = searchByDegree,
+                SearchByProject = searchByProject,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
             };
