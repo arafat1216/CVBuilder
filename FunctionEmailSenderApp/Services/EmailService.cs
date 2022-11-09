@@ -33,7 +33,7 @@ namespace FunctionEmailSenderApp.Services
 
             smpt.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
 
-            smpt.Authenticate("kyra17@ethereal.email", "khCqgaDfbxXbQvtY3M");
+            smpt.Authenticate("kayla.romaguera@ethereal.email", "JNsJZ9xvrzsujuK7Ja");
 
             await smpt.SendAsync(email);
 

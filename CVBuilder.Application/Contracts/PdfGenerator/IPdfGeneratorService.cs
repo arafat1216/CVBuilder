@@ -4,6 +4,6 @@ namespace CVBuilder.Application.Contracts.PdfGenerator
 {
     public interface IPdfGeneratorService
     {
-        Task<byte[]> GeneratePdf(Guid employeeId);
+        Task<byte[]> GeneratePdf(EmployeeDetailsDto employeeDetails);
     }
 }

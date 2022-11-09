@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CVBuilder.Application\CVBuilder.Application.csproj" />
     <ProjectReference Include="..\CVBuilder.Infrastructure\CVBuilder.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shared.Common\Shared.Common.csproj" />
   </ItemGroup>
 
 </Project>

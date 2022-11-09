@@ -1,28 +1,23 @@
 ﻿using CVBuilder.Application.Contracts.PdfGenerator;
 using CVBuilder.Application.Dtos.Employee;
-using CVBuilder.Application.Features.Employees.Queries.GetEmployeeDetail;
 using DinkToPdf;
 using DinkToPdf.Contracts;
-using MediatR;
 
-namespace CVBuilder.Infrastructure.Services
+namespace Shared.Common.Services.PdfGenerator
 {
     public class PdfGeneratorService : IPdfGeneratorService
     {
         private readonly ITemplateGeneratorService templateGeneratorService;
         private readonly IConverter converter;
-        private readonly IMediator mediator;
 
-        public PdfGeneratorService(ITemplateGeneratorService templateGeneratorService, IConverter converter, IMediator mediator)
+        public PdfGeneratorService(ITemplateGeneratorService templateGeneratorService, IConverter converter)
         {
             this.templateGeneratorService = templateGeneratorService;
             this.converter = converter;
-            this.mediator = mediator;
         }
-        public async Task<byte[]> GeneratePdf(Guid employeeId)
-        {
-            EmployeeDetailsDto employeeDetails = await GetEmployeeDetails(employeeId);
 
+        public async Task<byte[]> GeneratePdf(EmployeeDetailsDto employeeDetails)
+        {
             var html = await templateGeneratorService.GenerateHtmlTemplate(employeeDetails);
 
             var globalSettings = GetGlobalSettings();
@@ -31,18 +26,7 @@ namespace CVBuilder.Infrastructure.Services
 
             var pdf = GetPdfDocument(globalSettings, objectSettings);
 
-            return converter.Convert(pdf);
-        }
-
-        private async Task<EmployeeDetailsDto> GetEmployeeDetails(Guid employeeId)
-        {
-            var requestDto = new GetEmployeeDetailQuery()
-            {
-                Id = employeeId
-            };
-
-            var employeeDetails = await mediator.Send(requestDto);
-            return employeeDetails;
+            return converter.Convert(pdf);  
         }
 
         private HtmlToPdfDocument GetPdfDocument(GlobalSettings globalSettings, ObjectSettings objectSettings)
@@ -50,7 +34,7 @@ namespace CVBuilder.Infrastructure.Services
             return new HtmlToPdfDocument()
             {
                 GlobalSettings = globalSettings,
-                Objects = {objectSettings}
+                Objects = { objectSettings }
             };
         }
 
@@ -60,11 +44,10 @@ namespace CVBuilder.Infrastructure.Services
             {
                 PagesCount = true,
                 HtmlContent = html,
-                WebSettings = new WebSettings() { DefaultEncoding = "utf-8"},
+                WebSettings = new WebSettings() { DefaultEncoding = "utf-8" },
                 HeaderSettings = GetHeaderSettings(),
                 FooterSettings = GetFooterSettings(),
             };
-
         }
 
         private FooterSettings GetFooterSettings()
@@ -92,7 +75,7 @@ namespace CVBuilder.Infrastructure.Services
                 ColorMode = ColorMode.Color,
                 Orientation = Orientation.Portrait,
                 PaperSize = PaperKind.A4,
-                Margins = new MarginSettings() { Top = 10, Bottom = 10}
+                Margins = new MarginSettings() { Top = 10, Bottom = 10 }
             };
         }
     }

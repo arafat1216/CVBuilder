@@ -54,10 +54,6 @@ namespace CVBuilder.Infrastructure
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             
-            services.AddScoped<ITemplateGeneratorService, TemplateGeneratorService>();
-            services.AddScoped<IPdfGeneratorService, PdfGeneratorService>();
-            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
-            
             services.AddTransient<IUploadEmailToQueueService, UploadEmailToQueueService>();
 
             services.AddScoped<IUpdateResourceService, UpdateResourceService>();

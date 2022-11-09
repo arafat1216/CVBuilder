@@ -55,8 +55,14 @@ namespace CVBuilder.Api.Controllers
         [HttpGet("download-cv")]
         public async Task<IActionResult> DownloadCv()
         {
-           
-            var file = await pdfGeneratorService.GeneratePdf(applicationUser.GetUserId());
+            var requestDto = new GetEmployeeDetailQuery()
+            {
+                Id = applicationUser.GetUserId(),
+            };
+
+            var employeeDetails = await mediator.Send(requestDto);
+
+            var file = await pdfGeneratorService.GeneratePdf(employeeDetails);
 
             return File(file, "application/octet-stream", "Resume.pdf");
         }
@@ -121,15 +127,20 @@ namespace CVBuilder.Api.Controllers
         [HttpPost("send-email")]
         public async Task<IActionResult> SendEmail([FromBody] EmailViewModel emailViewModel)
         {
+            var employeeDetailsRequestDto = new GetEmployeeDetailQuery()
+            {
+                Id = applicationUser.GetUserId(),
+            };
+
+            var employeeDetails = await mediator.Send(employeeDetailsRequestDto);
+
             var requestDto = mapper.Map<EmailDto>(emailViewModel);
 
             requestDto.Id = applicationUser.GetUserId();
 
             requestDto.Sender = User.FindFirstValue(ClaimTypes.Email);
 
-            var file = await pdfGeneratorService.GeneratePdf(applicationUser.GetUserId());
-
-            
+            var file = await pdfGeneratorService.GeneratePdf(employeeDetails);
 
             await uploadEmailToQueueService.UploadEmailToQueue(requestDto, file);
 

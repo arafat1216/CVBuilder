@@ -25,7 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Razor.TemplateEngine", "Raz
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure Functions", "Azure Functions", "{8018A7C4-877B-4DA1-864E-548AEC138142}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionEmailSenderApp", "FunctionEmailSenderApp\FunctionEmailSenderApp.csproj", "{F63D98B9-26AD-440F-A6F2-0CE43B11CE39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionEmailSenderApp", "FunctionEmailSenderApp\FunctionEmailSenderApp.csproj", "{F63D98B9-26AD-440F-A6F2-0CE43B11CE39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{BE977A30-4CC5-4F8C-A761-B42D7D94FA3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Common", "Shared.Common\Shared.Common.csproj", "{B35B5EFD-5B4A-439C-BBE2-1923064C4A7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{F63D98B9-26AD-440F-A6F2-0CE43B11CE39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F63D98B9-26AD-440F-A6F2-0CE43B11CE39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F63D98B9-26AD-440F-A6F2-0CE43B11CE39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B35B5EFD-5B4A-439C-BBE2-1923064C4A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B35B5EFD-5B4A-439C-BBE2-1923064C4A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B35B5EFD-5B4A-439C-BBE2-1923064C4A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B35B5EFD-5B4A-439C-BBE2-1923064C4A7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,8 @@ Global
 		{C2345E07-EF87-4FF2-B608-574EE0BC5CBC} = {726E6DCA-E723-4BE0-8516-5F8F8A03E38B}
 		{8018A7C4-877B-4DA1-864E-548AEC138142} = {0429C342-CCA0-4020-9F37-45D12B67B65F}
 		{F63D98B9-26AD-440F-A6F2-0CE43B11CE39} = {8018A7C4-877B-4DA1-864E-548AEC138142}
+		{BE977A30-4CC5-4F8C-A761-B42D7D94FA3B} = {0429C342-CCA0-4020-9F37-45D12B67B65F}
+		{B35B5EFD-5B4A-439C-BBE2-1923064C4A7B} = {BE977A30-4CC5-4F8C-A761-B42D7D94FA3B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F7D5518F-118A-4393-B990-C2A58892C640}

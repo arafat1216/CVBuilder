@@ -2,7 +2,7 @@
 using CVBuilder.Application.Dtos.Employee;
 using Razor.Templating.Core;
 
-namespace CVBuilder.Infrastructure.Services
+namespace Shared.Common.Services.TemplateGenerator
 {
     public class TemplateGeneratorService : ITemplateGeneratorService
     {

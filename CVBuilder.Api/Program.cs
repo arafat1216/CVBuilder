@@ -4,6 +4,7 @@ using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Shared.Common;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +61,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddCommonServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IApplicationUser, ApplicationUser>();
 
