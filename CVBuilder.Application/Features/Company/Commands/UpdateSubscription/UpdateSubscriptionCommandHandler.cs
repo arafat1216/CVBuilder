@@ -1,4 +1,5 @@
 ﻿using CVBuilder.Application.Contracts.Persistence;
+using CVBuilder.Domain.Enums;
 using MediatR;
 
 namespace CVBuilder.Application.Features.Company.Commands.UpdateSubscription
@@ -19,6 +20,10 @@ namespace CVBuilder.Application.Features.Company.Commands.UpdateSubscription
                 throw new Exceptions.NotFoundException(nameof(Company), request.CompanyId);
 
             company.SubscriptionType = request.SubscriptionType;
+
+            company.SubscriptionPurchasedDate = DateTime.Now;
+
+            company.SubscriptionStatus = SubscriptionStatus.Active;
 
             await repository.UpdateAsync(company);
 

@@ -9,6 +9,8 @@ namespace CVBuilder.Domain.Entities
         public string Password { get; set; }
         public Role Role { get; set; } = Role.Company;
         public SubscriptionType SubscriptionType { get; set; }
+        public DateTime SubscriptionPurchasedDate { get; set; } = DateTime.Now;
+        public SubscriptionStatus SubscriptionStatus { get; set; } = SubscriptionStatus.Active;
 
         // Navigation Property
         public CompanyDetails? CompanyDetails { get; set; }

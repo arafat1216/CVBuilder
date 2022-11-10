@@ -11,6 +11,11 @@ namespace CVBuilder.Infrastructure.Repositories
         {
         }
 
+        public async Task<List<Company>> GetAllCompanies()
+        {
+            return await dbSet.ToListAsync();
+        }
+
         public async Task<Company?> GetCompanyByIdAsync(Guid id)
         {
             return await dbSet.Include(c => c.CompanyDetails).Where(c => c.CompanyId == id).FirstOrDefaultAsync();

@@ -3,7 +3,7 @@ using CVBuilder.Application.Contracts.Persistence;
 using CVBuilder.Application.Dtos.Company;
 using MediatR;
 
-namespace CVBuilder.Application.Features.Company.Queries
+namespace CVBuilder.Application.Features.Company.Queries.GetCompanyDetails
 {
     public class GetCompanyDetailsQueryHandler : IRequestHandler<GetCompanyDetailsQuery, CompanyDetailsDto>
     {

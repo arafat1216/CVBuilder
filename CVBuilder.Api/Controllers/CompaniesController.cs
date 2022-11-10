@@ -4,12 +4,13 @@ using CVBuilder.Application.Contracts.CVRequest;
 using CVBuilder.Application.Features.Company.Commands.AddCompany;
 using CVBuilder.Application.Features.Company.Commands.UpdateCompany;
 using CVBuilder.Application.Features.Company.Commands.UpdateSubscription;
-using CVBuilder.Application.Features.Company.Queries;
+using CVBuilder.Application.Features.Company.Commands.UpdateSubscriptionStatus;
+using CVBuilder.Application.Features.Company.Queries.GetCompaniesList;
+using CVBuilder.Application.Features.Company.Queries.GetCompanyDetails;
 using CVBuilder.Application.ViewModels.Company;
 using CVBuilder.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVBuilder.Api.Controllers
@@ -110,5 +111,7 @@ namespace CVBuilder.Api.Controllers
             return Ok("Updated Successfully");
 
         }
+
+
     }
 }

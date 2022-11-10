@@ -5,6 +5,7 @@ using CVBuilder.Application.Dtos.Employee;
 using CVBuilder.Application.Exceptions;
 using CVBuilder.Application.ViewModels.Company;
 using CVBuilder.Domain.Entities;
+using CVBuilder.Domain.Enums;
 using CVBuilder.Domain.Others;
 
 namespace CVBuilder.Infrastructure.Services
@@ -26,6 +27,12 @@ namespace CVBuilder.Infrastructure.Services
 
         public async Task<List<EmployeeDetailsDto>> RequestCV(CVRequestViewModel cvRequestViewModel)
         {
+            // Check Subscription Status
+            SubscriptionStatus status = await GetSubscriptionStatus(cvRequestViewModel.CompanyId);
+
+            if (status == SubscriptionStatus.Expired)
+                throw new BadRequestException("Your Subsription Package Has Been Expired!");
+
             // check if maximum cv request limit exceeded
             var currentDate = DateTime.Now.ToShortDateString();
 
@@ -49,6 +56,13 @@ namespace CVBuilder.Infrastructure.Services
             var employees = await employeeRepository.GetAllEmployeesCVAsync(cvRequestViewModel);
 
             return mapper.Map<List<EmployeeDetailsDto>>(employees);
+        }
+
+        private async Task<SubscriptionStatus> GetSubscriptionStatus(Guid companyId)
+        {
+            var company = await companyRepository.GetCompanyByIdAsync(companyId);
+
+            return company.SubscriptionStatus;
         }
 
         private async Task<int> GetCVRequestLimit(Guid companyId)

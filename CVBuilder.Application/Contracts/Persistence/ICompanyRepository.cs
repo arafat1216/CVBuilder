@@ -6,5 +6,7 @@ namespace CVBuilder.Application.Contracts.Persistence
     {
         Task<Company?> GetCompanyByIdAsync(Guid id);
         Task<Company?> GetCompanyByNameAsync(string name);
+
+        Task<List<Company>> GetAllCompanies();
     }
 }

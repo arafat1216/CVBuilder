@@ -423,6 +423,8 @@ namespace CVBuilder.Application.Profiles
                 .IncludeMembers(c => c.CompanyDetails)
                 .ForMember(dest => dest.SubscriptionType, src => src.MapFrom(src => src.SubscriptionType));
 
+            CreateMap<Company, CompaniesListDto>();
+
             CreateMap<UpdateCompanyDetailsViewModel, UpdateCompanyDetailsCommand>();
 
             // Company Details Mappings

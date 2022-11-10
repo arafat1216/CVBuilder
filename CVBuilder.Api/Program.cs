@@ -1,8 +1,10 @@
 using CVBuilder.Api;
+using CVBuilder.Api.Quartz;
 using CVBuilder.Application;
 using CVBuilder.Application.Contracts.Authentication;
 using CVBuilder.Infrastructure;
 using Microsoft.OpenApi.Models;
+using Quartz;
 using Serilog;
 using Shared.Common;
 using System.Text.Json.Serialization;
@@ -72,6 +74,15 @@ var logger = new LoggerConfiguration()
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
+
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+    q.AddJobAndTrigger<UpdateSubscriptionStatusJob>(builder.Configuration);
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 
