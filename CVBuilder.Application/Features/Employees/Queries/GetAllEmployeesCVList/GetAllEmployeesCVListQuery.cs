@@ -9,7 +9,7 @@ namespace CVBuilder.Application.Features.Employees.Queries.GetAllEmployeesCVList
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
-        public RelatedData? RelatedData { get; set; }
+        public List<RelatedData>? RelatedDataList { get; set; }
         public string? SearchBySkill { get; set; }
         public string? SearchByDegree { get; set; }
         public string? SearchByProject { get; set; }

@@ -8,8 +8,8 @@ namespace CVBuilder.Application.Contracts.Persistence
     public interface IEmployeeRepository
     {
         Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesAsync(int pageNumber, int pageSize);
-        Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(RelatedData?
-            relatedData ,string? searchBySkill, string? searchByDegree,
+        Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(List<RelatedData>
+            relatedDataList ,string? searchBySkill, string? searchByDegree,
             string? searchByProject, int pageNumber, int pageSize);
         Task<List<Employee>> GetAllEmployeesCVAsync(CVRequestViewModel cVRequestViewModel);
         Task<Employee> AddEmployeeAsync(Employee employee);

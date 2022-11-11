@@ -53,14 +53,14 @@ namespace CVBuilder.Api.Controllers
         }
 
         [HttpGet("all-employees-cv")]
-        public async Task<IActionResult> GetAllEmployeesCV([FromQuery] RelatedData? relatedData, [FromQuery] string? searchBySkill, [FromQuery] string? searchByDegree, [FromQuery] string? searchByProject, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
+        public async Task<IActionResult> GetAllEmployeesCV([FromQuery] string? searchBySkill, [FromQuery] string? searchByDegree, [FromQuery] string? searchByProject, [FromQuery] List<RelatedData>? relatedDataList = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
             if (pageNumber > maximumPageSize)
                 pageNumber = maximumPageSize;
 
             var requestDto = new GetAllEmployeesCVListQuery()
             {
-                RelatedData = relatedData,
+                RelatedDataList = relatedDataList,
                 SearchBySkill = searchBySkill,
                 SearchByDegree = searchByDegree,
                 SearchByProject = searchByProject,
@@ -73,6 +73,8 @@ namespace CVBuilder.Api.Controllers
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metaData));
 
             return Ok(employees);
+
+          
         }
 
 

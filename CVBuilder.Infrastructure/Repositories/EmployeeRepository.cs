@@ -60,7 +60,7 @@ namespace CVBuilder.Infrastructure.Repositories
 
         }
 
-        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(RelatedData? relatedData, string? searchBySkill, string? searchByDegree, string? searchByProject, int pageNumber, int pageSize)
+        public async Task<(List<Employee>, PaginationMetaData)> GetAllEmployeesCVAsync(List<RelatedData> relatedDataList, string? searchBySkill, string? searchByDegree, string? searchByProject, int pageNumber, int pageSize)
         {
             var collection = dbset as IQueryable<Employee>;
 
@@ -82,9 +82,12 @@ namespace CVBuilder.Infrastructure.Repositories
                 collection = ApplySearchByProjectFilter(searchByProject, collection);
             }
 
-            if (relatedData != null)
+            
+            foreach (var relatedData in relatedDataList)
             {
                 collection = LoadRelatedData(relatedData, collection);
+                if (relatedData == RelatedData.All)
+                    break;
             }
 
             var totalItems = await collection.CountAsync();
@@ -101,7 +104,7 @@ namespace CVBuilder.Infrastructure.Repositories
             return (collectionToReturn, paginationMetaData);
         }
 
-        private IQueryable<Employee> LoadRelatedData(RelatedData? relatedData, IQueryable<Employee> collection)
+        private IQueryable<Employee> LoadRelatedData(RelatedData relatedData, IQueryable<Employee> collection)
         {
             if (relatedData == RelatedData.All)
             {
